@@ -1,0 +1,51 @@
+# dependencies
+/node_modules
+
+# Environment Configuration
+.env
+temp
+
+# testing
+/coverage
+
+# production
+/build
+/public
+
+# Logs
+logs
+*.log
+
+# misc
+.DS_Store
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# user specific ide
+.idea
+.vscode
+
+# Flow Coverage Report
+flow-coverage/
+
+#
+/bower_components
+/_zip
+/_export
+/_podklady
+/web
+/src/css/core/icons.styl
+/src/css/core/icons-svg.styl
+/src/css/core/sprites.styl
+/src/css/core/sprites-retina.styl
+/wordpress/wp-content/themes/*/static/
+/wordpress/wp-content/uploads/
+/wordpress/wp-config.php
+/config.local.js
+
+/bck
+*.bck
+
+# OSX crap
+.DS_*
