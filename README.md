@@ -1,9 +1,9 @@
 # important
 
 ## VSCode
-settings.json set user defaults (copy&paste)
+settings.json sets user defaults (copy&paste it)
 
-### extensions
+### Extensions
 *  AB HTML Formatter
 *  Annotator
 *  Apache Conf
@@ -29,12 +29,27 @@ http://cmder.net/
 
 https://nodejs.org/en/
 
-### window build tools (install via cmder)
+### window build tools
 
 https://www.npmjs.com/package/windows-build-tools
 
-### build tools (install via cmder)
+**install via cmder**
+
+npm install --global --production windows-build-tools
+
+### build and automation tool
 
 https://gulpjs.com/
+
+****install via cmder**
+
+npm install gulp-cli -g
+npm install gulp -D
+
+---
+
+## Recommended
+
+https://www.gitkraken.com/
 
 ---
