@@ -35,16 +35,16 @@ https://www.npmjs.com/package/windows-build-tools
 
 **install via cmder**
 
-npm install --global --production windows-build-tools
+*  npm install --global --production windows-build-tools
 
 ### build and automation tool
 
 https://gulpjs.com/
 
-****install via cmder**
+**install via cmder**
 
-npm install gulp-cli -g
-npm install gulp -D
+*  npm install gulp-cli -g
+*  npm install gulp -D
 
 ---
 
