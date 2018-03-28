@@ -18,3 +18,23 @@ settings.json set user defaults (copy&paste)
 *  VSCode Map Preview
 
 ---
+
+## Setup developer environment in Windows
+
+### Unix console emulator
+
+http://cmder.net/
+
+### node.js
+
+https://nodejs.org/en/
+
+### window build tools (install via cmder)
+
+https://www.npmjs.com/package/windows-build-tools
+
+### build tools (install via cmder)
+
+https://gulpjs.com/
+
+---
