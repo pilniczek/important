@@ -53,3 +53,9 @@ https://gulpjs.com/
 https://www.gitkraken.com/
 
 ---
+
+## SSH
+
+ssh-keygen -t rsa -C "your.email@example.com" -b 4096
+
+---
