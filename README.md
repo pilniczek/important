@@ -37,6 +37,10 @@ https://www.npmjs.com/package/windows-build-tools
 
 *  npm install --global --production windows-build-tools
 
+__trouble shooter__
+
+https://stackoverflow.com/questions/40480560/unable-to-install-visual-c-build-tools-a-setup-package-is-either-missing-or-d
+
 ### build and automation tool
 
 https://gulpjs.com/
