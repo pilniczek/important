@@ -1,56 +1,54 @@
-!IMPORTANT
-
-CSS
+# CSS
 https://github.com/papercss/papercss
 https://github.com/kbrsh/wing
 
 
-SVG
+# SVG
 https://github.com/jonathantneal/svg4everybody
 
 
-GIT
+# GIT
 https://github.com/tj/git-extras
 
 
-CHECKLISTS
+# CHECKLISTS
 https://github.com/Heydon/inclusive-design-checklist
 https://github.com/thedaviddias/Front-End-Checklist
 
 
-TEMPLATE STYLE WEB
+# TEMPLATE STYLE WEB
 https://github.com/edent/SuperTinyIcons
 
 
-REACT
+# REACT
 https://github.com/airbnb/react-dates
 https://github.com/airbnb/prop-types
 https://github.com/airbnb/javascript
 
-The Apollo Server backend shared by all Apollo client example apps.
+# The Apollo Server backend shared by all Apollo client example apps.
 https://github.com/apollographql/GitHunt-API
 
-React Components & Libraries
+# React Components & Libraries
 https://github.com/brillout/awesome-react-components
 
 
-STANDARD (ESLINT)
+# STANDARD (ESLINT)
 https://github.com/standard/eslint-config-standard
 https://standardjs.com/
 https://github.com/standard/vscode-standardjs/issues/4
 https://github.com/standard/standard#how-do-i-hide-a-certain-warning
 
 
-NUNJUCKS
+# NUNJUCKS
 https://medium.com/@andy.neale/nunjucks-a-javascript-template-engine-7731d23eb8cc
 https://mozilla.github.io/nunjucks/getting-started.html
 https://github.com/carlosl/gulp-nunjucks-render
 
 
-LOCAL WEBSERVER
+# LOCAL WEBSERVER
 https://github.com/AveVlad/gulp-connect/
 
 
-GULPFILE SCSS AND JS HELP
+# GULPFILE SCSS AND JS HELP
 https://engageinteractive.co.uk/blog/improve-front-end-workflow-gulp
 http://macr.ae/article/splitting-gulpfile-multiple-files.html
