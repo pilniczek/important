@@ -13,4 +13,6 @@
   "editor.fontWeight": "100",
   "editor.mouseWheelZoom": true,
   "editor.smoothScrolling": true,
+  "telemetry.enableCrashReporter": false, // not nice
+  "telemetry.enableTelemetry": false // not nice
 }
