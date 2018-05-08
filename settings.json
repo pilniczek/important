@@ -7,7 +7,7 @@
   "editor.multiCursorModifier": "ctrlCmd",
   "editor.snippetSuggestions": "top",
   "editor.rulers": [80,100],
-  "editor.detectIndentation": false, // potential danger
+  // "editor.detectIndentation": false, // potential danger
   "editor.tabSize": 2,
   "editor.fontWeight": "100",
   "editor.mouseWheelZoom": true,
