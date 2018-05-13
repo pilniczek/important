@@ -52,3 +52,6 @@ https://github.com/AveVlad/gulp-connect/
 # GULPFILE SCSS AND JS HELP
 https://engageinteractive.co.uk/blog/improve-front-end-workflow-gulp
 http://macr.ae/article/splitting-gulpfile-multiple-files.html
+
+# convertors
+https://www.json2yaml.com/
