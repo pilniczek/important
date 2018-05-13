@@ -7,11 +7,20 @@
   "editor.multiCursorModifier": "ctrlCmd",
   "editor.snippetSuggestions": "top",
   "editor.rulers": [80,100],
-  "editor.detectIndentation": false, // potential danger
+  // "editor.detectIndentation": false, // potential danger
   "editor.tabSize": 2,
   "editor.fontWeight": "100",
   "editor.mouseWheelZoom": true,
   "editor.smoothScrolling": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+  },
+  "javascript.format.enable": false, // 3rd party ESLint better
   "telemetry.enableCrashReporter": false, // not nice
   "telemetry.enableTelemetry": false // not nice
 }
