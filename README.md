@@ -16,6 +16,11 @@ settings.json sets user defaults (copy&paste it)
 *  Prettier - Codde formatter
 *  Sublime Text Keymap
 *  VSCode Map Preview
+*  Animate.css
+*  markdownlint
+*  Can I Use
+*  SVG Viewer
+*  SVGO
 
 ---
 
