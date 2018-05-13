@@ -21,6 +21,7 @@ settings.json sets user defaults (copy&paste it)
 *  Can I Use
 *  SVG Viewer
 *  SVGO
+*  Markdown Preview Enhanced
 
 ---
 
