@@ -35,3 +35,17 @@ _bck
 
 # OSX crap
 .DS_*
+
+# https://docs.npmjs.com/files/package.json
+.git
+CVS
+.svn
+.hg
+.lock-wscript
+.wafpickle-N
+.*.swp
+._*
+npm-debug.log
+.npmrc
+config.gypi
+*.orig
