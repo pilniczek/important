@@ -4,24 +4,39 @@
 settings.json sets user defaults (copy&paste it)
 
 ### Extensions
-*  AB HTML Formatter
-*  Annotator
-*  Apache Conf
-*  Debugger for Chrome
-*  ESLint
-*  IntelliSense for CSS class names in HTML
-*  Javascript Standard Style
-*  npm
-*  Nunjucks
-*  Prettier - Codde formatter
-*  Sublime Text Keymap
-*  VSCode Map Preview
-*  Animate.css
-*  markdownlint
-*  Can I Use
-*  SVG Viewer
-*  SVGO
-*  Markdown Preview Enhanced
+`code --list-extensions`
+
+* aeschli.vscode-css-formatter
+* ajhyndman.vscode-svgo
+* andys8.jest-snippets
+* ashhitch.vs-code-css-comments
+* chenxsan.vscode-standardjs
+* cssho.vscode-svgviewer
+* dbaeumer.vscode-eslint
+* ecmel.vscode-html-css
+* eg2.vscode-npm-script
+* esbenp.prettier-vscode
+* felixfbecker.php-intellisense
+* glen-84.sass-lint
+* HookyQR.minify
+* Hridoy.animate-css
+* jumpinjackie.vscode-map-preview
+* Kasik96.latte
+* kisstkondoros.vscode-gutter-preview
+* mrmlnc.vscode-apache
+* mrmlnc.vscode-attrs-sorter
+* mrmlnc.vscode-scss
+* ms-vscode.sublime-keybindings
+* msjsdiag.debugger-for-chrome
+* Orta.vscode-jest
+* ronnidc.nunjucks
+* ryu1kn.annotator
+* shd101wyy.markdown-preview-enhanced
+* tht13.html-preview-vscode
+* Tyriar.sort-lines
+* whatwedo.twig
+* zhyong10.markdown-html
+* zovorap.ab-html-formatter
 
 ---
 
