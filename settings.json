@@ -2,8 +2,8 @@
 {
   "workbench.colorTheme": "Monokai",
   "typescript.check.npmIsInstalled": false,
-  "window.zoomLevel": -1,
-  "sublimeTextKeymap.promptV3Features": true,
+  "window.zoomLevel": 0,
+  "editor.insertSpaces": false,
   "editor.multiCursorModifier": "ctrlCmd",
   "editor.snippetSuggestions": "top",
   "editor.rulers": [80,100],
@@ -22,5 +22,9 @@
   },
   "javascript.format.enable": false, // 3rd party ESLint better
   "telemetry.enableCrashReporter": false, // not nice
-  "telemetry.enableTelemetry": false // not nice
+  "telemetry.enableTelemetry": false, // not nice
+  "php.suggest.basic": false,
+  "window.restoreWindows": "all",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  //"search.location": "panel",
 }
