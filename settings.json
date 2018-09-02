@@ -1,9 +1,9 @@
-// VSCode custom settings
 {
   "workbench.colorTheme": "Monokai",
   "typescript.check.npmIsInstalled": false,
   "window.zoomLevel": 0,
-  "editor.insertSpaces": false,
+  // "editor.insertSpaces": false,
+  "editor.formatOnSave": false,
   "editor.multiCursorModifier": "ctrlCmd",
   "editor.snippetSuggestions": "top",
   "editor.rulers": [80,100],
@@ -25,6 +25,18 @@
   "telemetry.enableTelemetry": false, // not nice
   "php.suggest.basic": false,
   "window.restoreWindows": "all",
+  "sasslint.configFile": "./sass-lint.yml",
+  "html.format.enable": false,
+  "html.format.endWithNewline": true,
+  "eslint.autoFixOnSave": true,
+  "[latte]": {
+    // "editor.formatOnSave": true,
+  },
+  "editor.renderWhitespace": "boundary",
+  "javascript.preferences.importModuleSpecifier": "non-relative",
   "javascript.updateImportsOnFileMove.enabled": "always",
+  "gitlens.advanced.messages": {
+    "suppressShowKeyBindingsNotice": true
+  },
   //"search.location": "panel",
 }

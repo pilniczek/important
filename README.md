@@ -6,20 +6,22 @@ settings.json sets user defaults (copy&paste it)
 ### Extensions
 `code --list-extensions`
 
-* aeschli.vscode-css-formatter
 * ajhyndman.vscode-svgo
 * andys8.jest-snippets
 * ashhitch.vs-code-css-comments
-* chenxsan.vscode-standardjs
 * cssho.vscode-svgviewer
 * dbaeumer.vscode-eslint
+* dzannotti.vscode-babel-coloring
+* eamodio.gitlens
 * ecmel.vscode-html-css
 * eg2.vscode-npm-script
 * esbenp.prettier-vscode
+* felipecaputo.git-project-manager
 * felixfbecker.php-intellisense
 * glen-84.sass-lint
-* HookyQR.minify
 * Hridoy.animate-css
+* ionutvmi.path-autocomplete
+* joshpeng.sublime-babel-vscode
 * jumpinjackie.vscode-map-preview
 * Kasik96.latte
 * kisstkondoros.vscode-gutter-preview
@@ -29,6 +31,7 @@ settings.json sets user defaults (copy&paste it)
 * ms-vscode.sublime-keybindings
 * msjsdiag.debugger-for-chrome
 * Orta.vscode-jest
+* P-de-Jong.vscode-html-scss
 * ronnidc.nunjucks
 * ryu1kn.annotator
 * shd101wyy.markdown-preview-enhanced

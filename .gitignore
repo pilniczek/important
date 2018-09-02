@@ -12,6 +12,7 @@ temp
 # production
 /build
 /public
+/www/_cache/*
 
 # Logs
 logs
@@ -46,6 +47,8 @@ CVS
 .*.swp
 ._*
 npm-debug.log
+yarn-debug.log*
+yarn-error.log*
 .npmrc
 config.gypi
 *.orig
