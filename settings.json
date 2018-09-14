@@ -1,3 +1,9 @@
+/*
+* GUI for editing settings. In 1.27.
+* access the JSON settings editor,
+* either by using the command Open Settings (JSON)
+* or by changing your default settings editor with the "workbench.settings.editor" setting.
+*/
 {
   "workbench.colorTheme": "Monokai",
   "typescript.check.npmIsInstalled": false,
@@ -20,7 +26,7 @@
     "**/.DS_Store": true,
     "**/node_modules": true,
   },
-  "javascript.format.enable": false, // 3rd party ESLint better
+  "javascript.format.enable": false,
   "telemetry.enableCrashReporter": false, // not nice
   "telemetry.enableTelemetry": false, // not nice
   "php.suggest.basic": false,
@@ -30,7 +36,6 @@
   "html.format.endWithNewline": true,
   "eslint.autoFixOnSave": true,
   "[latte]": {
-    // "editor.formatOnSave": true,
   },
   "editor.renderWhitespace": "boundary",
   "javascript.preferences.importModuleSpecifier": "non-relative",
