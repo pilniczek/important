@@ -16,3 +16,12 @@ https://easings.net/
 
 https://matthewlein.com/tools/ceaser
 
+
+#Testing
+
+https://observatory.mozilla.org/
+
+https://www.ssllabs.com/ssltest/analyze.html
+
+https://www.botify.com/
+
