@@ -7,12 +7,14 @@
 {
   "workbench.colorTheme": "Monokai",
   "typescript.check.npmIsInstalled": false,
-  "window.zoomLevel": 0,
-  // "editor.insertSpaces": false,
   "editor.formatOnSave": false,
+  // "editor.insertSpaces": false,
   "editor.multiCursorModifier": "ctrlCmd",
   "editor.snippetSuggestions": "top",
-  "editor.rulers": [80,100],
+  "editor.rulers": [
+    80,
+    100
+  ],
   // "editor.detectIndentation": false, // potential danger
   "editor.tabSize": 2,
   "editor.fontWeight": "100",
@@ -27,15 +29,16 @@
     "**/node_modules": true,
   },
   "javascript.format.enable": false,
-  "telemetry.enableCrashReporter": false, // not nice
-  "telemetry.enableTelemetry": false, // not nice
-  "php.suggest.basic": false,
+  "telemetry.enableCrashReporter": false,
+  "telemetry.enableTelemetry": false,
+  "window.zoomLevel": 0,
   "window.restoreWindows": "all",
   "sasslint.configFile": "./sass-lint.yml",
   "html.format.enable": false,
   "html.format.endWithNewline": true,
   "eslint.autoFixOnSave": true,
   "[latte]": {
+    // "editor.formatOnSave": true,
   },
   "editor.renderWhitespace": "boundary",
   "javascript.preferences.importModuleSpecifier": "non-relative",
@@ -43,5 +46,5 @@
   "gitlens.advanced.messages": {
     "suppressShowKeyBindingsNotice": true
   },
-  //"search.location": "panel",
+  "explorer.confirmDelete": false,
 }
