@@ -1,7 +1,7 @@
 # important
 
 ## VSCode
-settings.json sets user defaults (copy&paste it)
+settings.json + extensions.json (copy&paste)
 
 ### Extensions
 `code --list-extensions`
@@ -9,6 +9,7 @@ settings.json sets user defaults (copy&paste it)
 * ajhyndman.vscode-svgo
 * andys8.jest-snippets
 * ashhitch.vs-code-css-comments
+* Asuka.insertnumbers
 * cssho.vscode-svgviewer
 * dbaeumer.vscode-eslint
 * dzannotti.vscode-babel-coloring
@@ -29,11 +30,13 @@ settings.json sets user defaults (copy&paste it)
 * mrmlnc.vscode-attrs-sorter
 * mrmlnc.vscode-scss
 * ms-vscode.sublime-keybindings
+* ms-vsliveshare.vsliveshare
 * msjsdiag.debugger-for-chrome
 * Orta.vscode-jest
 * P-de-Jong.vscode-html-scss
 * ronnidc.nunjucks
 * ryu1kn.annotator
+* Shan.code-settings-sync
 * shd101wyy.markdown-preview-enhanced
 * tht13.html-preview-vscode
 * Tyriar.sort-lines
@@ -59,7 +62,7 @@ https://www.npmjs.com/package/windows-build-tools
 
 **install via cmder**
 
-*  npm install --global --production windows-build-tools
+* npm install --global --production windows-build-tools
 
 __trouble shooter__
 
