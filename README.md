@@ -5,6 +5,7 @@ settings.json + extensions.json (copy&paste)
 
 ### Extensions
 `code --list-extensions`
+
 `code --install-extension`
 
 * ajhyndman.vscode-svgo
@@ -49,10 +50,6 @@ settings.json + extensions.json (copy&paste)
 
 ## Setup developer environment in Windows
 
-### Unix console emulator
-
-http://cmder.net/
-
 ### node.js
 
 https://nodejs.org/en/
@@ -73,16 +70,8 @@ https://stackoverflow.com/questions/40480560/unable-to-install-visual-c-build-to
 
 https://gulpjs.com/
 
-**install via cmder**
-
 *  npm install gulp-cli -g
 *  npm install gulp -D
-
----
-
-## Recommended
-
-https://www.gitkraken.com/
 
 ---
 
