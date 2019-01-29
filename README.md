@@ -5,6 +5,7 @@ settings.json + extensions.json (copy&paste)
 
 ### Extensions
 `code --list-extensions`
+`code --install-extension`
 
 * ajhyndman.vscode-svgo
 * andys8.jest-snippets
