@@ -2,6 +2,7 @@
 * https://itnext.io/the-power-of-npm-scripts-57aaad9f038d
 * https://deliciousbrains.com/npm-build-script/
 * https://scotch.io/tutorials/using-npm-as-a-build-tool
+* https://medium.com/@OlegVaraksin/workflow-for-creating-svg-sprites-with-npm-scripts-7cae7014619
 
 
 # CSS
