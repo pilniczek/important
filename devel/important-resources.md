@@ -1,3 +1,6 @@
+# GULP
+* **migrate v3 -> v4:** https://www.liquidlight.co.uk/blog/how-do-i-update-to-gulp-4/
+
 # NPM
 * https://itnext.io/the-power-of-npm-scripts-57aaad9f038d
 * https://deliciousbrains.com/npm-build-script/
