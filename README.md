@@ -21,8 +21,12 @@ settings.json + extensions.json (copy&paste)
 * esbenp.prettier-vscode
 * felipecaputo.git-project-manager
 * felixfbecker.php-intellisense
+* formulahendry.auto-close-tag
+* formulahendry.auto-complete-tag
+* formulahendry.auto-rename-tag
 * glen-84.sass-lint
 * Hridoy.animate-css
+* humao.rest-client
 * ionutvmi.path-autocomplete
 * joshpeng.sublime-babel-vscode
 * jumpinjackie.vscode-map-preview
@@ -42,7 +46,9 @@ settings.json + extensions.json (copy&paste)
 * shd101wyy.markdown-preview-enhanced
 * tht13.html-preview-vscode
 * Tyriar.sort-lines
+* WallabyJs.quokka-vscode
 * whatwedo.twig
+* wix.vscode-import-cost
 * zhyong10.markdown-html
 * zovorap.ab-html-formatter
 
