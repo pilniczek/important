@@ -29,6 +29,11 @@ flow-coverage/
 # locals
 /config.local.js
 /config.local.neon
+.env
+/media
+
+# cache
+__pycache__
 
 # temp backups
 *.bck
