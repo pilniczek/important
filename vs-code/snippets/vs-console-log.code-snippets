@@ -1,0 +1,9 @@
+{
+	"console log": {
+		"prefix": "cl",
+		"body": [
+			"console.log('log: ', $1)",
+		],
+		"description": "Console Log"
+	}
+}
