@@ -1,14 +1,7 @@
-/*
-* GUI for editing settings. In 1.27.
-* access the JSON settings editor,
-* either by using the command Open Settings (JSON)
-* or by changing your default settings editor with the "workbench.settings.editor" setting.
-*/
 {
   "workbench.colorTheme": "Monokai",
   "typescript.check.npmIsInstalled": false,
   "editor.formatOnSave": false,
-  // "editor.insertSpaces": false, // potential danger
   "editor.multiCursorModifier": "ctrlCmd",
   "editor.snippetSuggestions": "top",
   "editor.rulers": [
@@ -16,7 +9,6 @@
     100
   ],
   "html.format.wrapLineLength": 100,
-  // "editor.detectIndentation": false, // potential danger
   "editor.tabSize": 2,
   "editor.fontWeight": "100",
   "editor.mouseWheelZoom": true,
@@ -31,7 +23,6 @@
     "**/node_modules": true,
   },
   "files.insertFinalNewline": true,
-  // "files.trimTrailingWhitespace": true, // potential danger
   "javascript.format.enable": false,
   "search.useIgnoreFiles": false, // testing
   "telemetry.enableCrashReporter": false,

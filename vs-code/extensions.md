@@ -1,9 +1,3 @@
-### Extensions
-
-`code --list-extensions`
-
-`code --install-extension`
-
 * ajhyndman.vscode-svgo
 * andys8.jest-snippets
 * ashhitch.vs-code-css-comments
