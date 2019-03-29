@@ -1,0 +1,18 @@
+{
+	"console log": {
+		"prefix": "cl",
+		"body": [
+			"console.log('log: ', $1)",
+		],
+		"description": "Console Log"
+	},
+	"modern document ready": {
+		"prefix": "cl",
+		"body": [
+			"document.addEventListener('DOMContentLoaded', function(event) {/* IE gt 8 */",
+			"\t$1",
+			"});",
+		],
+		"description": "modern document ready"
+	}
+}
