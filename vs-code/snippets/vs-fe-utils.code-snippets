@@ -7,7 +7,7 @@
 		"description": "Console Log"
 	},
 	"modern document ready": {
-		"prefix": "cl",
+		"prefix": "docready",
 		"body": [
 			"document.addEventListener('DOMContentLoaded', function(event) {/* IE gt 8 */",
 			"\t$1",
