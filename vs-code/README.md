@@ -34,3 +34,7 @@ Example:
 	"description": "Log output to console"
 }
 ```
+
+#TIPs
+
+https://snippet-generator.app/
