@@ -1,0 +1,19 @@
+{
+	"svg main markup": {
+		"prefix": "svg",
+		"body": [
+			"<svg",
+			"\txmlns=\"http://www.w3.org/2000/svg\"",
+			"\txmlns:xlink=\"http://www.w3.org/1999/xlink\"",
+			"\tviewBox=\"0 0 __vBx__ __vBy__\"",
+			">",
+			"\t<defs>",
+			"\t\t<g id=\"__my_id__\">",
+			"\t\t</g>",
+			"\t</defs>",
+			"\t<use xlink:href=\"#__my_id__\" transform=\"translate(__x__ __y__)\" />",
+			"</svg>",
+		],
+		"description": "svg main markup"
+	}
+}
