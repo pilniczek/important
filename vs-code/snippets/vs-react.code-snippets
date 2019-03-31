@@ -1,0 +1,82 @@
+{
+	"react full container": {
+		"prefix": "rfcontainer",
+		"body": [
+			"import { connect } from 'react-redux';",
+			"import { __Actions__ } from '__Actions_path__';",
+			"import { __Selectors__ } from '__Selectors_path__';",
+			"import $1 from './';",
+			"",
+			"const mapStateToProps = (state, locals) => ({",
+			"\t__prop_name__: __get_prop__(state),",
+			"});",
+			"",
+			"const mapDispatchToProps = dispatch => ({",
+				"\t__action__: (id, __val__) => dispatch(__action__(id, __val__)),",
+			"});",
+			"",
+			"export default connect(",
+			"\tmapStateToProps,",
+			"\tmapDispatchToProps,",
+			")($1);",
+		],
+		"description": "react full container"
+	},
+	"react reducer": {
+		"prefix": "rreducer",
+		"body": [
+			"const $1 = (state = {}, action = {}) => {",
+			"\tswitch (action.type) {",
+			"\t\tcase types.$1: {",
+			"\t\t\treturn Object.assign({}, state, {",
+			"\t\t\t\t__what__: __how__,",
+			"\t\t\t});",
+			"\t\t}",
+			"\t\tdefault: {",
+			"\t\t\treturn state;",
+			"\t\t}",
+			"\t}",
+			"};",
+		],
+		"description": "react reducer"
+	},
+	"react selector": {
+		"prefix": "rselector",
+		"body": [
+			"const $1 = state => get(state, '__where__', {});",
+			"",
+			"export {",
+			"\t$1,",
+			"};",
+		],
+		"description": "react selector"
+	},
+	"react component": {
+		"prefix": "rcomponent",
+		"body": [
+			"",
+		],
+		"description": "react component"
+	},
+	"react pure component": {
+		"prefix": "rpcomponent",
+		"body": [
+			"",
+		],
+		"description": "react pure component"
+	},
+	"react functional component": {
+		"prefix": "rfcomponent",
+		"body": [
+			"",
+		],
+		"description": "react functional component"
+	},
+	"react memoized component": {
+		"prefix": "rmcomponent",
+		"body": [
+			"",
+		],
+		"description": "react memoized component"
+	}
+}
