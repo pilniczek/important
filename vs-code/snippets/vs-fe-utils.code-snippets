@@ -14,5 +14,16 @@
 			"});",
 		],
 		"description": "modern document ready"
+	},
+	"modern image": {
+		"prefix": "img",
+		"body": [
+			"<picture>",
+			"\t<source media=\"(max-width: __window_width_1__)\" srcset=\"__img_name_1__.jpg\">",
+			"\t<source media=\"(min-width: __window_width_2__)\" srcset=\"__img_name_2__.jpg\">",
+			"\t<img src=\"__img_name_2__.jpg\">",
+			"</picture>",
+		],
+		"description": "modern image"
 	}
 }
