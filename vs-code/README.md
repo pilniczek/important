@@ -3,16 +3,20 @@
 GUI for editing settings. In 1.27. access the JSON settings editor, either by using the command Open Settings (JSON) or by changing your default settings editor with the "workbench.settings.editor" setting.
 
 ```
-"editor.insertSpaces": false, // potential danger
-"editor.detectIndentation": false, // potential danger
-"files.trimTrailingWhitespace": true, // potential danger
+"editor.insertSpaces": false, // is potential danger
+"editor.detectIndentation": false, // is potential danger
+"files.trimTrailingWhitespace": true, // is potential danger
 ```
+
+**TIP:** Copy & paste settings.json.
 
 # Extensions
 
 `code --list-extensions`
 
 `code --install-extension`
+
+**TIP:** In extensions.md replace `* ` with given installation command and paste everything into terminal.
 
 # Custom snippets
 
@@ -35,6 +39,4 @@ Example:
 }
 ```
 
-#TIPs
-
-https://snippet-generator.app/
+**TIP:** https://snippet-generator.app/
