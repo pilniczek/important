@@ -18,14 +18,41 @@
 	"modern image": {
 		"prefix": "img",
 		"body": [
-			"<picture>",
+			"<picture class=\"picture\">",
 			"\t<source media=\"(max-width: ${1:__window_width_1__})\" srcset=\"${3:__img_name_1__}.jpg\">",
 			"\t<source media=\"(min-width: ${2:__window_width_2__})\" srcset=\"${4:__img_name_2__}.jpg\">",
-			"\t<img src=\"${4:__img_name_2__}.jpg\" alt=\"${4:__img_alt__\">",
+			"\t<img class=\"picture__img\" src=\"${4:__img_name_2__}.jpg\" alt=\"${4:__img_alt__\">",
 			"</picture>",
 			"$0",
 		],
 		"description": "modern image"
+	},
+	"modern image css": {
+		"prefix": "imgcss",
+		"body": [
+			".picture {",
+			"\tdisplay: block;",
+			"\tposition: relative;",
+			"\toverflow: hidden;",
+			"\t/*choose aspect ratio*/",
+			"\t/*padding-top: 56.25%;*//*16:9*/",
+			"\t/*or fixed height*/",
+			"\t/*height: ;*/",
+			"}",
+			"",
+			".picture__img {",
+			"\twidth: 100%;",
+			"\theight: auto;",
+			"\tposition: absolute;",
+			"\ttop: -50%;",
+			"\tleft: -50%;",
+			"\tright: -50%;",
+			"\tbottom: -50%;",
+			"\tmargin: auto;",
+			"}",
+			"",
+		],
+		"description": "modern image css"
 	},
 	"link with secure target=\"_blank\"": {
 		"prefix": "hrefb",
