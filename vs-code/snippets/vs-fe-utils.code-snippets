@@ -21,7 +21,7 @@
 			"<picture>",
 			"\t<source media=\"(max-width: ${1:__window_width_1__})\" srcset=\"${3:__img_name_1__}.jpg\">",
 			"\t<source media=\"(min-width: ${2:__window_width_2__})\" srcset=\"${4:__img_name_2__}.jpg\">",
-			"\t<img src=\"${4:__img_name_2__}.jpg\">",
+			"\t<img src=\"${4:__img_name_2__}.jpg\" alt=\"${4:__img_alt__\">",
 			"</picture>",
 			"$0",
 		],
