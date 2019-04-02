@@ -6,7 +6,7 @@
 			"\t<tbody>",
 			"\t\t<tr>",
 			"\t\t\t<td>",
-			"\t\t\t\t",
+			"\t\t\t\t$0",
 			"\t\t\t</td>",
 			"\t\t</tr>",
 			"\t</tbody>",

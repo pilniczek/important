@@ -2,7 +2,7 @@
 	"console log": {
 		"prefix": "cl",
 		"body": [
-			"console.log('log: ', $1)",
+			"console.log('log: ', ${1:__var_name__})",
 		],
 		"description": "Console Log"
 	},
@@ -10,7 +10,7 @@
 		"prefix": "docready",
 		"body": [
 			"document.addEventListener('DOMContentLoaded', function(event) {/* IE gt 8 */",
-			"\t$1",
+			"\t${1:__do_something__}",
 			"});",
 		],
 		"description": "modern document ready"
@@ -19,10 +19,11 @@
 		"prefix": "img",
 		"body": [
 			"<picture>",
-			"\t<source media=\"(max-width: __window_width_1__)\" srcset=\"__img_name_1__.jpg\">",
-			"\t<source media=\"(min-width: __window_width_2__)\" srcset=\"__img_name_2__.jpg\">",
-			"\t<img src=\"__img_name_2__.jpg\">",
+			"\t<source media=\"(max-width: ${1:__window_width_1__})\" srcset=\"${3:__img_name_1__}.jpg\">",
+			"\t<source media=\"(min-width: ${2:__window_width_2__})\" srcset=\"${4:__img_name_2__}.jpg\">",
+			"\t<img src=\"${4:__img_name_2__}.jpg\">",
 			"</picture>",
+			"$0",
 		],
 		"description": "modern image"
 	},
