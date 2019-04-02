@@ -33,5 +33,21 @@
 			"<a href=\"${1:__href__}\" target=\"_blank\" rel=\"noopener noreferrer\">${2:__label__}</a>",
 		],
 		"description": "link with secure target=\"_blank\""
+	},
+	"@font-face": {
+		"prefix": "font-face",
+		"body": [
+			"@font-face {",
+			"\tfont-family: '${1:__font_name__}';",
+			"\tfont-style: normal;",
+			"\tfont-weight: 400;",
+			"\tsrc: url('${2:__font_name__}.eot?#iefix');",
+			"\tsrc: url('${2:__font_name__}.eot?#iefix') format('eot'),",
+			"\t\turl('${2:__font_name__}.woff2') format('woff2'),",
+			"\t\turl('${2:__font_name__}.woff') format('woff'),",
+			"\t\turl('${2:__font_name__}.ttf') format('truetype');",
+			"}",
+		],
+		"description": "@font-face"
 	}
 }
