@@ -40,3 +40,8 @@ Example:
 ```
 
 **TIP:** https://snippet-generator.app/
+
+## Useful snippets libraries
+### HTML emails
+* https://litmus.com/community/snippets
+* https://litmus.com/blog/the-ultimate-guide-to-using-snippets-in-email-design
