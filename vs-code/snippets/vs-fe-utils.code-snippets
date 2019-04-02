@@ -25,5 +25,12 @@
 			"</picture>",
 		],
 		"description": "modern image"
+	},
+	"link with secure target=\"_blank\"": {
+		"prefix": "hrefb",
+		"body": [
+			"<a href=\"${1:__href__}\" target=\"_blank\" rel=\"noopener noreferrer\">${2:__label__}</a>",
+		],
+		"description": "link with secure target=\"_blank\""
 	}
 }
