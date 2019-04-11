@@ -15,14 +15,37 @@
 		],
 		"description": "modern document ready"
 	},
+	"modern picture": {
+		"prefix": "img picture",
+		"body": [
+			"<picture class=\"img-wrapper\">",
+			"\t<source media=\"(min-width: ${1:__L_breakpoint__})\" srcset=\"${3:__src_L__}.jpg\">",
+			"\t<source media=\"(min-width: ${2:__M_breakpoint__})\" srcset=\"${4:__src_M__}.jpg\">",
+			"\t<img class=\"img\" src=\"${5:__src_S__}.jpg\" alt=\"${6:__img_alt__}\">",
+			"</picture>",
+			"$0",
+		],
+		"description": "modern picture"
+	},
 	"modern image": {
 		"prefix": "img",
 		"body": [
-			"<picture class=\"picture\">",
-			"\t<source media=\"(max-width: ${1:__window_width_1__})\" srcset=\"${3:__img_name_1__}.jpg\">",
-			"\t<source media=\"(min-width: ${2:__window_width_2__})\" srcset=\"${4:__img_name_2__}.jpg\">",
-			"\t<img class=\"picture__img\" src=\"${4:__img_name_2__}.jpg\" alt=\"${4:__img_alt__\">",
-			"</picture>",
+			"<div class=\"img-wrapper\">",
+			"\t<img",
+			"\t\tclass=\"img\"",
+			"\t\tsrcset=\"",
+			"\t\t\t${7:__src_S__}.jpg ${4:__img_S_width__}w,",
+			"\t\t\t${8:__src_M__}.jpg ${5:__img_M_width__}w,",
+			"\t\t\t${9:__src_L__}.jpg ${6:__img_L_width__}w,",
+			"\t\t\"",
+			"\t\tsizes=\"",
+			"\t\t\t(min-width: ${1:__L_breakpoint__}) ${4:__img_L_width__}px,",
+			"\t\t\t(min-width: ${2:__M_breakpoint__}) ${5:__img_M_width__}px,",
+			"\t\t\t(max-width: ${3:__S_breakpoint__}) ${6:__img_S_width__}px",
+			"\t\t\"",
+			"\t\talt=\"${10:__img_alt__}\"",
+			"\t>",
+			"</div>",
 			"$0",
 		],
 		"description": "modern image"
@@ -30,27 +53,27 @@
 	"modern image css": {
 		"prefix": "imgcss",
 		"body": [
-			".picture {",
+			".img-wrapper {",
 			"\tdisplay: block;",
 			"\tposition: relative;",
 			"\toverflow: hidden;",
+			"\twidth: 100%;",
 			"\t/*choose aspect ratio*/",
 			"\t/*padding-top: 56.25%;*//*16:9*/",
 			"\t/*or fixed height*/",
 			"\t/*height: ;*/",
 			"}",
 			"",
-			".picture__img {",
+			".img {",
 			"\twidth: 100%;",
 			"\theight: auto;",
 			"\tposition: absolute;",
-			"\ttop: -50%;",
-			"\tleft: -50%;",
-			"\tright: -50%;",
-			"\tbottom: -50%;",
+			"\ttop: 50%;",
+			"\tleft: 50%;",
+			"\ttransform: translate(-50%, -50%);",
 			"\tmargin: auto;",
 			"}",
-			"",
+			"$0",
 		],
 		"description": "modern image css"
 	},
@@ -76,5 +99,30 @@
 			"}",
 		],
 		"description": "@font-face"
-	}
+	},
+	"box-sizing": {
+		"prefix": "box-sizing",
+		"body": [
+			"html {",
+			"\t-webkit-box-sizing: border-box;",
+			"\t-moz-box-sizing: border-box;",
+			"\tbox-sizing: border-box;",
+			"}",
+			"*, *:before, *:after {",
+			"\t-webkit-box-sizing: inherit;",
+			"\t-moz-box-sizing: inherit;",
+			"\tbox-sizing: inherit;",
+			"}",
+		],
+		"description": "box-sizing"
+	},
+	"@media": {
+		"prefix": "@media",
+		"body": [
+			"@media (max-width: ${1:800px}) {",
+			"$2",
+			"}",
+		],
+		"description": "@media"
+	},
 }
