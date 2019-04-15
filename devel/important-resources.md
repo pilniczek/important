@@ -11,6 +11,7 @@
 # CSS
 * https://github.com/papercss/papercss
 * https://github.com/kbrsh/wing
+* https://www.youtube.com/watch?v=WvBF1_-a5OY
 
 
 # SVG
@@ -28,7 +29,6 @@
 
 # TEMPLATE STYLE WEB
 * https://github.com/edent/SuperTinyIcons
-
 
 # REACT
 * https://github.com/airbnb/react-dates
@@ -63,5 +63,3 @@
 * https://engageinteractive.co.uk/blog/improve-front-end-workflow-gulp
 * http://macr.ae/article/splitting-gulpfile-multiple-files.html
 
-# convertors
-* https://www.json2yaml.com/

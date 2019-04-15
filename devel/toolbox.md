@@ -1,27 +1,48 @@
-#TOOLBOX
+# TOOLBOX
 
-http://www.mergely.com/editor
+## GIT
+* **Online Diff Viewer:** http://www.mergely.com/editor
 
-http://angrytools.com/gradient/
+## CSS
+* **Gradient Generator:** http://angrytools.com/gradient/
+* **Easing Function Catalogue:** https://easings.net/en
+* **Easing Function Generator:** https://matthewlein.com/tools/ceaser
 
-https://www.photopea.com/
+## jQuery
+* **Hamburger Menu:** https://jonsuh.com/hamburgers/
+* **Zoom:** http://www.jacklmoore.com/zoom/
 
-http://www.jacklmoore.com/zoom/
+## Convertors
+* **JSON to YAML:** https://www.json2yaml.com/
 
-https://jonsuh.com/hamburgers/
+## IMG
+**WebP Converter:**
+* Desktop: https://developers.google.com/speed/webp/
+* Online: https://ezgif.com/webp-maker
+* Gulp: https://santhoshveer.com/webp-image-conversion-using-gulpjs/
 
-https://spritegen.website-performance.org/
+**Others**
+* Sprite generator: https://spritegen.website-performance.org/
+* Online image editor: https://www.photopea.com/
 
-https://easings.net/
+## TESTING
 
-https://matthewlein.com/tools/ceaser
+### Frontend
 
+**Speed:**
+* http://webpagetest.org/
+* https://developers.google.com/speed/pagespeed/insights/?hl=cs
+* https://gtmetrix.com/
+* https://gtmetrix.com/
 
-#Testing
+**Complex Testing:**
+* https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk/related?hl=cs (testovat v anonymním okně, kde je aktivní jen lighthouse)
+* https://www.botify.com/
 
-https://observatory.mozilla.org/
+---
 
-https://www.ssllabs.com/ssltest/analyze.html
+TIP: https://www.vzhurudolu.cz/prirucka/google-analytics-vyvojari
 
-https://www.botify.com/
-
+**Security**
+* https://observatory.mozilla.org/
+* https://www.ssllabs.com/ssltest/analyze.html?viaform=on&d=tomas-pilnaj.cz
