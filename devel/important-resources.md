@@ -63,3 +63,14 @@
 * https://engageinteractive.co.uk/blog/improve-front-end-workflow-gulp
 * http://macr.ae/article/splitting-gulpfile-multiple-files.html
 
+# Augmented/Mixed/Virtual Reality
+* https://github.com/jeromeetienne/AR.js
+* https://www.youtube.com/watch?v=MXnaUkmLXok
+* https://facebook.github.io/react-360/
+* https://blog.pusher.com/how-you-can-become-an-ar-vr-developer/
+
+# Advanced JS 3D Animation
+* https://threejs.org/
+* https://www.opengl.org/
+
+* https://github.com/greensock/GreenSock-JS
