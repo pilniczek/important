@@ -44,5 +44,6 @@
 TIP: https://www.vzhurudolu.cz/prirucka/google-analytics-vyvojari
 
 **Security**
-* https://observatory.mozilla.org/
-* https://www.ssllabs.com/ssltest/analyze.html?viaform=on&d=tomas-pilnaj.cz
+* **Complex:** https://observatory.mozilla.org/
+* **SSL:** https://www.ssllabs.com/ssltest/analyze.html?viaform=on&d=tomas-pilnaj.cz
+* **Have I Been Pwned Verification:** https://haveibeenpwned.com/DomainSearch
