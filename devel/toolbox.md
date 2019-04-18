@@ -24,6 +24,7 @@
 **Others**
 * Sprite generator: https://spritegen.website-performance.org/
 * Online image editor: https://www.photopea.com/
+* Remove image background: https://www.remove.bg/
 
 ## TESTING
 
