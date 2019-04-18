@@ -74,3 +74,6 @@
 * https://www.opengl.org/
 
 * https://github.com/greensock/GreenSock-JS
+
+# Design
+* https://www.designui.cz/lekce/jak-si-ulehcit-navrhovani-ui-aneb-nastavte-si-mantinely
