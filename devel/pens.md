@@ -10,7 +10,8 @@
 * [Embeded YouTube controls](https://codepen.io/pilniczek/pen/WWoZQM)
 * [Inverse hover](https://codepen.io/pilniczek/pen/LaZPBp)
 * [SVG icon set](https://codepen.io/pilniczek/pen/MZdxRx)
-* [Char loaders](https://codepen.io/pilniczek/pen/pBOEGo)
+* [Char loader](https://codepen.io/pilniczek/pen/qwMZEV)
+* [Char loaders manager](https://codepen.io/pilniczek/pen/pBOEGo)
 
 # Resources for new snippets
 
