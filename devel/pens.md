@@ -5,11 +5,13 @@
 * [SimpleMDE customization](https://codepen.io/pilniczek/pen/KbEMPr)
 * [Styleable select from radios](https://codepen.io/pilniczek/pen/QzpOmZ)
 * [Flexbox layout example](https://codepen.io/pilniczek/pen/MqvWbm)
-* [Bordered vox combo](https://codepen.io/pilniczek/pen/VNQVQx)
+* [Bordered box combo](https://codepen.io/pilniczek/pen/VNQVQx)
 * [Full scrollable tables](https://codepen.io/pilniczek/pen/vMeVgR)
 * [Embeded YouTube controls](https://codepen.io/pilniczek/pen/WWoZQM)
 * [Inverse hover](https://codepen.io/pilniczek/pen/LaZPBp)
 * [SVG icon set](https://codepen.io/pilniczek/pen/MZdxRx)
+* [Char loader](https://codepen.io/pilniczek/pen/qwMZEV)
+* [Char loaders manager](https://codepen.io/pilniczek/pen/pBOEGo)
 
 # Resources for new snippets
 
