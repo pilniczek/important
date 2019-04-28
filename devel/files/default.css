@@ -60,10 +60,11 @@ legend {
   max-width: 1650px;
   margin: auto;
   overflow: hidden;
+  padding: 0 10px 10px 10px;
 }
 .container__item {
   flex: 1;
-  padding: 10px;
+  padding: 0 10px 10px 10px;
 }
 /* DISPLAY UTILITIES */
 .d-none {
