@@ -62,7 +62,7 @@ legend {
   overflow: hidden;
 }
 .container__item {
-  flex-grow: 1;
+  flex: 1;
   padding: 10px;
 }
 /* DISPLAY UTILITIES */
