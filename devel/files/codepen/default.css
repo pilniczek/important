@@ -8,6 +8,7 @@ html {
 img, picture {
   line-height: 0;
   font-size: 0;
+  max-width: 100%;
 }
 ol,
 ul,

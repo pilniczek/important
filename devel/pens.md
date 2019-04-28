@@ -2,6 +2,7 @@
 
 * [Pure CSS popup](https://codepen.io/pilniczek/pen/rbJoxG)
 * [Compare image solutions](https://codepen.io/pilniczek/pen/yrLPyr)
+* [Image lazy loading](https://codepen.io/pilniczek/pen/ZZPyz)
 * [SimpleMDE customization](https://codepen.io/pilniczek/pen/KbEMPr)
 * [Styleable select from radios](https://codepen.io/pilniczek/pen/QzpOmZ)
 * [Flexbox layout example](https://codepen.io/pilniczek/pen/MqvWbm)
