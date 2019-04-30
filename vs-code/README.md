@@ -20,7 +20,10 @@ GUI for editing settings. In 1.27. access the JSON settings editor, either by us
 
 # Custom snippets
 
-Insert into `C:\Users\${user_name}\AppData\Roaming\Code\User\snippets`. (Or where is your VSCode installed...)
+**Path to snippets**
+* `C:\Users\${user_name}\AppData\Roaming\Code\User\snippets` (Win)
+* `/home/${user_name}/.config/Code/User/snippets` (Ubuntu)
+* (Or where is your VSCode installed...)
 
 Place your global snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope is left empty or omitted, the snippet gets applied to all languages. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
 
