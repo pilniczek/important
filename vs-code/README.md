@@ -39,6 +39,8 @@ Example:
 }
 ```
 
+**More:** https://code.visualstudio.com/docs/editor/userdefinedsnippets
+
 **TIP:** https://snippet-generator.app/
 
 ## Useful snippets libraries
