@@ -1,13 +1,13 @@
 {
-  "diffEditor.ignoreTrimWhitespace": false,
+  "diffEditor.ignoreTrimWhitespace": true,
   "editor.fontWeight": "100",
   "editor.formatOnSave": false,
   "editor.mouseWheelZoom": true,
   "editor.multiCursorModifier": "ctrlCmd",
   "editor.renderWhitespace": "boundary",
   "editor.rulers": [
-      100,
-      80
+    100,
+    80
   ],
   "editor.smoothScrolling": true,
   "editor.snippetSuggestions": "top",
@@ -16,16 +16,16 @@
   "explorer.confirmDelete": false,
   "files.eol": "\n",
   "files.exclude": {
-      "**/.DS_Store": true,
-      "**/.git": true,
-      "**/.hg": true,
-      "**/.svn": true,
-      "**/CVS": true,
-      "**/node_modules": true
+    "**/.DS_Store": true,
+    "**/.git": true,
+    "**/.hg": true,
+    "**/.svn": true,
+    "**/CVS": true,
+    "**/node_modules": true
   },
-  "files.insertFinalNewline": true,
+  "files.insertFinalNewline": false,
   "gitlens.advanced.messages": {
-      "suppressShowKeyBindingsNotice": true
+    "suppressShowKeyBindingsNotice": true
   },
   "html.format.enable": false,
   "html.format.endWithNewline": true,
