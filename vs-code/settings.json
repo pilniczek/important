@@ -20,11 +20,11 @@
     "**/.hg": true,
     "**/CVS": true,
     "**/.DS_Store": true,
-    "**/node_modules": true,
+    "**/node_modules": true
   },
   "files.insertFinalNewline": true,
   "javascript.format.enable": false,
-  "search.useIgnoreFiles": false, // testing
+  "search.useIgnoreFiles": false,
   "telemetry.enableCrashReporter": false,
   "telemetry.enableTelemetry": false,
   "window.zoomLevel": 0,
@@ -33,9 +33,6 @@
   "html.format.enable": false,
   "html.format.endWithNewline": true,
   "eslint.autoFixOnSave": true,
-  "[latte]": {
-    // "editor.formatOnSave": true,
-  },
   "editor.renderWhitespace": "boundary",
   "javascript.preferences.importModuleSpecifier": "non-relative",
   "javascript.updateImportsOnFileMove.enabled": "always",
@@ -43,7 +40,7 @@
     "suppressShowKeyBindingsNotice": true
   },
   "explorer.confirmDelete": false,
-  "sync.gist": "", // code here
+  "sync.gist": "",
   "sync.quietSync": false,
   "sync.removeExtensions": true,
   "sync.syncExtensions": true,
@@ -51,5 +48,5 @@
   "sync.autoUpload": false,
   "sync.forceDownload": false,
   "workbench.settings.editor": "json",
-  "diffEditor.ignoreTrimWhitespace": false,
+  "diffEditor.ignoreTrimWhitespace": false
 }
