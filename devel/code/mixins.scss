@@ -1,0 +1,103 @@
+// FONT-FACE RULE
+@mixin font-face($font-family, $url) {
+	@font-face {
+		font-family: '#{$font-family}';
+		src: url('#{$url}.eot');
+		src: url('#{$url}.eot?#iefix') format('embedded-opentype'),
+			url('#{$url}.woff2') format('woff2'),
+			url('#{$url}.woff') format('woff'),
+			url('#{$url}.ttf') format('truetype');
+		font-weight: normal;
+		font-style: normal;
+		text-rendering: optimizeLegibility;
+	}
+}
+
+// RETINA-READY BACKGROUND IMAGES
+@mixin background-retina($imageOriginal, $imageRetina) {
+	background-image: url($imageOriginal);
+	@media 
+	screen and (-webkit-min-device-pixel-ratio: 2  ),
+	screen and (   min--moz-device-pixel-ratio: 2  ),
+	screen and (   -moz-min-device-pixel-ratio: 2  ),
+	screen and (     -o-min-device-pixel-ratio: 2/1),
+	screen and (        min-device-pixel-ratio: 2  ),
+	screen and (             min-resolution: 192dpi),
+	screen and (             min-resolution: 2dppx ) {
+		background-image: url($imageRetina);
+	}
+}
+
+// FIXED ASPECT RATIO
+@mixin aspect-ratio-box($width, $height, $selector: "> :first-child") {
+	display: block;
+	padding: 0 0 percentage($height / $width) 0;
+	height: 0;
+	overflow: hidden;
+	position: relative;
+	#{unquote($selector)} {
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		top: 0;
+		left: 0;
+	}
+}
+
+// VERTICAL CENTERING (flexbox)
+@mixin vertical-center() {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+// BASIC PSEUDO-ELEMENT SETUP
+@mixin pseudo($display: block, $pos: absolute, $content: ''){
+	content: $content;
+	display: $display;
+	position: $pos;
+}
+
+// CSS triangles
+@mixin css-triangle($color, $direction, $size, $position: absolute){
+	@include pseudo($pos: $position);
+	width: 0;
+	height: 0;
+	@if $direction == down {
+		border-left: $size solid transparent;
+		border-right: $size solid transparent;
+		border-top: $size solid $color;
+		margin-top: 0 - round( $size / 2.5 );
+	} @else if $direction == up {
+		border-left: $size solid transparent;
+		border-right: $size solid transparent;
+		border-bottom: $size solid $color;
+		margin-bottom: 0 - round( $size / 2.5 );
+	} @else if $direction == right {
+		border-top: $size solid transparent;
+		border-bottom: $size solid transparent;
+		border-left: $size solid $color;
+		margin-right: -$size;
+	} @else if  $direction == left {
+		border-top: $size solid transparent;
+		border-bottom: $size solid transparent;
+		border-right: $size solid $color;
+		margin-left: -$size;
+	}
+}
+
+// Z-INDEX CHECKER
+$z-indexes: (
+	"modal",
+	"header",
+	"wrapper",
+	"footer"
+);
+@function z($name) {
+	@if index($z-indexes, $name) {
+			@return (length($z-indexes) - index($z-indexes, $name)) + 1;
+	} @else {
+			@warn 'There is no item "#{$name}" in this list; choose one of: #{$z-indexes}';
+			@return null;
+	}
+}
