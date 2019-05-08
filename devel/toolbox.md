@@ -25,16 +25,23 @@
 * Sprite generator: https://spritegen.website-performance.org/
 * Online image editor: https://www.photopea.com/
 * Remove image background: https://www.remove.bg/
+* Use SVG to shrink PNG: https://codepen.io/shshaw/full/LVKEdv
 
 ## TESTING
 
 ### Frontend
 
+**UX**
+* https://webaim.org/resources/contrastchecker/
+
 **Speed:**
 * http://webpagetest.org/
 * https://developers.google.com/speed/pagespeed/insights/?hl=cs
 * https://gtmetrix.com/
-* https://gtmetrix.com/
+* https://www.thinkwithgoogle.com/intl/en-gb/feature/testmysite
+
+**Mobile friendly:**
+* https://ready.mobi/
 
 **Complex Testing:**
 * https://chrome.google.com/webstore/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk/related?hl=cs (testovat v anonymním okně, kde je aktivní jen lighthouse)
@@ -46,5 +53,12 @@ TIP: https://www.vzhurudolu.cz/prirucka/google-analytics-vyvojari
 
 **Security**
 * **Complex:** https://observatory.mozilla.org/
-* **SSL:** https://www.ssllabs.com/ssltest/analyze.html?viaform=on&d=tomas-pilnaj.cz
+* **SSL:** https://www.ssllabs.com/ssltest/analyze.html
+* **headers:** https://securityheaders.com
 * **Have I Been Pwned Verification:** https://haveibeenpwned.com/DomainSearch
+
+**SEO**
+* **duplicity**https://www.microsoft.com/en-us/download/details.aspx?id=24823
+* **duplicity**http://home.snafu.de/tilman/xenulink.html
+* https://www.screamingfrog.co.uk
+
