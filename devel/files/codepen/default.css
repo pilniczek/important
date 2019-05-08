@@ -1,6 +1,31 @@
+/* font */
+/*@font-face {
+  font-family: 'Lato';
+  src: url('https://tomas-pilnaj.cz/codepen/font/lato/lato-latin/fonts/LatoLatin-Light.eot');
+  src: url('https://tomas-pilnaj.cz/codepen/font/lato/lato-latin/fonts/LatoLatin-Light.eot?#iefix') format('embedded-opentype'),
+       url('https://tomas-pilnaj.cz/codepen/font/lato/lato-latin/fonts/LatoLatin-Light.woff2') format('woff2'),
+       url('https://tomas-pilnaj.cz/codepen/font/lato/lato-latin/fonts/LatoLatin-Light.woff') format('woff'),
+       url('https://tomas-pilnaj.cz/codepen/font/lato/lato-latin/fonts/LatoLatin-Light.ttf') format('truetype');
+  font-style: normal;
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
+}*/
 /* basic setup */
 html {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: -moz-scrollbars-vertical;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  font-size: 62.5%;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 1.8rem;
+  line-height: 2.4rem;
 }
 *, *:before, *:after {
   box-sizing: inherit;
@@ -9,6 +34,7 @@ img, picture {
   line-height: 0;
   font-size: 0;
   max-width: 100%;
+  margin: 0 auto;
 }
 ol,
 ul,
@@ -52,6 +78,44 @@ legend {
   line-height: inherit;
   color: inherit;
   white-space: normal;
+}
+/* basic headline typography */
+/* https://grtcalculator.com/ */
+h1 {
+  font-size: 4.7rem;
+  line-height: 6rem;
+  padding-bottom: 1.2rem;
+	font-weight: 300;
+}
+h2 {
+  font-size: 3.7rem;
+  line-height: 4.7rem;
+  padding-bottom: 1rem;
+	font-weight: 300;
+}
+h3 {
+  font-size: 2.9rem;
+  line-height: 3.7rem;
+  padding-bottom: .9rem;
+	font-weight: 300;
+}
+h4 {
+  font-size: 2.3rem;
+  line-height: 3rem;
+  padding-bottom: .7rem;
+	font-weight: 300;
+}
+h5 {
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+  padding-bottom: .6rem;
+	font-weight: 300;
+}
+h6 {
+  font-size: 1.4rem;
+  line-height: 1.9rem;
+  padding-bottom: .5rem;
+	font-weight: 300;
 }
 /* LAYOUT */
 .container {
