@@ -26,6 +26,7 @@
 * Online image editor: https://www.photopea.com/
 * Remove image background: https://www.remove.bg/
 * Use SVG to shrink PNG: https://codepen.io/shshaw/full/LVKEdv
+* IMG to primitive shapes: https://ondras.github.io/primitive.js/
 
 ## TESTING
 
