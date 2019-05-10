@@ -11,3 +11,8 @@ https://www.youtube.com/watch?v=FwMwO8pXfq0
 ## Screen to video
 
 https://obsproject.com/
+
+## Benchmarks
+
+https://benchmark.unigine.com/superposition
+
