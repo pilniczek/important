@@ -2,7 +2,7 @@
 	"console log": {
 		"prefix": "cl",
 		"body": [
-			"console.log('log: ', ${1:__var_name__})",
+			"console.log('log ${1:__var_name__}: ', ${1:__var_name__})",
 		],
 		"description": "Console Log"
 	},
