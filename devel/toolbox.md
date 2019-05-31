@@ -28,6 +28,7 @@
 * Remove image background: https://www.remove.bg/
 * Use SVG to shrink PNG: https://codepen.io/shshaw/full/LVKEdv
 * IMG to primitive shapes: https://ondras.github.io/primitive.js/
+* image placeholders generator: https://satyr.io/documentation
 * Lazyload lib: https://github.com/verlok/lazyload
 * Free images: https://www.freeimages.com/image
 
