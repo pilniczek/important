@@ -39,6 +39,9 @@
 **UX**
 * https://webaim.org/resources/contrastchecker/
 
+**Visual testing**
+* https://percy.io/
+
 **Speed:**
 * http://webpagetest.org/
 * https://developers.google.com/speed/pagespeed/insights/?hl=cs
