@@ -2,6 +2,7 @@
 
 ## FE microanimations
 * https://cssfx.dev/
+* http://animista.net/
 
 ## GIT
 * **Online Diff Viewer:** http://www.mergely.com/editor
