@@ -1,18 +1,23 @@
 {
   "diffEditor.ignoreTrimWhitespace": true,
   "editor.fontWeight": "100",
-  "editor.formatOnSave": false,
+  "editor.formatOnSave": true,
+  "editor.fontLigatures": true,
+  "workbench.editor.highlightModifiedTabs": true,
+  "explorer.sortOrder": "type",
+  "[javascript]": {
+    "editor.formatOnSave": false
+  },
+  /*"prettier.disableLanguages": ["js"],*/
   "editor.mouseWheelZoom": true,
   "editor.multiCursorModifier": "ctrlCmd",
   "editor.renderWhitespace": "boundary",
-  "editor.rulers": [
-    100,
-    80
-  ],
+  "editor.rulers": [100, 80],
   "editor.smoothScrolling": true,
   "editor.snippetSuggestions": "top",
   "editor.tabSize": 2,
   "eslint.autoFixOnSave": true,
+  "eslint.alwaysShowStatus": true,
   "explorer.confirmDelete": false,
   "files.eol": "\n",
   "files.exclude": {
@@ -30,7 +35,6 @@
   "html.format.enable": false,
   "html.format.endWithNewline": true,
   "html.format.wrapLineLength": 100,
-  "javascript.format.enable": false,
   "javascript.preferences.importModuleSpecifier": "non-relative",
   "javascript.updateImportsOnFileMove.enabled": "always",
   "sasslint.configFile": "./sass-lint.yml",
@@ -48,5 +52,6 @@
   "window.restoreWindows": "all",
   "window.zoomLevel": 0,
   "workbench.colorTheme": "Monokai",
-  "workbench.settings.editor": "json"
+  "workbench.settings.editor": "json",
+  "editor.insertSpaces": false
 }
