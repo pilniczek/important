@@ -34,6 +34,7 @@
 * https://github.com/airbnb/react-dates
 * https://github.com/airbnb/prop-types
 * https://github.com/airbnb/javascript
+* https://ryanelainska.com/blog/google-tag-manager-in-react (next.js)
 
 # The Apollo Server backend shared by all Apollo client example apps.
 * https://github.com/apollographql/GitHunt-API
