@@ -7,6 +7,7 @@
 * [Docker](https://medium.com/@Grigorkh/how-to-install-docker-on-ubuntu-19-04-7ccfeda5935)
 * [Docker](https://docs.docker.com/install/linux/linux-postinstall/)
 * [AMD Drivers](https://amdgpu-install.readthedocs.io/en/latest/)
+* [nodeJS](https://github.com/nodesource/distributions/blob/master/README.md#installation-instructions)
 
 ## Troubleshooter
 
