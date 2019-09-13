@@ -23,3 +23,6 @@ http://www.stucox.com/blog/using-webp-with-modernizr/
 # Watch
 
 https://github.com/Pagedraw/pagedraw
+
+# GitLab
+https://docs.gitlab.com/ee/user/project/pages/#explore-gitlab-pages
