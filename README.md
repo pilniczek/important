@@ -24,5 +24,8 @@ http://www.stucox.com/blog/using-webp-with-modernizr/
 
 https://github.com/Pagedraw/pagedraw
 
-# GitLab
-https://docs.gitlab.com/ee/user/project/pages/#explore-gitlab-pages
+# GitLab & DevOps
+- https://docs.gitlab.com/ee/user/project/pages/#explore-gitlab-pages
+- https://gitlab.com/help/topics/autodevops/index.md
+- https://www.gatsbyjs.org/docs/deploying-to-gitlab-pages/ (with GatsbyJS)
+- https://assets.sqreen.com/whitepapers/devops-security-checklist.pdf
