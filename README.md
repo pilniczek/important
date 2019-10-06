@@ -29,3 +29,5 @@ https://github.com/Pagedraw/pagedraw
 - https://gitlab.com/help/topics/autodevops/index.md
 - https://www.gatsbyjs.org/docs/deploying-to-gitlab-pages/ (with GatsbyJS)
 - https://assets.sqreen.com/whitepapers/devops-security-checklist.pdf
+
+# https://www.smashingmagazine.com/2019/09/machine-learning-front-end-developers-tensorflowjs/
