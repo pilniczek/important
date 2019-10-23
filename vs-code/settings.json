@@ -1,14 +1,18 @@
 {
-  "diffEditor.ignoreTrimWhitespace": true,
-  "editor.fontWeight": "100",
-  "editor.formatOnSave": true,
-  "editor.fontLigatures": true,
-  "workbench.editor.highlightModifiedTabs": true,
-  "explorer.sortOrder": "type",
   "[javascript]": {
     "editor.formatOnSave": false
   },
-  /*"prettier.disableLanguages": ["js"],*/
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.fontLigatures": true,
+  "editor.fontWeight": "100",
+  "editor.formatOnSave": true,
+  "editor.insertSpaces": false,
   "editor.mouseWheelZoom": true,
   "editor.multiCursorModifier": "ctrlCmd",
   "editor.renderWhitespace": "boundary",
@@ -16,19 +20,27 @@
   "editor.smoothScrolling": true,
   "editor.snippetSuggestions": "top",
   "editor.tabSize": 2,
+  "eslint.alwaysShowStatus": true,
   "eslint.autoFixOnSave": true,
   "eslint.alwaysShowStatus": true,
   "explorer.confirmDelete": false,
+  "explorer.sortOrder": "type",
   "files.eol": "\n",
   "files.exclude": {
+    "**/.cache": true,
     "**/.DS_Store": true,
     "**/.git": true,
     "**/.hg": true,
+    "**/.idea": true,
     "**/.svn": true,
     "**/CVS": true,
-    "**/node_modules": true
+    "**/node_modules": true,
+    "**/public": true
   },
   "files.insertFinalNewline": false,
+  "files.associations": {
+    "*.svg": "html"
+  },
   "gitlens.advanced.messages": {
     "suppressShowKeyBindingsNotice": true
   },
@@ -39,19 +51,18 @@
   "javascript.updateImportsOnFileMove.enabled": "always",
   "sasslint.configFile": "./sass-lint.yml",
   "search.useIgnoreFiles": false,
-  "sync.autoDownload": false,
-  "sync.autoUpload": false,
-  "sync.forceDownload": false,
-  "sync.gist": "",
-  "sync.quietSync": false,
-  "sync.removeExtensions": true,
-  "sync.syncExtensions": true,
+  "sync.autoDownload": true,
+  "sync.autoUpload": true,
+  "sync.gist": "aa72dcbb66b7986e2d9b05d65c76d609",
   "telemetry.enableCrashReporter": false,
   "telemetry.enableTelemetry": false,
-  "typescript.check.npmIsInstalled": false,
   "window.restoreWindows": "all",
   "window.zoomLevel": 0,
   "workbench.colorTheme": "Monokai",
+  "workbench.editor.highlightModifiedTabs": true,
   "workbench.settings.editor": "json",
-  "editor.insertSpaces": false
+  "sync.forceUpload": true,
+  "editor.wordWrap": "on",
+  "git.branchSortOrder": "alphabetically",
+  "git.enableCommitSigning": true
 }
