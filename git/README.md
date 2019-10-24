@@ -2,7 +2,9 @@
 
 git config commit.gpgsign true 
 
-git config --global gpg.program "C:\Program Files (x86)\gnupg\bin\gpg.exe"
+(WIN only) git config --global gpg.program "C:\Program Files (x86)\gnupg\bin\gpg.exe"
+
+gpg --fingerprint
 
 git config --global user.signingkey KEY
 
