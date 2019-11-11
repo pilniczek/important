@@ -32,3 +32,6 @@ https://github.com/Pagedraw/pagedraw
 - https://www.gatsbyjs.org/docs/deploying-to-gitlab-pages/ (with GatsbyJS)
 - https://assets.sqreen.com/whitepapers/devops-security-checklist.pdf
 
+# Hudba
+- https://wiki.pirati.cz/hudba/start, resp. https://hudba.pirati.cz/archivy/
+- https://www.bensound.com/
