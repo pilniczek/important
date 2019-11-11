@@ -18,7 +18,9 @@ https://benchmark.unigine.com/superposition
 
 # Idea
 
-http://www.stucox.com/blog/using-webp-with-modernizr/
+- http://www.stucox.com/blog/using-webp-with-modernizr/
+- https://www.smashingmagazine.com/2019/09/machine-learning-front-end-developers-tensorflowjs/
+- [Gitlab integrate Zapier](https://zapier.com/) 
 
 # Watch
 
@@ -30,4 +32,3 @@ https://github.com/Pagedraw/pagedraw
 - https://www.gatsbyjs.org/docs/deploying-to-gitlab-pages/ (with GatsbyJS)
 - https://assets.sqreen.com/whitepapers/devops-security-checklist.pdf
 
-# https://www.smashingmagazine.com/2019/09/machine-learning-front-end-developers-tensorflowjs/
