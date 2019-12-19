@@ -1,4 +1,4 @@
-
+```
 import styled from "styled-components";
 
 const mobileMenuWidth = -200;
@@ -28,3 +28,4 @@ const StyledLayout = styled.div`
 		${generateKeyframes(easeOutBounceValues, mobileMenuWidth)}
 	}
 `;
+```
