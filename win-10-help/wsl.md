@@ -39,3 +39,7 @@ https://github.com/shayne/wsl2-hacks
 `sysctl -w fs.inotify.max_user_watches=524288` - does not help
 
 You need to clone project inside `\\wsl$\[somewhere]`
+
+## TIPS
+
+https://github.com/microsoft/WSL/issues/1890#issuecomment-423692567
