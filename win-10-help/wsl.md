@@ -20,7 +20,7 @@ explorer -> ctrl+l -> `\\wsl$\`
 
 ### Copy
 
-C:\Users\[user]\.ssh -> \\wsl$\[distro]\home\[user]\.ssh
+`C:\Users\[user]\.ssh` -> `\\wsl$\[distro]\home\[user]\.ssh`
 
 ### Change ssh key permission
 
@@ -38,4 +38,4 @@ https://github.com/shayne/wsl2-hacks
 
 `sysctl -w fs.inotify.max_user_watches=524288` - does not help
 
-You need to clone project inside \\wsl$\
+You need to clone project inside `\\wsl$\[somewhere]`
