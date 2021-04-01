@@ -1,0 +1,223 @@
+{
+  "SaveName": "",
+  "GameMode": "",
+  "Date": "",
+  "VersionNumber": "",
+  "GameType": "",
+  "GameComplexity": "",
+  "Tags": [],
+  "Gravity": 0.5,
+  "PlayArea": 0.5,
+  "Table": "",
+  "Sky": "",
+  "Note": "",
+  "Rules": "",
+  "TabStates": {},
+  "LuaScript": "",
+  "LuaScriptState": "",
+  "XmlUI": "",
+  "ObjectStates": [
+    {
+      "GUID": "f99f8b",
+      "Name": "Die_20",
+      "Transform": {
+        "posX": -79.17699,
+        "posY": 2.168965,
+        "posZ": 9.860175,
+        "rotX": 307.3774,
+        "rotY": 101.5853,
+        "rotZ": 161.999985,
+        "scaleX": 1.59999955,
+        "scaleY": 1.59999955,
+        "scaleZ": 1.59999955
+      },
+      "Nickname": "",
+      "Description": "",
+      "GMNotes": "",
+      "ColorDiffuse": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0
+      },
+      "LayoutGroupSortIndex": 0,
+      "Locked": false,
+      "Grid": false,
+      "Snap": true,
+      "IgnoreFoW": false,
+      "MeasureMovement": false,
+      "DragSelectable": true,
+      "Autoraise": false,
+      "Sticky": true,
+      "Tooltip": true,
+      "GridProjection": false,
+      "HideWhenFaceDown": false,
+      "Hands": false,
+      "MaterialIndex": 0,
+      "LuaScript": "",
+      "LuaScriptState": "",
+      "XmlUI": "",
+      "RotationValues": [
+        {
+          "Value": 1,
+          "Rotation": {
+            "x": -11.0,
+            "y": 60.0,
+            "z": 17.0
+          }
+        },
+        {
+          "Value": 2,
+          "Rotation": {
+            "x": 52.0,
+            "y": -60.0,
+            "z": -17.0
+          }
+        },
+        {
+          "Value": 3,
+          "Rotation": {
+            "x": -11.0,
+            "y": -180.0,
+            "z": 90.0
+          }
+        },
+        {
+          "Value": 4,
+          "Rotation": {
+            "x": -11.0,
+            "y": -180.0,
+            "z": 162.0
+          }
+        },
+        {
+          "Value": 5,
+          "Rotation": {
+            "x": -11.0,
+            "y": -60.0,
+            "z": 234.0
+          }
+        },
+        {
+          "Value": 6,
+          "Rotation": {
+            "x": -11.0,
+            "y": -180.0,
+            "z": 306.0
+          }
+        },
+        {
+          "Value": 7,
+          "Rotation": {
+            "x": 52.0,
+            "y": -60.0,
+            "z": 55.0
+          }
+        },
+        {
+          "Value": 8,
+          "Rotation": {
+            "x": 52.0,
+            "y": -60.0,
+            "z": 198.0
+          }
+        },
+        {
+          "Value": 9,
+          "Rotation": {
+            "x": 52.0,
+            "y": -60.0,
+            "z": 127.0
+          }
+        },
+        {
+          "Value": 10,
+          "Rotation": {
+            "x": 52.0,
+            "y": -180.0,
+            "z": -90.0
+          }
+        },
+        {
+          "Value": 11,
+          "Rotation": {
+            "x": 308.0,
+            "y": 0.0,
+            "z": 90.0
+          }
+        },
+        {
+          "Value": 12,
+          "Rotation": {
+            "x": 306.0,
+            "y": -240.0,
+            "z": -52.0
+          }
+        },
+        {
+          "Value": 13,
+          "Rotation": {
+            "x": -52.0,
+            "y": -240.0,
+            "z": 18.0
+          }
+        },
+        {
+          "Value": 14,
+          "Rotation": {
+            "x": 307.0,
+            "y": 120.0,
+            "z": 233.0
+          }
+        },
+        {
+          "Value": 15,
+          "Rotation": {
+            "x": 11.0,
+            "y": 120.0,
+            "z": -234.0
+          }
+        },
+        {
+          "Value": 16,
+          "Rotation": {
+            "x": 11.0,
+            "y": 0.0,
+            "z": 54.0
+          }
+        },
+        {
+          "Value": 17,
+          "Rotation": {
+            "x": 11.0,
+            "y": -120.0,
+            "z": -17.0
+          }
+        },
+        {
+          "Value": 18,
+          "Rotation": {
+            "x": 11.0,
+            "y": 0.0,
+            "z": -90.0
+          }
+        },
+        {
+          "Value": 19,
+          "Rotation": {
+            "x": -52.0,
+            "y": -240.0,
+            "z": -198.0
+          }
+        },
+        {
+          "Value": 20,
+          "Rotation": {
+            "x": 11.0,
+            "y": 0.0,
+            "z": -162.0
+          }
+        }
+      ]
+    }
+  ]
+}
