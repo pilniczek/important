@@ -16,6 +16,10 @@ windows store - find linux (ubuntu 20.04)
 
 explorer -> ctrl+l -> `\\wsl$\`
 
+## Code
+
+Run `code` in unix terminal
+
 ## SSH keys
 
 ### Copy
