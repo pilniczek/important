@@ -20,6 +20,10 @@ explorer -> ctrl+l -> `\\wsl$\`
 
 Run `code` in unix terminal
 
+## Fix PATH
+
+https://hackmd.io/@badging/wsl2#Troubleshooting-PATH
+
 ## SSH keys
 
 ### Copy
