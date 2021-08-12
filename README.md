@@ -4,6 +4,12 @@
 
 ssh-keygen -t rsa -C "your.email@example.com" -b 4096
 
+## node
+
+https://meohay.cc/how-to-install-uninstall-nodejs-in-ubuntu-20-04-lts-linux
+
+https://www.stewright.me/2021/03/install-nodejs-14-on-ubuntu-20-04/
+
 ## MongoDB
 
 https://www.youtube.com/watch?v=FwMwO8pXfq0
@@ -35,3 +41,5 @@ https://github.com/Pagedraw/pagedraw
 # Hudba
 - https://wiki.pirati.cz/hudba/start, resp. https://hudba.pirati.cz/archivy/
 - https://www.bensound.com/
+
+
