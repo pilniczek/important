@@ -10,6 +10,7 @@
 	autocrlf = input
 	safecrlf = false
 	# excludesfile = /Users/<!--username-->/.gitignore_global
+	editor = code --wait
 [alias]
 	# rebase feature branch onto current branch (typically release branch)
 	rebm = !sh -c 'echo rebasing branch \"$0\" on top of \"$1\" && git checkout \"$0\" && git pull origin \"$0\" && git rebase \"$1\" && git checkout \"$1\" && git merge \"$0\" && echo all done'
@@ -60,6 +61,13 @@
 	push = HEAD
 [diff]
 	mnemonicprefix = true
+	tool = vscode
+[difftool "vscode"]
+  cmd = code --wait --diff $LOCAL $REMOTE
+[merge]
+  tool = vscode
+[mergetool "vscode"]
+  cmd = code --wait $MERGED
 [pull]
 	rebase = true
 [color]
