@@ -51,3 +51,7 @@ You need to clone project inside `\\wsl$\[somewhere]`
 ## TIPS
 
 https://github.com/microsoft/WSL/issues/1890#issuecomment-423692567
+
+## JAVA
+
+https://phoenixnap.com/kb/how-to-install-java-ubuntu
