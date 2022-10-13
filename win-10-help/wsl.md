@@ -55,3 +55,9 @@ https://github.com/microsoft/WSL/issues/1890#issuecomment-423692567
 ## JAVA
 
 https://phoenixnap.com/kb/how-to-install-java-ubuntu
+
+## ERRORS & FIXES
+
+`gyp ERR! stack Error: not found: make`
+
+https://stackoverflow.com/questions/14772508/npm-failed-to-install-time-with-make-not-found-error
