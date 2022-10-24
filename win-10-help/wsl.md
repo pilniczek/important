@@ -61,3 +61,15 @@ https://phoenixnap.com/kb/how-to-install-java-ubuntu
 `gyp ERR! stack Error: not found: make`
 
 https://stackoverflow.com/questions/14772508/npm-failed-to-install-time-with-make-not-found-error
+
+`Ubuntu 22.04 SSH`
+
+add `config` file intu `.ssh` folder.
+
+```
+Host ssh.dev.azure.com
+  IdentityFile ~/.ssh/id_rsa
+  IdentitiesOnly yes
+  HostkeyAlgorithms +ssh-rsa
+  PubkeyAcceptedAlgorithms +ssh-rsa
+```
