@@ -1,12 +1,14 @@
-- `https://www.youtube.com/`
-- `https://calendar.google.com/calendar/u/1/r`
-- `https://keep.google.com/u/1/`
-- `https://www.notion.so/`
-- `https://gitlab.com/`
+- `https://www.youtube.com`
+- `https://calendar.google.com/calendar/u/1/r/customweek?pli=1`
+- `https://keep.google.com/u/1`
+- `https://www.notion.so`
+- `https://track.toggl.com/timer`
+- `https://gitlab.com`
 ---
-- `https://www.youtube.com/`
-- `https://calendar.google.com/calendar/u/1/r`
-- `https://keep.google.com/u/1/`
-- `https://www.notion.so/`
-- `https://gitlab.com/`
-- `https://www.facebook.com/`
+- `https://www.youtube.com`
+- `https://calendar.google.com`
+- `https://keep.google.com`
+- `https://www.notion.so`
+- `https://track.toggl.com`
+- `https://gitlab.com`
+- `https://www.facebook.com`
