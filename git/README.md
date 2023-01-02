@@ -22,15 +22,3 @@ https://dev.to/devmount/signed-git-commits-in-vs-code-36do
 https://help.github.com/en/github/authenticating-to-github/signing-commits
 
 git commit --amend --cleanup=whitespace
-
-## Fixup
-
-git rebase -i HEAD~"number of commits"
-
-řádky jako
-
-pick c5bc058 fixup! feat #7: create stateless checkbox
-
-přepsat na
-
-fixup c5bc058 fixup! feat #7: create stateless checkbox

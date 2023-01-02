@@ -1,55 +1,22 @@
 {
-	"react full container": {
-		"prefix": "rfcontainer",
+	"react set state": {
+		"prefix": "setState",
 		"body": [
-			"import { connect } from 'react-redux';",
-			"import { __Actions__ } from '__Actions_path__';",
-			"import { __Selectors__ } from '__Selectors_path__';",
-			"import $1 from './';",
-			"",
-			"const mapStateToProps = (state, locals) => ({",
-			"\t__prop_name__: __get_prop__(state),",
-			"});",
-			"",
-			"const mapDispatchToProps = dispatch => ({",
-				"\t__action__: (id, __val__) => dispatch(__action__(id, __val__)),",
-			"});",
-			"",
-			"export default connect(",
-			"\tmapStateToProps,",
-			"\tmapDispatchToProps,",
-			")($1);",
+			"const [${1:__name__}, set${1/(^.)/${1:/upcase}/}] = useState(${2});", // https://stackoverflow.com/questions/51272365/vs-code-how-to-convert-snippet-placeholder-to-uppercase-or-lowercase
 		],
-		"description": "react full container"
+		"description": "react component"
 	},
-	"react reducer": {
-		"prefix": "rreducer",
+	"react use effect": {
+		"prefix": "useEffect",
 		"body": [
-			"const $1 = (state = {}, action = {}) => {",
-			"\tswitch (action.type) {",
-			"\t\tcase types.$1: {",
-			"\t\t\treturn Object.assign({}, state, {",
-			"\t\t\t\t__what__: __how__,",
-			"\t\t\t});",
-			"\t\t}",
-			"\t\tdefault: {",
-			"\t\t\treturn state;",
-			"\t\t}",
-			"\t}",
-			"};",
+			"useEffect(() => {",
+			"\tconsole.log('mounted')",
+			"\treturn () => {",
+			"\t\tconsole.log('unmounted')",
+			"\t};",
+			"}, [${__check_changes_props__}]);",
 		],
-		"description": "react reducer"
-	},
-	"react selector": {
-		"prefix": "rselector",
-		"body": [
-			"const $1 = state => get(state, '__where__', {});",
-			"",
-			"export {",
-			"\t$1,",
-			"};",
-		],
-		"description": "react selector"
+		"description": "react component"
 	},
 	"react component": {
 		"prefix": "rcomponent",
@@ -65,18 +32,47 @@
 		],
 		"description": "react pure component"
 	},
-	"react functional component": {
-		"prefix": "rfcomponent",
-		"body": [
-			"",
-		],
-		"description": "react functional component"
-	},
+  "react functional component": {
+    "prefix": "rfcomponentTS",
+    "body": [
+      "import * as React from 'react';",
+      "",
+      "export interface ${1:__name__}Props {",
+      "\t${2:__props__}",
+      "}",
+      "",
+      "const ${1:__name__} = ({",
+      "\t${2:__props__},",
+      "\t...rest",
+      "}: ${1:__name__}Props): JSX.Element => {",
+      "\treturn ();",
+      "};",
+      "",
+      "export default ${1:__name__};",
+    ],
+    "description": "react functional component"
+  },
 	"react memoized component": {
 		"prefix": "rmcomponent",
 		"body": [
 			"",
 		],
 		"description": "react memoized component"
+	},
+	"storybook": {
+		"prefix": "sb",
+		"body": [
+			"import React from 'react';",
+			"import { ${1:__what__} } from '${2:__where__}';",
+			"export default {",
+			"\tcomponent: ${1:__what__},",
+			"\ttitle: 'Components/${1:__what__}',",
+			"};",
+			"const ${1:__what__}Template = (args) => <${1:__what__} {...args} />;",
+			"export const ${1:__what__}Component = ${1:__what__}Template.bind({});",
+			"${1:__what__}Component.args = {",
+			"\tchildren: 'Something',",
+			"};",
+		]
 	}
 }

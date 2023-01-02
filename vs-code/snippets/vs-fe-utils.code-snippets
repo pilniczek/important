@@ -15,114 +15,44 @@
 		],
 		"description": "modern document ready"
 	},
-	"modern picture": {
-		"prefix": "img picture",
+	"svg main markup": {
+		"prefix": "svg",
 		"body": [
-			"<picture class=\"img-wrapper\">",
-			"\t<source media=\"(min-width: ${1:__L_breakpoint__})\" srcset=\"${3:__src_L__}.jpg\">",
-			"\t<source media=\"(min-width: ${2:__M_breakpoint__})\" srcset=\"${4:__src_M__}.jpg\">",
-			"\t<img class=\"img\" src=\"${5:__src_S__}.jpg\" alt=\"${6:__img_alt__}\">",
-			"</picture>",
-			"$0",
+			"<svg",
+			"\txmlns=\"http://www.w3.org/2000/svg\"",
+			"\txmlns:xlink=\"http://www.w3.org/1999/xlink\"",
+			"\tviewBox=\"0 0 ${1:__vBx__} ${2:__vBy__}\"",
+			">",
+			"\t<defs>",
+			"\t\t<g id=\"__my_id__\">",
+			"\t\t</g>",
+			"\t</defs>",
+			"\t<use xlink:href=\"#__my_id__\" transform=\"translate(__x__ __y__)\" />",
+			"\t$0",
+			"</svg>",
 		],
-		"description": "modern picture"
+		"description": "svg main markup"
 	},
-	"modern image": {
-		"prefix": "img",
-		"body": [
-			"<div class=\"img-wrapper\">",
-			"\t<img",
-			"\t\tclass=\"img\"",
-			"\t\tsrcset=\"",
-			"\t\t\t${7:__src_S__}.jpg ${4:__img_S_width__}w,",
-			"\t\t\t${8:__src_M__}.jpg ${5:__img_M_width__}w,",
-			"\t\t\t${9:__src_L__}.jpg ${6:__img_L_width__}w,",
-			"\t\t\"",
-			"\t\tsizes=\"",
-			"\t\t\t(min-width: ${1:__L_breakpoint__}) ${4:__img_L_width__}px,",
-			"\t\t\t(min-width: ${2:__M_breakpoint__}) ${5:__img_M_width__}px,",
-			"\t\t\t(max-width: ${3:__S_breakpoint__}) ${6:__img_S_width__}px",
-			"\t\t\"",
-			"\t\talt=\"${10:__img_alt__}\"",
-			"\t>",
-			"</div>",
-			"$0",
-		],
-		"description": "modern image"
-	},
-	"modern image css": {
-		"prefix": "imgcss",
-		"body": [
-			".img-wrapper {",
-			"\tdisplay: block;",
-			"\tposition: relative;",
-			"\toverflow: hidden;",
-			"\twidth: 100%;",
-			"\t/*choose aspect ratio*/",
-			"\t/*padding-top: 56.25%;*//*16:9*/",
-			"\t/*or fixed height*/",
-			"\t/*height: ;*/",
-			"}",
-			"",
-			".img {",
-			"\twidth: 100%;",
-			"\theight: auto;",
-			"\tposition: absolute;",
-			"\ttop: 50%;",
-			"\tleft: 50%;",
-			"\ttransform: translate(-50%, -50%);",
-			"\tmargin: auto;",
-			"}",
-			"$0",
-		],
-		"description": "modern image css"
-	},
-	"link with secure target=\"_blank\"": {
-		"prefix": "hrefb",
-		"body": [
-			"<a href=\"${1:__href__}\" target=\"_blank\" rel=\"noopener noreferrer\">${2:__label__}</a>",
-		],
-		"description": "link with secure target=\"_blank\""
-	},
-	"@font-face": {
-		"prefix": "font-face",
-		"body": [
-			"@font-face {",
-			"\tfont-family: '${1:__font_name__}';",
-			"\tfont-style: normal;",
-			"\tfont-weight: 400;",
-			"\tsrc: url('${2:__font_name__}.eot?#iefix');",
-			"\tsrc: url('${2:__font_name__}.eot?#iefix') format('eot'),",
-			"\t\turl('${2:__font_name__}.woff2') format('woff2'),",
-			"\t\turl('${2:__font_name__}.woff') format('woff'),",
-			"\t\turl('${2:__font_name__}.ttf') format('truetype');",
-			"}",
-		],
-		"description": "@font-face"
-	},
-	"box-sizing": {
-		"prefix": "box-sizing",
-		"body": [
-			"html {",
-			"\t-webkit-box-sizing: border-box;",
-			"\t-moz-box-sizing: border-box;",
-			"\tbox-sizing: border-box;",
-			"}",
-			"*, *:before, *:after {",
-			"\t-webkit-box-sizing: inherit;",
-			"\t-moz-box-sizing: inherit;",
-			"\tbox-sizing: inherit;",
-			"}",
-		],
-		"description": "box-sizing"
-	},
-	"@media": {
-		"prefix": "@media",
-		"body": [
-			"@media (max-width: ${1:800px}) {",
-			"$2",
-			"}",
-		],
-		"description": "@media"
-	},
+  "email table": {
+    "prefix": "etable",
+    "body": [
+      "<table class='$1' width='100%' border='0' cellspacing='0' cellpadding='0'><!-- no padding, no margin -->",
+      "\t<tbody>",
+      "\t\t<tr>",
+      "\t\t\t<td>",
+      "\t\t\t\t$0",
+      "\t\t\t</td>",
+      "\t\t</tr>",
+      "\t</tbody>",
+      "</table> <!-- / $1 -->"
+    ],
+    "description": "email table"
+  },
+  "email image": {
+    "prefix": "eimg",
+    "body": [
+      "<img width=\"${1:__width__}px\" height=\"${2:__height__}px\" alt=\"${3:__alt_text__}\">"
+    ],
+    "description": "email image"
+  }
 }
