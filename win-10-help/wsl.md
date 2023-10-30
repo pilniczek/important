@@ -73,3 +73,9 @@ Host ssh.dev.azure.com
   HostkeyAlgorithms +ssh-rsa
   PubkeyAcceptedAlgorithms +ssh-rsa
 ```
+
+## Port Forwarding
+
+https://medium.com/@Dylan.Wang/how-to-port-forwarding-from-windows-host-to-wsl2-6889a5a3631c
+
+https://jwstanly.com/blog/article/Port+Forwarding+WSL+2+to+Your+LAN/
