@@ -2,6 +2,12 @@
 
 ## MANUAL
 
+### 11
+
+https://techcommunity.microsoft.com/t5/windows-11/how-to-install-the-linux-windows-subsystem-in-windows-11/m-p/2701207
+
+### 10
+
 https://docs.microsoft.com/en-us/windows/wsl/install-win10
 
 `dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart`
