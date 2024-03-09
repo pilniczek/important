@@ -20,6 +20,7 @@
 	# squash x commits onto first of them
 	sq = !sh -c 'git reset --soft HEAD~\"$0\" && git commit —-amend'
 	fp = fetch --prune
+	pf = git push --force-with-lease
 	st = status
 	cm = commit
 	cmp = commit --amend --no-edit
@@ -85,3 +86,6 @@
 	added = green
 	changed = yellow
 	untracked = cyan
+[rerere]
+	enabled = true
+
