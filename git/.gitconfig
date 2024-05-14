@@ -11,6 +11,7 @@
 	safecrlf = false
 	# excludesfile = /Users/<!--username-->/.gitignore_global
 	editor = code --wait
+	#editor = \"C:\\Users\\pilna\\AppData\\Local\\Programs\\Microsoft VS Code\\bin\\code\" --wait
 [alias]
 	# rebase feature branch onto current branch (typically release branch)
 	rebm = !sh -c 'echo rebasing branch \"$0\" on top of \"$1\" && git checkout \"$0\" && git pull origin \"$0\" && git rebase \"$1\" && git checkout \"$1\" && git merge \"$0\" && echo all done'
@@ -57,6 +58,8 @@
 	release = push origin HEAD:release
 	selenium = push origin HEAD:selenium
 	test = push origin HEAD:test
+	# remove merged branches
+	merged = git branch --merged | egrep -v "(^\*|master|main|dev)" >/tmp/merged-branches && code --wait /tmp/merged-branches && xargs git branch -d </tmp/merged-branches
 [remote "origin"]
 	# git push -> push current HEAD into tracked remote branch
 	push = HEAD
@@ -88,4 +91,3 @@
 	untracked = cyan
 [rerere]
 	enabled = true
-
