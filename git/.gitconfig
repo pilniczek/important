@@ -59,7 +59,7 @@
 	selenium = push origin HEAD:selenium
 	test = push origin HEAD:test
 	# remove merged branches
-	merged = git branch --merged | egrep -v "(^\*|master|main|dev)" >/tmp/merged-branches && code --wait /tmp/merged-branches && xargs git branch -d </tmp/merged-branches
+	merged = !sh -c 'git branch --merged | egrep -v \"(^\\*|master|main|dev)\" >/tmp/merged-branches && code --wait /tmp/merged-branches && xargs git branch -d </tmp/merged-branches'
 [remote "origin"]
 	# git push -> push current HEAD into tracked remote branch
 	push = HEAD
