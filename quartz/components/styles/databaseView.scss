@@ -1,0 +1,152 @@
+.database-view {
+  margin: 1.5rem 0;
+
+  .database-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    background: var(--lightgray);
+    border: 1px solid var(--lightgray);
+
+    .database-filter-name,
+    .database-filter-type,
+    .database-filter-tag {
+      font: inherit;
+      color: var(--dark);
+      background: var(--light);
+      border: 1px solid var(--gray);
+      border-radius: 5px;
+      padding: 0.3rem 0.5rem;
+      min-height: 2rem;
+
+      &:focus {
+        outline: none;
+        border-color: var(--secondary);
+      }
+    }
+
+    .database-filter-name {
+      // grows to fill remaining row width; basis 0 so content/value never affects width
+      flex: 1 1 0;
+      min-width: 0;
+    }
+
+    .database-filter-type,
+    .database-filter-tag {
+      // fixed-shape selects so the row layout never shifts when an option is picked
+      flex: 0 0 auto;
+      width: 12rem;
+    }
+  }
+
+  .database-table-wrapper {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid var(--lightgray);
+  }
+
+  .database-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+
+    thead th {
+      text-align: left;
+      padding: 0.6rem 0.75rem;
+      font-weight: 600;
+      color: var(--darkgray);
+      background: var(--lightgray);
+      border-bottom: 1px solid var(--gray);
+      white-space: nowrap;
+
+    }
+
+    tbody td {
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid var(--lightgray);
+      vertical-align: top;
+
+      &:nth-child(1) { width: 35%; }
+      &:nth-child(2) { width: 14%; white-space: nowrap; }
+      &:nth-child(3) { width: 31%; }
+      &:nth-child(4) { width: 20%; }
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background: var(--highlight);
+    }
+
+    a.internal {
+      text-decoration: none;
+      color: var(--dark);
+
+      &:hover {
+        color: var(--secondary);
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .database-pill {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    margin: 0.1rem 0.2rem 0.1rem 0;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    white-space: nowrap;
+    text-decoration: none;
+    border: 1px solid transparent;
+  }
+
+  .database-tag {
+    background: var(--highlight);
+    color: var(--dark);
+
+    &:hover {
+      background: var(--lightgray);
+      border-color: var(--gray);
+    }
+  }
+
+  .database-type {
+    font-weight: 500;
+    background: var(--lightgray);
+    color: var(--darkgray);
+
+    // distinct colour-coded buckets per Notion convention
+    &.type-tool                { background: #e7e3ff; color: #4a3a8a; }
+    &.type-tutorial-how-to     { background: #d9eaff; color: #1f5294; }
+    &.type-article             { background: #ffe2c2; color: #8a4a14; }
+    &.type-code-snippet        { background: #e6f4d7; color: #3a6814; }
+    &.type-course              { background: #ffd9ef; color: #8a2266; }
+    &.type-approach            { background: #fff3b8; color: #6e5a14; }
+    &.type-tool-description    { background: #e7e3ff; color: #4a3a8a; }
+  }
+
+  // dark-mode adjustments
+  :root[saved-theme="dark"] & {
+    .database-type {
+      &.type-tool                { background: #2a2647; color: #c8bdfa; }
+      &.type-tutorial-how-to     { background: #1d3552; color: #b3d3f8; }
+      &.type-article             { background: #4a3015; color: #efb380; }
+      &.type-code-snippet        { background: #1f3a14; color: #b9d99a; }
+      &.type-course              { background: #4a1a36; color: #f5b3da; }
+      &.type-approach            { background: #4a3f0c; color: #ffd966; }
+      &.type-tool-description    { background: #2a2647; color: #c8bdfa; }
+    }
+  }
+
+  .database-url {
+    word-break: break-all;
+    font-size: 0.85rem;
+  }
+}

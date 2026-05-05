@@ -1,5 +1,6 @@
 import { QuartzConfig } from "./quartz/cfg"
 import * as Plugin from "./quartz/plugins"
+import * as Component from "./quartz/components"
 
 /**
  * Quartz 4 Configuration
@@ -76,7 +77,11 @@ const config: QuartzConfig = {
       Plugin.AliasRedirects(),
       Plugin.ComponentResources(),
       Plugin.ContentPage(),
-      Plugin.FolderPage(),
+      // FolderPage normally renders a "N items under this folder" listing as
+      // the page body. We override pageBody to Content() so the actual (empty)
+      // body of our folder index.md pages is used instead — the per-folder
+      // DatabaseView in beforeBody is the only listing we want.
+      Plugin.FolderPage({ pageBody: Component.Content() }),
       Plugin.TagPage(),
       Plugin.ContentIndex({
         enableSiteMap: true,
