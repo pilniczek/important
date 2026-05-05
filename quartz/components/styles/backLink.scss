@@ -1,0 +1,35 @@
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 0.4rem;
+  height: 32px;
+  min-width: 5rem;
+  font-size: 0.95rem;
+  line-height: 1;
+  color: var(--darkgray);
+  text-decoration: none;
+  transition: color 0.1s ease;
+
+  & svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  &.back-link-root {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--dark);
+    cursor: default;
+  }
+
+  &.back-link-home,
+  &.back-link-table {
+    cursor: pointer;
+
+    &:hover {
+      color: var(--secondary);
+    }
+  }
+}
