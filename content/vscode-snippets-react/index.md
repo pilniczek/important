@@ -1,0 +1,88 @@
+---
+title: VSCode Snippets - React
+tags:
+  - IDE
+type:
+  - Code / Snippet
+---
+
+```json
+{
+	"react set state": {
+		"prefix": "setState",
+		"body": [
+			"const [${1:__name__}, set${1/(^.)/${1:/upcase}/}] = useState(${2});", // https://stackoverflow.com/questions/51272365/vs-code-how-to-convert-snippet-placeholder-to-uppercase-or-lowercase
+		],
+		"description": "react component"
+	},
+	"react use effect": {
+		"prefix": "useEffect",
+		"body": [
+			"useEffect(() => {",
+			"\tconsole.log('mounted')",
+			"\treturn () => {",
+			"\t\tconsole.log('unmounted')",
+			"\t};",
+			"}, [${__check_changes_props__}]);",
+		],
+		"description": "react component"
+	},
+	"react component": {
+		"prefix": "rcomponent",
+		"body": [
+			"",
+		],
+		"description": "react component"
+	},
+	"react pure component": {
+		"prefix": "rpcomponent",
+		"body": [
+			"",
+		],
+		"description": "react pure component"
+	},
+  "react functional component": {
+    "prefix": "rfcomponentTS",
+    "body": [
+      "import * as React from 'react';",
+      "",
+      "export interface ${1:__name__}Props {",
+      "\t${2:__props__}",
+      "}",
+      "",
+      "const ${1:__name__} = ({",
+      "\t${2:__props__},",
+      "\t...rest",
+      "}: ${1:__name__}Props): JSX.Element => {",
+      "\treturn ();",
+      "};",
+      "",
+      "export default ${1:__name__};",
+    ],
+    "description": "react functional component"
+  },
+	"react memoized component": {
+		"prefix": "rmcomponent",
+		"body": [
+			"",
+		],
+		"description": "react memoized component"
+	},
+	"storybook": {
+		"prefix": "sb",
+		"body": [
+			"import React from 'react';",
+			"import { ${1:__what__} } from '${2:__where__}';",
+			"export default {",
+			"\tcomponent: ${1:__what__},",
+			"\ttitle: 'Components/${1:__what__}',",
+			"};",
+			"const ${1:__what__}Template = (args) => <${1:__what__} {...args} />;",
+			"export const ${1:__what__}Component = ${1:__what__}Template.bind({});",
+			"${1:__what__}Component.args = {",
+			"\tchildren: 'Something',",
+			"};",
+		]
+	}
+}
+```

@@ -1,0 +1,68 @@
+---
+title: VSCode Snippets - FE utils
+tags:
+  - IDE
+type:
+  - Code / Snippet
+---
+
+```json
+{
+	"console log": {
+		"prefix": "cl",
+		"body": [
+			"console.log('log ${1:__var_name__}: ', ${1:__var_name__})",
+		],
+		"description": "Console Log"
+	},
+	"modern document ready": {
+		"prefix": "docready",
+		"body": [
+			"document.addEventListener('DOMContentLoaded', function(event) {/* IE gt 8 */",
+			"\t${1:__do_something__}",
+			"});",
+		],
+		"description": "modern document ready"
+	},
+	"svg main markup": {
+		"prefix": "svg",
+		"body": [
+			"<svg",
+			"\txmlns=\"http://www.w3.org/2000/svg\"",
+			"\txmlns:xlink=\"http://www.w3.org/1999/xlink\"",
+			"\tviewBox=\"0 0 ${1:__vBx__} ${2:__vBy__}\"",
+			">",
+			"\t<defs>",
+			"\t\t<g id=\"__my_id__\">",
+			"\t\t</g>",
+			"\t</defs>",
+			"\t<use xlink:href=\"#__my_id__\" transform=\"translate(__x__ __y__)\" />",
+			"\t$0",
+			"</svg>",
+		],
+		"description": "svg main markup"
+	},
+  "email table": {
+    "prefix": "etable",
+    "body": [
+      "<table class='$1' width='100%' border='0' cellspacing='0' cellpadding='0'><!-- no padding, no margin -->",
+      "\t<tbody>",
+      "\t\t<tr>",
+      "\t\t\t<td>",
+      "\t\t\t\t$0",
+      "\t\t\t</td>",
+      "\t\t</tr>",
+      "\t</tbody>",
+      "</table> <!-- / $1 -->"
+    ],
+    "description": "email table"
+  },
+  "email image": {
+    "prefix": "eimg",
+    "body": [
+      "<img width=\"${1:__width__}px\" height=\"${2:__height__}px\" alt=\"${3:__alt_text__}\">"
+    ],
+    "description": "email image"
+  }
+}
+```

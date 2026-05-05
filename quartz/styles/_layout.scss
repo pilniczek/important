@@ -1,0 +1,218 @@
+// Page layout & top-level chrome: the `.page` grid with header / center /
+// footer / sidebars, the responsive visibility helpers
+// (`.desktop-only` / `.mobile-only`), the `.flex-component` hook used by
+// Quartz's Flex wrapper, and the SPA navigation progress bar.
+
+@use "sass:map";
+@use "./variables.scss" as *;
+
+.flex-component {
+  display: flex;
+}
+
+.desktop-only {
+  display: initial;
+  &.flex-component {
+    display: flex;
+  }
+  @media all and ($mobile) {
+    &.flex-component {
+      display: none;
+    }
+    display: none;
+  }
+}
+
+.mobile-only {
+  display: none;
+  &.flex-component {
+    display: none;
+  }
+  @media all and ($mobile) {
+    &.flex-component {
+      display: flex;
+    }
+    display: initial;
+  }
+}
+
+.page {
+  max-width: calc(#{map.get($breakpoints, desktop)} + 300px);
+  margin: 0 auto;
+  padding: 0.5rem 2rem;
+  box-sizing: border-box;
+  @media all and not ($desktop) {
+    padding: 0 0.5rem;
+  }
+  & article {
+    & > h1 {
+      font-size: 2rem;
+    }
+
+    & li:has(> input[type="checkbox"]) {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    & li:has(> input[type="checkbox"]:checked) {
+      text-decoration: line-through;
+      text-decoration-color: var(--gray);
+      color: var(--gray);
+    }
+
+    & li > * {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    p > strong {
+      color: var(--dark);
+    }
+  }
+
+  & > #quartz-body {
+    display: grid;
+    grid-template-columns: #{map.get($desktopGrid, templateColumns)};
+    grid-template-rows: #{map.get($desktopGrid, templateRows)};
+    column-gap: #{map.get($desktopGrid, columnGap)};
+    row-gap: #{map.get($desktopGrid, rowGap)};
+    grid-template-areas: #{map.get($desktopGrid, templateAreas)};
+
+    @media all and ($tablet) {
+      grid-template-columns: #{map.get($tabletGrid, templateColumns)};
+      grid-template-rows: #{map.get($tabletGrid, templateRows)};
+      column-gap: #{map.get($tabletGrid, columnGap)};
+      row-gap: #{map.get($tabletGrid, rowGap)};
+      grid-template-areas: #{map.get($tabletGrid, templateAreas)};
+    }
+    @media all and ($mobile) {
+      grid-template-columns: #{map.get($mobileGrid, templateColumns)};
+      grid-template-rows: #{map.get($mobileGrid, templateRows)};
+      column-gap: #{map.get($mobileGrid, columnGap)};
+      row-gap: #{map.get($mobileGrid, rowGap)};
+      grid-template-areas: #{map.get($mobileGrid, templateAreas)};
+    }
+
+    @media all and ($mobile) {
+      margin: 0 auto;
+    }
+
+    // Collapse the grid when both sidebars are empty so .center can use the
+    // full page width instead of leaving 320px reserved on each side.
+    &:has(> .sidebar.left:empty):has(> .sidebar.right:empty) {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        "grid-header"
+        "grid-center"
+        "grid-footer";
+      @media all and ($tablet) {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+          "grid-header"
+          "grid-center"
+          "grid-footer";
+      }
+      & > .sidebar {
+        display: none;
+      }
+    }
+
+    & .sidebar {
+      gap: 1.2rem;
+      top: 0;
+      box-sizing: border-box;
+      padding: $topSpacing 2rem 2rem 2rem;
+      display: flex;
+      height: 100vh;
+      position: sticky;
+    }
+
+    & .sidebar.left {
+      z-index: 1;
+      grid-area: grid-sidebar-left;
+      flex-direction: column;
+      @media all and ($mobile) {
+        gap: 0;
+        align-items: center;
+        position: initial;
+        display: flex;
+        height: unset;
+        flex-direction: row;
+        padding: 0;
+        padding-top: 2rem;
+      }
+    }
+
+    & .sidebar.right {
+      grid-area: grid-sidebar-right;
+      margin-right: 0;
+      flex-direction: column;
+      @media all and ($mobile) {
+        margin-left: inherit;
+        margin-right: inherit;
+      }
+      @media all and not ($desktop) {
+        position: initial;
+        height: unset;
+        width: 100%;
+        flex-direction: row;
+        padding: 0;
+        & > * {
+          flex: 1;
+          max-height: 24rem;
+        }
+        & > .toc {
+          display: none;
+        }
+      }
+    }
+    & .page-header {
+      grid-area: grid-header;
+      margin: 0;
+      @media all and ($mobile) {
+        padding: 0;
+      }
+    }
+
+    & .center > article {
+      grid-area: grid-center;
+    }
+
+    & footer {
+      grid-area: grid-footer;
+    }
+
+    & .center,
+    & footer {
+      max-width: 100%;
+      min-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      @media all and ($tablet) {
+        margin-right: 0;
+      }
+      @media all and ($mobile) {
+        margin-right: 0;
+        margin-left: 0;
+      }
+    }
+    & footer {
+      margin-left: 0;
+    }
+  }
+}
+
+.spacer {
+  flex: 2 1 auto;
+}
+
+.navigation-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: var(--secondary);
+  transition: width 0.2s ease;
+  z-index: 9999;
+}

@@ -1,0 +1,110 @@
+@use "../../styles/variables.scss" as *;
+
+// AT-only label, hidden from sighted users. Used by DatabaseFilters'
+// per-control labels — keeps the compact filter row's visuals while
+// providing a proper accessible name (WCAG 2.1 SC 3.3.2).
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.database-view {
+  font-size: 0.9rem;
+
+  .database-table {
+    display: grid;
+    grid-template-columns:
+      minmax(120px, 2fr)
+      minmax(120px, 150px)
+      minmax(120px, 2fr)
+      minmax(100px, 180px);
+    border: 1px solid var(--lightgray);
+    border-radius: $borderRadiusXL;
+    overflow: auto;
+  }
+
+  .database-row {
+    display: contents;
+  }
+
+  .database-row > div {
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--lightgray);
+    min-width: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .database-row:last-child > div {
+    border-bottom: 0;
+  }
+
+  .database-header > div {
+    background: var(--lightgray);
+    border-bottom-color: var(--gray);
+  }
+
+  .database-row:not(.database-header) > div:first-child {
+    overflow: hidden;
+  }
+
+  .database-row:not(.database-header) > div:first-child > a {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .database-filter-name,
+  .database-filter-type,
+  .database-filter-tag,
+  .database-filter-url {
+    font: inherit;
+    color: var(--dark);
+    background: var(--light);
+    border: 1px solid var(--gray);
+    border-radius: $borderRadius;
+    padding: 0.3rem 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+
+    &:focus {
+      outline: none;
+      border-color: var(--secondary);
+    }
+  }
+
+  a.internal {
+    text-decoration: none;
+    color: var(--dark);
+
+    &:hover {
+      color: var(--secondary);
+      text-decoration: underline;
+    }
+  }
+
+  .database-url {
+    display: inline-block;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    font-size: 0.85rem;
+    color: var(--secondary);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
