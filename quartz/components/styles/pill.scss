@@ -1,0 +1,71 @@
+@use "../../styles/variables.scss" as *;
+
+.pill {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  margin: 0.1rem 0.2rem 0.1rem 0;
+  border-radius: $borderRadiusFull;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  white-space: nowrap;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+
+a.pill {
+  text-decoration: none;
+}
+
+.pill-tag {
+  background: var(--highlight);
+  color: var(--dark);
+
+  &:hover {
+    background: var(--lightgray);
+    border-color: var(--gray);
+  }
+}
+
+.pill-type {
+  font-weight: 500;
+  background: var(--lightgray);
+  color: var(--darkgray);
+
+  &:hover {
+    border-color: var(--gray);
+    filter: brightness(0.96);
+  }
+
+  // Maps page type → palette hue. Palette lives in quartz/styles/_colors.scss.
+  &.pill-type-tool,
+  &.pill-type-tool-description {
+    background: var(--color-violet-bg);
+    color: var(--color-violet-fg);
+  }
+  &.pill-type-tutorial-how-to {
+    background: var(--color-blue-bg);
+    color: var(--color-blue-fg);
+  }
+  &.pill-type-article {
+    background: var(--color-orange-bg);
+    color: var(--color-orange-fg);
+  }
+  &.pill-type-code-snippet {
+    background: var(--color-green-bg);
+    color: var(--color-green-fg);
+  }
+  &.pill-type-course {
+    background: var(--color-pink-bg);
+    color: var(--color-pink-fg);
+  }
+  &.pill-type-approach {
+    background: var(--color-yellow-bg);
+    color: var(--color-yellow-fg);
+  }
+  // Muted: Archived is de-emphasized, doesn't compete visually with active content.
+  &.pill-type-archived {
+    background: var(--lightgray);
+    color: var(--darkgray);
+    opacity: 0.85;
+  }
+}

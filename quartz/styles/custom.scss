@@ -1,0 +1,37 @@
+@use "./base.scss";
+
+// Tighten the default Quartz top spacing.
+.page header {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+// TopBar lives in <header> (so it's excluded from popover previews). <header>
+// is itself display:flex, so the Flex wrapper around TopBar collapses to its
+// content width. Force it to span the full row so the search bar grows and
+// the GraphButton/Darkmode controls sit on the right.
+header > .flex-component {
+  flex: 1;
+}
+
+// Hide page-listing dates on Tag/Type/Folder content pages — Notion-imported
+// timestamps are not meaningful for this wiki. PageList is shared by
+// TagContent, TypeContent, and FolderContent so this covers all three.
+li.section-li > .section {
+  grid-template-columns: 3fr 1fr;
+
+  & > .meta {
+    display: none;
+  }
+}
+
+// Pin all Mermaid quadrantChart matrices to the same rendered size for
+// cross-page visual consistency. Internal viewBox is pinned by Mermaid's
+// quadrantChart config in quartz/components/scripts/mermaid.inline.ts.
+.mermaid svg[aria-roledescription="quadrantChart"] {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  display: block;
+  margin-inline: auto;
+}

@@ -1,0 +1,16 @@
+// Manifest. Imports the ITCSS-lite layers in cascade order:
+//   Settings  → variables.scss, colors.scss
+//   Component → syntax.scss, callouts.scss
+//   Reset     → _reset.scss
+//   Elements  → _elements.scss
+//   Layout    → _layout.scss
+// See REVIEW.md "SCSS organization" for the rationale.
+
+@use "./variables.scss" as *;
+@use "./colors.scss";
+@use "./syntax.scss";
+@use "./callouts.scss";
+
+@use "./reset.scss";
+@use "./elements.scss";
+@use "./layout.scss";

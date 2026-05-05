@@ -1,0 +1,48 @@
+@use "../../styles/variables.scss" as *;
+
+ul.section-ul {
+  list-style: none;
+  margin-top: 2em;
+  padding-left: 0;
+}
+
+li.section-li {
+  margin-bottom: 1em;
+
+  & > .section {
+    display: grid;
+    grid-template-columns: fit-content(8em) 3fr 1fr;
+
+    @media all and ($mobile) {
+      & > .tags {
+        display: none;
+      }
+    }
+
+    & > .desc > h3 > a {
+      background-color: transparent;
+    }
+
+    & .meta {
+      margin: 0 1em 0 0;
+      opacity: 0.6;
+    }
+  }
+}
+
+// modifications in popover context
+// Selector intentionally includes `li.section-li` so specificity (0,3,1)
+// beats the parent `li.section-li > .section` rule (0,2,1) above, no
+// `!important` needed. Wiki-specific: only the title column is shown in
+// popover previews (date and tags suppressed).
+.popover li.section-li > .section {
+  grid-template-columns: 1fr;
+
+  & > .tags {
+    display: none;
+  }
+
+  & > .meta {
+    display: none;
+  }
+}
