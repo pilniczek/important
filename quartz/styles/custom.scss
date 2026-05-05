@@ -1,0 +1,30 @@
+@use "./base.scss";
+
+// Tighten the default Quartz top spacing.
+.page {
+  padding-top: 1.5rem;
+
+  & header {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+}
+
+// Hide page-listing dates on Tag/Type/Folder content pages — Notion-imported
+// timestamps are not meaningful for this wiki. PageList is shared by
+// TagContent, TypeContent, and FolderContent so this covers all three.
+li.section-li > .section {
+  grid-template-columns: 3fr 1fr;
+
+  & > .meta {
+    display: none;
+  }
+}
+
+.popover .section {
+  grid-template-columns: 1fr !important;
+
+  & > .meta {
+    display: none;
+  }
+}

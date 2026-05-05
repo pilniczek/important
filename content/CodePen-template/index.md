@@ -1,0 +1,314 @@
+---
+title: CodePen template
+tags:
+  - CSS
+type: Code / Snippet
+---
+
+Default CSS and a placeholder icon I drop into new CodePens to start with consistent baseline styles.
+
+## default.css
+
+```css
+/* font */
+/*@font-face {
+  font-family: 'Lato';
+  src: url('https://tomas-pilnaj.cz/codepen/font/lato/lato-latin/fonts/LatoLatin-Light.eot');
+  src: url('https://tomas-pilnaj.cz/codepen/font/lato/lato-latin/fonts/LatoLatin-Light.eot?#iefix') format('embedded-opentype'),
+       url('https://tomas-pilnaj.cz/codepen/font/lato/lato-latin/fonts/LatoLatin-Light.woff2') format('woff2'),
+       url('https://tomas-pilnaj.cz/codepen/font/lato/lato-latin/fonts/LatoLatin-Light.woff') format('woff'),
+       url('https://tomas-pilnaj.cz/codepen/font/lato/lato-latin/fonts/LatoLatin-Light.ttf') format('truetype');
+  font-style: normal;
+  font-weight: normal;
+  text-rendering: optimizeLegibility;
+}*/
+/* basic setup */
+html {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: -moz-scrollbars-vertical;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  font-size: 62.5%;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+img, picture {
+  line-height: 0;
+  font-size: 0;
+  max-width: 100%;
+  margin: 0 auto;
+}
+ol,
+ul,
+dl {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+ol ol,
+ul ul,
+ol ul,
+ul ol {
+  margin-bottom: 0;
+}
+input,
+button,
+select,
+optgroup,
+textarea {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+textarea {
+  overflow: auto;
+  resize: vertical;
+}
+fieldset {
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+legend {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin-bottom: .5rem;
+  font-size: 1.5rem;
+  line-height: inherit;
+  color: inherit;
+  white-space: normal;
+}
+/* basic headline typography */
+/* https://grtcalculator.com/ */
+h1 {
+  font-size: 4.7rem;
+  line-height: 6rem;
+  padding-bottom: 1.2rem;
+	font-weight: 300;
+}
+h2 {
+  font-size: 3.7rem;
+  line-height: 4.7rem;
+  padding-bottom: 1rem;
+	font-weight: 300;
+}
+h3 {
+  font-size: 2.9rem;
+  line-height: 3.7rem;
+  padding-bottom: .9rem;
+	font-weight: 300;
+}
+h4 {
+  font-size: 2.3rem;
+  line-height: 3rem;
+  padding-bottom: .7rem;
+	font-weight: 300;
+}
+h5 {
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+  padding-bottom: .6rem;
+	font-weight: 300;
+}
+h6 {
+  font-size: 1.4rem;
+  line-height: 1.9rem;
+  padding-bottom: .5rem;
+	font-weight: 300;
+}
+/* LAYOUT */
+.container {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+  max-width: 1650px;
+  margin: auto;
+  overflow: hidden;
+  padding: 0 10px 10px 10px;
+}
+.container__item {
+  flex: 1;
+  margin: 0 10px 10px 10px;
+  overflow: hidden;
+}
+/* DISPLAY UTILITIES */
+.d-none {
+  display: none !important;
+}
+.d-inline {
+  display: inline !important;
+}
+.d-inline-block {
+  display: inline-block !important;
+}
+.d-block {
+  display: block !important;
+}
+.d-table {
+  display: table !important;
+}
+.d-table-row {
+  display: table-row !important;
+}
+.d-table-cell {
+  display: table-cell !important;
+}
+.d-flex {
+  display: flex !important;
+}
+.d-inline-flex {
+  display: inline-flex !important;
+}
+/* MARGIN / PADDING UTILITIES */
+.m-0 {
+  margin: 0 !important;
+}
+.mt-0,
+.my-0 {
+  margin-top: 0 !important;
+}
+.mr-0,
+.mx-0 {
+  margin-right: 0 !important;
+}
+.mb-0,
+.my-0 {
+  margin-bottom: 0 !important;
+}
+.ml-0,
+.mx-0 {
+  margin-left: 0 !important;
+}
+.p-0 {
+  padding: 0 !important;
+}
+.pt-0,
+.py-0 {
+  padding-top: 0 !important;
+}
+.pr-0,
+.px-0 {
+  padding-right: 0 !important;
+}
+.pb-0,
+.py-0 {
+  padding-bottom: 0 !important;
+}
+.pl-0,
+.px-0 {
+  padding-left: 0 !important;
+}
+.m-auto {
+  margin: auto !important;
+}
+.mt-auto,
+.my-auto {
+  margin-top: auto !important;
+}
+.mr-auto,
+.mx-auto {
+  margin-right: auto !important;
+}
+.mb-auto,
+.my-auto {
+  margin-bottom: auto !important;
+}
+.ml-auto,
+.mx-auto {
+  margin-left: auto !important;
+}
+/* TEXT UTILITIES */
+.text-monospace {
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+}
+.text-left {
+  text-align: left !important;
+}
+.text-right {
+  text-align: right !important;
+}
+.text-center {
+  text-align: center !important;
+}
+.text-lowercase {
+  text-transform: lowercase !important;
+}
+.text-uppercase {
+  text-transform: uppercase !important;
+}
+.text-capitalize {
+  text-transform: capitalize !important;
+}
+.font-weight-light {
+  font-weight: 300 !important;
+}
+.font-weight-lighter {
+  font-weight: lighter !important;
+}
+.font-weight-normal {
+  font-weight: 400 !important;
+}
+.font-weight-bold {
+  font-weight: 700 !important;
+}
+.font-weight-bolder {
+  font-weight: bolder !important;
+}
+.font-italic {
+  font-style: italic !important;
+}
+.text-decoration-none {
+  text-decoration: none !important;
+}
+.text-break {
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+}
+.text-reset {
+  color: inherit !important;
+}
+.visible {
+  visibility: visible !important;
+}
+.invisible {
+  visibility: hidden !important;
+}
+/* OVERFLOW UTILITIES */
+.overflow-auto {
+  overflow: auto !important;
+}
+.overflow-hidden {
+  overflow: hidden !important;
+}
+```
+
+## img-icon.svg
+
+```xml
+<svg
+  aria-hidden="true"
+  focusable="false"
+  data-icon="image"
+  role="img"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 512 512"
+>
+  <path
+    fill="rgba(255,255,255,.5)"
+    d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm-6 336H54a6 6 0 0 1-6-6V118a6 6 0 0 1 6-6h404a6 6 0 0 1 6 6v276a6 6 0 0 1-6 6zM128 152c-22.091 0-40 17.909-40 40s17.909 40 40 40 40-17.909 40-40-17.909-40-40-40zM96 352h320v-80l-87.515-87.515c-4.686-4.686-12.284-4.686-16.971 0L192 304l-39.515-39.515c-4.686-4.686-12.284-4.686-16.971 0L96 304v48z"
+  ></path>
+</svg>
+```
