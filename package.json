@@ -16,7 +16,10 @@
     "build": "node ./quartz/bootstrap-cli.mjs build",
     "quartz": "node ./quartz/bootstrap-cli.mjs",
     "check": "tsc --noEmit && npx prettier . --check",
-    "format": "npx prettier . --write"
+    "format": "npx prettier . --write",
+    "audit": "npm audit --audit-level=high",
+    "audit:fix": "npm audit fix",
+    "prepare": "husky"
   },
   "engines": {
     "npm": ">=10.9.2",
@@ -104,6 +107,7 @@
     "@types/ws": "^8.18.1",
     "@types/yargs": "^17.0.35",
     "esbuild": "^0.27.2",
+    "husky": "^9.1.7",
     "prettier": "^3.8.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"

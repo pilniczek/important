@@ -48,6 +48,8 @@ npm run dev        # build + serve at http://localhost:8080 with hot reload
 npm run build      # one-shot build to public/
 npm run check      # tsc --noEmit + prettier --check
 npm run format     # prettier --write
+npm run audit      # npm audit --audit-level=high (also runs automatically on `git push` via husky)
+npm run audit:fix  # apply non-breaking fixes for security advisories
 ```
 
 ## Wiki content conventions
