@@ -266,22 +266,20 @@ export async function handleBuild(argv) {
       {
         name: "inline-script-loader",
         setup(build) {
-          build.onLoad({ filter: /\.inline\.(ts|js)$/ }, async (args) => {
+          // See AGENTS.md "Heavy scripts: lazy chunks" for the two flows.
+          build.onLoad({ filter: /\.(inline|lazy)\.(ts|js)$/ }, async (args) => {
             let text = await promises.readFile(args.path, "utf8")
+            const isLazy = /\.lazy\.(ts|js)$/.test(args.path)
 
-            // remove default exports that we manually inserted
-            text = text.replace("export default", "")
-            text = text.replace("export", "")
+            if (!isLazy) {
+              text = text.replace("export default", "")
+              text = text.replace("export", "")
+            }
 
             const sourcefile = path.relative(path.resolve("."), args.path)
             const resolveDir = path.dirname(sourcefile)
             const transpiled = await esbuild.build({
-              stdin: {
-                contents: text,
-                loader: "ts",
-                resolveDir,
-                sourcefile,
-              },
+              stdin: { contents: text, loader: "ts", resolveDir, sourcefile },
               write: false,
               bundle: true,
               minify: true,
@@ -289,10 +287,10 @@ export async function handleBuild(argv) {
               format: "esm",
             })
             const rawMod = transpiled.outputFiles[0].text
-            return {
-              contents: rawMod,
-              loader: "text",
+            if (isLazy) {
+              return { contents: `export default ${JSON.stringify(rawMod)}`, loader: "ts" }
             }
+            return { contents: rawMod, loader: "text" }
           })
         },
       },

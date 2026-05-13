@@ -72,7 +72,7 @@ async function transpileWorkerScript() {
             contents: "",
             loader: "text",
           }))
-          build.onLoad({ filter: /\.inline\.(ts|js)$/ }, (_) => ({
+          build.onLoad({ filter: /\.(inline|lazy)\.(ts|js)$/ }, (_) => ({
             contents: "",
             loader: "text",
           }))

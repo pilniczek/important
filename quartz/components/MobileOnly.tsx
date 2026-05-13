@@ -9,6 +9,7 @@ export default ((component: QuartzComponent) => {
   MobileOnly.displayName = component.displayName
   MobileOnly.afterDOMLoaded = component?.afterDOMLoaded
   MobileOnly.beforeDOMLoaded = component?.beforeDOMLoaded
+  MobileOnly.lazyScripts = component?.lazyScripts
   MobileOnly.css = component?.css
   return MobileOnly
 }) satisfies QuartzComponentConstructor<QuartzComponent>

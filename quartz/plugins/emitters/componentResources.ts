@@ -23,6 +23,7 @@ type ComponentResources = {
   css: string[]
   beforeDOMLoaded: string[]
   afterDOMLoaded: string[]
+  lazyScripts: Record<string, string>
 }
 
 function getComponentResources(ctx: BuildCtx): ComponentResources {
@@ -38,6 +39,7 @@ function getComponentResources(ctx: BuildCtx): ComponentResources {
     css: new Set<string>(),
     beforeDOMLoaded: new Set<string>(),
     afterDOMLoaded: new Set<string>(),
+    lazyScripts: {} as Record<string, string>,
   }
 
   function normalizeResource(resource: string | string[] | undefined): string[] {
@@ -47,7 +49,7 @@ function getComponentResources(ctx: BuildCtx): ComponentResources {
   }
 
   for (const component of allComponents) {
-    const { css, beforeDOMLoaded, afterDOMLoaded } = component
+    const { css, beforeDOMLoaded, afterDOMLoaded, lazyScripts } = component
     const normalizedCss = normalizeResource(css)
     const normalizedBeforeDOMLoaded = normalizeResource(beforeDOMLoaded)
     const normalizedAfterDOMLoaded = normalizeResource(afterDOMLoaded)
@@ -55,12 +57,24 @@ function getComponentResources(ctx: BuildCtx): ComponentResources {
     normalizedCss.forEach((c) => componentResources.css.add(c))
     normalizedBeforeDOMLoaded.forEach((b) => componentResources.beforeDOMLoaded.add(b))
     normalizedAfterDOMLoaded.forEach((a) => componentResources.afterDOMLoaded.add(a))
+    if (lazyScripts) {
+      for (const [name, script] of Object.entries(lazyScripts)) {
+        const existing = componentResources.lazyScripts[name]
+        if (existing && existing !== script) {
+          throw new Error(
+            `lazyScripts name collision: "${name}" registered with two different bodies`,
+          )
+        }
+        componentResources.lazyScripts[name] = script
+      }
+    }
   }
 
   return {
     css: [...componentResources.css],
     beforeDOMLoaded: [...componentResources.beforeDOMLoaded],
     afterDOMLoaded: [...componentResources.afterDOMLoaded],
+    lazyScripts: componentResources.lazyScripts,
   }
 }
 
@@ -367,6 +381,16 @@ export const ComponentResources: QuartzEmitterPlugin = () => {
         ext: ".js",
         content: postscript,
       })
+
+      for (const [name, script] of Object.entries(componentResources.lazyScripts)) {
+        const minified = await transpile(script, { minify: true })
+        yield write({
+          ctx,
+          slug: name as FullSlug,
+          ext: ".js",
+          content: minified.code,
+        })
+      }
     },
     async *partialEmit() {},
   }

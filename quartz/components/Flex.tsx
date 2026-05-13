@@ -55,5 +55,9 @@ export default ((config: FlexConfig) => {
     ...config.components.map((c) => c.Component.beforeDOMLoaded),
   )
   Flex.css = concatenateResources(...config.components.map((c) => c.Component.css))
+  Flex.lazyScripts = config.components.reduce<Record<string, string>>((acc, c) => {
+    if (c.Component.lazyScripts) Object.assign(acc, c.Component.lazyScripts)
+    return acc
+  }, {})
   return Flex
 }) satisfies QuartzComponentConstructor<FlexConfig>

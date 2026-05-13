@@ -16,6 +16,7 @@ export default ((config: ConditionalRenderConfig) => {
 
   ConditionalRender.afterDOMLoaded = config.component.afterDOMLoaded
   ConditionalRender.beforeDOMLoaded = config.component.beforeDOMLoaded
+  ConditionalRender.lazyScripts = config.component.lazyScripts
   ConditionalRender.css = config.component.css
 
   return ConditionalRender

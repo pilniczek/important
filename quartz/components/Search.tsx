@@ -2,6 +2,8 @@ import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } fro
 import style from "./styles/search.scss"
 // @ts-ignore
 import script from "./scripts/search.inline"
+// @ts-ignore
+import lazyScript from "./scripts/search.lazy"
 import { classNames } from "../util/lang"
 import { i18n } from "../i18n"
 
@@ -47,6 +49,7 @@ export default ((userOpts?: Partial<SearchOptions>) => {
   }
 
   Search.afterDOMLoaded = script
+  Search.lazyScripts = { search: lazyScript }
   Search.css = style
 
   return Search

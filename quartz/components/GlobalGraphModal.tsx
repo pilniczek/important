@@ -1,6 +1,8 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 // @ts-ignore
 import script from "./scripts/graph.inline"
+// @ts-ignore
+import lazyScript from "./scripts/graph.lazy"
 import style from "./styles/globalGraphModal.scss"
 import { D3Config } from "./Graph"
 
@@ -44,6 +46,7 @@ export default ((opts?: Partial<GlobalGraphModalOptions>) => {
 
   GlobalGraphModal.css = style
   GlobalGraphModal.afterDOMLoaded = script
+  GlobalGraphModal.lazyScripts = { graph: lazyScript }
 
   return GlobalGraphModal
 }) satisfies QuartzComponentConstructor

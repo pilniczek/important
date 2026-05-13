@@ -22,6 +22,8 @@ export type QuartzComponent = ComponentType<QuartzComponentProps> & {
   css?: StringResource
   beforeDOMLoaded?: StringResource
   afterDOMLoaded?: StringResource
+  // See AGENTS.md "Heavy scripts: lazy chunks".
+  lazyScripts?: Record<string, string>
 }
 
 export type QuartzComponentConstructor<Options extends object | undefined = undefined> = (

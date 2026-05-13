@@ -109,6 +109,21 @@ When writing `quadrantChart`, follow these rules (see [content/matrix-stakeholde
 4. Export from [quartz/components/index.ts](quartz/components/index.ts).
 5. Reference in [quartz.layout.ts](quartz.layout.ts).
 
+### Heavy scripts: lazy chunks (`*.lazy.ts`)
+
+`postscript.js` is one big ESM bundle that must download, parse, and execute end-to-end before any `nav` listener fires — only then does e.g. [databaseView.inline.ts](quartz/components/scripts/databaseView.inline.ts) wire the filter `<input>`. Anything bundled into `postscript.js` delays interactivity. The graph (D3 + Pixi, ~600 KB) and search (FlexSearch, ~60 KB) live in **lazy chunks** emitted as separate `public/<name>.js` files and loaded via dynamic `import()`.
+
+**To add one:**
+
+1. **`Foo.lazy.ts`** in `scripts/` — a normal ESM module that `export`s what the stub will call. **Must include `export default ""` at the bottom** because esbuild's parse pass reads the source to validate default imports *before* the inline-script-loader rewrites it.
+2. **`Foo.inline.ts`** — a tiny stub that ships in `postscript.js`. Dynamic-import the lazy chunk via a **variable** (`const url = "./foo.js"; import(url)`); a literal string would be resolved at build time and inlined back into `postscript.js`.
+3. **Component wiring**: `Component.afterDOMLoaded = stubScript` and `Component.lazyScripts = { foo: lazyScript }`. The key (`foo`) is the emitted filename. Wrapper components ([Flex.tsx](quartz/components/Flex.tsx), [DesktopOnly.tsx](quartz/components/DesktopOnly.tsx), [MobileOnly.tsx](quartz/components/MobileOnly.tsx), [ConditionalRender.tsx](quartz/components/ConditionalRender.tsx)) all propagate `lazyScripts` like they do `afterDOMLoaded`.
+
+**Two activation patterns in use:**
+
+- **On-demand** ([graph.inline.ts](quartz/components/scripts/graph.inline.ts)) — Lazy chunk imports on first user trigger (icon click / hotkey). Cheap if the user never opens it; first activation pays the full fetch + parse cost. Use when the feature is rarely used.
+- **Preload on idle with loading UI** ([search.inline.ts](quartz/components/scripts/search.inline.ts)) — Stub disables the activator and shows a CSS spinner; `requestIdleCallback` (with `setTimeout` fallback) kicks off the import + `init()` after first paint; activator becomes interactive when ready. Use when the user will likely need the feature soon. Companion CSS: a `.loading` class on the host component that hides the icon and swaps in a `::before` spinner sized to the icon's footprint (see [search.scss](quartz/components/styles/search.scss)) — match the icon's `width` / `min-width` / `margin` exactly to avoid layout shift.
+
 ### Shared building blocks
 
 Reach for these instead of reinventing — they're the canonical primitives:
