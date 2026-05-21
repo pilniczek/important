@@ -1,0 +1,22 @@
+.article-meta-line {
+  margin: 0.25rem 0 0 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.article-meta-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+
+  > span {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem;
+  }
+}
+
+.article-source-url {
+  word-break: break-all;
+}

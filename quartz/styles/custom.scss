@@ -1,0 +1,88 @@
+@use "./base.scss";
+@use "./variables.scss" as *;
+
+// Tighten the default Quartz top spacing.
+.page header {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+// TopBar lives in <header> (so it's excluded from popover previews). <header>
+// is itself display:flex, so the Flex wrapper around TopBar collapses to its
+// content width. Force it to span the full row so the search bar grows and
+// the GraphButton/Darkmode controls sit on the right.
+header > .flex-component {
+  flex: 1;
+}
+
+// Allow the search bar to shrink on narrow viewports. Quartz's Flex wrapper
+// already sets `flex-shrink: 1` on each item, but flex items default to
+// `min-width: auto` (= intrinsic content width), so the search can't actually
+// shrink below the width of its placeholder text. The .search-container
+// inside has `min-width: 0`, but the anonymous wrapper div Quartz's Flex
+// generates around it doesn't — so we target that with :has().
+header > .flex-component > div:has(> .search-container) {
+  min-width: 0;
+}
+
+// On narrow viewports (≤ 600px), expand the search results dropdown to span
+// the full page width. The dropdown defaults to `position: absolute` inside
+// the (now-shrunken) .search-container, so `left:0 / right:0` only reaches
+// the search input's narrow column. Switching to `position: fixed` anchors
+// it to the viewport instead. `top` is tuned to sit just below the TopBar.
+@media (max-width: 600px) {
+  .search-results {
+    position: fixed;
+    left: 0.5rem;
+    right: 0.5rem;
+    top: 3rem;
+    max-height: 70vh;
+  }
+}
+
+// Hide page-listing dates on Tag/Type/Folder content pages — Notion-imported
+// timestamps are not meaningful for this wiki. PageList is shared by
+// TagContent, TypeContent, and FolderContent so this covers all three.
+li.section-li > .section {
+  grid-template-columns: 3fr 1fr;
+
+  & > .meta {
+    display: none;
+  }
+}
+
+// Tables: fill the content width on wide screens, scroll horizontally on
+// narrow ones. `min-width: 100%` (not `width: 100%`) lets the table grow
+// beyond its container when cell min-widths demand it — that growth
+// triggers `.table-container { overflow-x: auto }` so wide tables (e.g.
+// kompetencni-tabulka-grid) scroll on mobile instead of wrapping cell
+// text to one word per line.
+.table-container > table {
+  min-width: 100%;
+  margin-inline: 0;
+
+  th,
+  td {
+    min-width: 150px;
+  }
+}
+
+// Inline code: Slack-style — orange text, no background pill. Fenced code
+// blocks (`pre > code`) keep their default styling because Quartz already
+// resets background/padding on them in _elements.scss.
+:not(pre) > code {
+  color: #d97706;
+  background: none;
+  padding: 0;
+}
+
+// Pin all Mermaid quadrantChart matrices to the same rendered size for
+// cross-page visual consistency. Internal viewBox is pinned by Mermaid's
+// quadrantChart config in quartz/components/scripts/mermaid.inline.ts.
+.mermaid svg[aria-roledescription="quadrantChart"] {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  display: block;
+  margin-inline: auto;
+}

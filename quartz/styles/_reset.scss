@@ -1,0 +1,30 @@
+// Generic / reset layer. Owns the document-level defaults: scroll behavior,
+// box-sizing, body background, and the global text selection style. No
+// component-specific rules belong here.
+
+@use "./variables.scss" as *;
+
+html {
+  scroll-behavior: smooth;
+  text-size-adjust: none;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  width: 100%;
+
+  @media all and ($mobile) {
+    scroll-padding-top: 4rem;
+  }
+}
+
+body {
+  margin: 0;
+  box-sizing: border-box;
+  background-color: var(--light);
+  font-family: var(--bodyFont);
+  color: var(--darkgray);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--tertiary) 60%, rgba(255, 255, 255, 0));
+  color: var(--darkgray);
+}
