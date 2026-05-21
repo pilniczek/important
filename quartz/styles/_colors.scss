@@ -1,0 +1,37 @@
+// Reusable color palette — hue-based tokens with bg/fg pairs.
+// Light/dark values are coordinated so swapping `[saved-theme]`
+// flips both the surface and the text in lockstep.
+//
+// Use these wherever a component needs a colored swatch (pill, badge,
+// graph node, sidebar accent, etc.). Don't add component-specific
+// aliases here; map type→hue in the consuming component's SCSS.
+
+:root {
+  --color-violet-bg: #e7e3ff;
+  --color-violet-fg: #4a3a8a;
+  --color-blue-bg: #d9eaff;
+  --color-blue-fg: #1f5294;
+  --color-orange-bg: #ffe2c2;
+  --color-orange-fg: #8a4a14;
+  --color-green-bg: #e6f4d7;
+  --color-green-fg: #3a6814;
+  --color-pink-bg: #ffd9ef;
+  --color-pink-fg: #8a2266;
+  --color-yellow-bg: #fff3b8;
+  --color-yellow-fg: #6e5a14;
+}
+
+:root[saved-theme="dark"] {
+  --color-violet-bg: #2a2647;
+  --color-violet-fg: #c8bdfa;
+  --color-blue-bg: #1d3552;
+  --color-blue-fg: #b3d3f8;
+  --color-orange-bg: #4a3015;
+  --color-orange-fg: #efb380;
+  --color-green-bg: #1f3a14;
+  --color-green-fg: #b9d99a;
+  --color-pink-bg: #4a1a36;
+  --color-pink-fg: #f5b3da;
+  --color-yellow-bg: #4a3f0c;
+  --color-yellow-fg: #ffd966;
+}
