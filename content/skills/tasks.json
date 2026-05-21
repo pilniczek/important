@@ -1,0 +1,17 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "skills check",
+      "type": "shell",
+      "command": "npx skills check",
+      "presentation": {
+        "reveal": "silent",
+        "panel": "shared"
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    }
+  ]
+}
