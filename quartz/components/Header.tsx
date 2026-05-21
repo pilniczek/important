@@ -1,0 +1,20 @@
+import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
+
+const Header: QuartzComponent = ({ children }: QuartzComponentProps) => {
+  return children.length > 0 ? <header>{children}</header> : null
+}
+
+Header.css = `
+header {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0;
+}
+
+header h1 {
+  margin: 0;
+  flex: auto;
+}
+`
+
+export default (() => Header) satisfies QuartzComponentConstructor
