@@ -1,0 +1,203 @@
+@use "./base.scss";
+@use "./variables.scss" as *;
+
+// Site-wide customizations live in the `overrides` cascade layer (declared last
+// in the layer order — see quartz/plugins/emitters/componentResources.ts), so
+// they outrank component styles by layer priority rather than specificity.
+@layer overrides {
+  // Tighten the default Quartz top spacing.
+  .page header {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  // TopBar lives in <header> (so it's excluded from popover previews). <header>
+  // is itself display:flex, so the Flex wrapper around TopBar collapses to its
+  // content width. Force it to span the full row so the search bar grows and
+  // the GraphButton/Darkmode controls sit on the right.
+  header > .flex-component {
+    flex: 1;
+  }
+
+  // Allow the search bar to shrink on narrow viewports. Quartz's Flex wrapper
+  // already sets `flex-shrink: 1` on each item, but flex items default to
+  // `min-width: auto` (= intrinsic content width), so the search can't actually
+  // shrink below the width of its placeholder text. The .search-container
+  // inside has `min-width: 0`, but the anonymous wrapper div Quartz's Flex
+  // generates around it doesn't — so we target that with :has().
+  header > .flex-component > div:has(> .search-container) {
+    min-width: 0;
+  }
+
+  // On narrow viewports (≤ 600px), expand the search results dropdown to span
+  // the full page width. The dropdown defaults to `position: absolute` inside
+  // the (now-shrunken) .search-container, so `left:0 / right:0` only reaches
+  // the search input's narrow column. Switching to `position: fixed` anchors
+  // it to the viewport instead. `top` is tuned to sit just below the TopBar.
+  @media (max-width: 600px) {
+    .search-results {
+      position: fixed;
+      left: 0.5rem;
+      right: 0.5rem;
+      top: 3rem;
+      max-height: 70vh;
+    }
+  }
+
+  // Hide page-listing dates on Tag/Type/Folder content pages — Notion-imported
+  // timestamps are not meaningful for this wiki. PageList is shared by
+  // TagContent, TypeContent, and FolderContent so this covers all three.
+  li.section-li > .section {
+    grid-template-columns: 3fr 1fr;
+
+    & > .meta {
+      display: none;
+    }
+  }
+
+  // Tables: fill the content width on wide screens, scroll horizontally on
+  // narrow ones. `min-width: 100%` (not `width: 100%`) lets the table grow
+  // beyond its container when cell min-widths demand it — that growth
+  // triggers `.table-container { overflow-x: auto }` so wide tables (e.g.
+  // kompetencni-tabulka-grid) scroll on mobile instead of wrapping cell
+  // text to one word per line.
+  .table-container > table {
+    min-width: 100%;
+    margin-inline: 0;
+
+    th,
+    td {
+      min-width: 150px;
+    }
+  }
+
+  // Inline code: Slack-style — orange text, no background pill. Fenced code
+  // blocks (`pre > code`) keep their default styling because Quartz already
+  // resets background/padding on them in _elements.scss.
+  :not(pre) > code {
+    color: #d97706;
+    background: none;
+    padding: 0;
+  }
+
+  // Link policy: every link reads as body text but underlined, with no
+  // background (e.g. the internal wiki-link `--highlight` fill is dropped).
+  // Exceptions are pills (type + tag chips — own color/shape) and `.icon-button`
+  // (icon-only, no text to underline; uses color for hover affordance).
+  // No `!important` needed: this sits in the `overrides` layer, which outranks
+  // the `components` layer regardless of selector specificity — so it beats the
+  // per-component link colors / `text-decoration: none` cleanly.
+  a:not(.pill):not(.icon-button) {
+    color: inherit;
+    text-decoration: underline;
+    background: none;
+  }
+
+  // Pin all Mermaid quadrantChart matrices to the same rendered size for
+  // cross-page visual consistency. Internal viewBox is pinned by Mermaid's
+  // quadrantChart config, sized by DEFAULT_QUADRANT_SIZE in quartz/util/mermaid.ts.
+  .mermaid svg[aria-roledescription="quadrantChart"] {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    display: block;
+    margin-inline: auto;
+  }
+
+  // On phones the chart goes full-bleed, so the em-dash "arrows" baked into the
+  // x-axis/y-axis label text (g.labels > g.label > text) overshoot the chart box
+  // — Mermaid emits them at font-size:14 without measuring their width. Shrink the
+  // axis-label font on mobile so the arrows pull back inside the chart. font-size
+  // here is an SVG presentation attr in viewBox user units; the `overrides` layer
+  // beats it the same way the quadrant fills below do (no !important needed).
+  @media #{$mobile} {
+    .mermaid svg[aria-roledescription="quadrantChart"] g.labels text {
+      font-size: 10px;
+    }
+  }
+
+  // Opt-in escape hatch for matrices whose quadrant labels are too long to fit
+  // the shared quadrantLabelFontSize (14, set in quartz/util/mermaid.ts's
+  // consumers) at DEFAULT_QUADRANT_SIZE — e.g. evalai's "Optimistic power user".
+  // Add `small-quadrant-labels` to the page's `cssclasses` to shrink just the
+  // quadrant labels so they clear the central dividers. font-size here is an SVG
+  // presentation attr in viewBox user units; the `overrides` layer beats it the
+  // same way the mobile axis-label rule above does (no !important needed).
+  .small-quadrant-labels .mermaid g.quadrants g.quadrant text {
+    font-size: 11px;
+  }
+
+  // Severity / opportunity quadrant tints (opt-in per page via frontmatter
+  // `cssclasses`). Both paint a green↔red diagonal with yellow on the off-
+  // diagonal; they differ only in which corner is "good":
+  //   .severity-matrix    — top-right (q1) = worst  = red   (risk-project, risk-vendor, decision, stakeholders)
+  //   .opportunity-matrix — top-right (q1) = best   = green (eisenhower)
+  // Opt-in because the diagonal only fits matrices where the top-right corner is
+  // unambiguously best or worst — not a typology grid whose four corners are
+  // independent categories rather than points on one good↔bad scale.
+  //
+  // Mermaid's init-directive theme variables don't apply in this Quartz render
+  // path, but each quadrant <rect> carries an inline `fill` *presentation
+  // attribute*, which a plain CSS rule overrides (no !important needed).
+  // Quadrants are emitted in q1..q4 order = top-right, top-left, bottom-left,
+  // bottom-right.
+  // Fills reuse the muted pill tokens from _colors.scss, and each quadrant's
+  // label takes the matching `fg` token. The fills flip with the theme like the
+  // pills do; in dark mode the colored labels are swapped for one light neutral
+  // so they stay legible on the darker surfaces (see the override below).
+  // (Axis/title text sits outside .quadrants and keeps the theme color.)
+  .severity-matrix,
+  .opportunity-matrix {
+    .mermaid g.quadrants g.quadrant {
+      // Off-diagonal (top-left q2 / bottom-right q4) is the mid tier in both.
+      &:nth-of-type(2),
+      &:nth-of-type(4) {
+        rect {
+          fill: var(--color-yellow-bg);
+        }
+        text {
+          fill: var(--color-yellow-fg);
+        }
+      }
+    }
+  }
+
+  // Diagonal corners — the only difference between the two variants.
+  .severity-matrix .mermaid g.quadrants g.quadrant {
+    &:nth-of-type(1) {
+      rect {
+        fill: var(--color-red-bg);
+      }
+      text {
+        fill: var(--color-red-fg);
+      }
+    } // top-right (q1) — worst
+    &:nth-of-type(3) {
+      rect {
+        fill: var(--color-green-bg);
+      }
+      text {
+        fill: var(--color-green-fg);
+      }
+    } // bottom-left (q3) — best
+  }
+
+  .opportunity-matrix .mermaid g.quadrants g.quadrant {
+    &:nth-of-type(1) {
+      rect {
+        fill: var(--color-green-bg);
+      }
+      text {
+        fill: var(--color-green-fg);
+      }
+    } // top-right (q1) — best
+    &:nth-of-type(3) {
+      rect {
+        fill: var(--color-red-bg);
+      }
+      text {
+        fill: var(--color-red-fg);
+      }
+    } // bottom-left (q3) — worst
+  }
+}
