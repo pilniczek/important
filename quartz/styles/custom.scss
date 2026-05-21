@@ -1,0 +1,362 @@
+@use "./base.scss";
+@use "./variables.scss" as *;
+
+// Site-wide customizations live in the `overrides` cascade layer (declared last
+// in the layer order — see quartz/plugins/emitters/componentResources.ts), so
+// they outrank component styles by layer priority rather than specificity.
+@layer overrides {
+  // Tighten the default Quartz top spacing.
+  .page header {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  // TopBar lives in <header> (so it's excluded from popover previews). <header>
+  // is itself display:flex, so the Flex wrapper around TopBar collapses to its
+  // content width. Force it to span the full row so the search bar grows and
+  // the GraphButton/Darkmode controls sit on the right.
+  header > .flex-component {
+    flex: 1;
+  }
+
+  // Allow the search bar to shrink on narrow viewports. Quartz's Flex wrapper
+  // already sets `flex-shrink: 1` on each item, but flex items default to
+  // `min-width: auto` (= intrinsic content width), so the search can't actually
+  // shrink below the width of its placeholder text. The .search-container
+  // inside has `min-width: 0`, but the anonymous wrapper div Quartz's Flex
+  // generates around it doesn't — so we target that with :has().
+  header > .flex-component > div:has(> .search-container) {
+    min-width: 0;
+  }
+
+  // On narrow viewports (≤ 600px), expand the search results dropdown to span
+  // the full page width. The dropdown defaults to `position: absolute` inside
+  // the (now-shrunken) .search-container, so `left:0 / right:0` only reaches
+  // the search input's narrow column. Switching to `position: fixed` anchors
+  // it to the viewport instead. `top` is tuned to sit just below the TopBar.
+  @media (max-width: 600px) {
+    .search-results {
+      position: fixed;
+      left: 0.5rem;
+      right: 0.5rem;
+      top: 3rem;
+      max-height: 70vh;
+    }
+  }
+
+  // Hide page-listing dates on Tag/Type/Folder content pages — Notion-imported
+  // timestamps are not meaningful for this wiki. PageList is shared by
+  // TagContent, TypeContent, and FolderContent so this covers all three.
+  li.section-li > .section {
+    grid-template-columns: 3fr 1fr;
+
+    & > .meta {
+      display: none;
+    }
+  }
+
+  // Tables: fill the content width on wide screens, scroll horizontally on
+  // narrow ones. `min-width: 100%` (not `width: 100%`) lets the table grow
+  // beyond its container when cell min-widths demand it — that growth
+  // triggers `.table-container { overflow-x: auto }` so wide tables (e.g.
+  // kompetencni-tabulka-grid) scroll on mobile instead of wrapping cell
+  // text to one word per line.
+  .table-container > table {
+    min-width: 100%;
+    margin-inline: 0;
+
+    th,
+    td {
+      min-width: 150px;
+    }
+  }
+
+  // Inline code: Slack-style — orange text, no background pill. Fenced code
+  // blocks (`pre > code`) keep their default styling because Quartz already
+  // resets background/padding on them in _elements.scss.
+  :not(pre) > code {
+    color: #d97706;
+    background: none;
+    padding: 0;
+  }
+
+  // Link policy: every link reads as body text but underlined, with no
+  // background (e.g. the internal wiki-link `--highlight` fill is dropped).
+  // Exceptions are pills (type + tag chips — own color/shape) and `.icon-button`
+  // (icon-only, no text to underline; uses color for hover affordance).
+  // No `!important` needed: this sits in the `overrides` layer, which outranks
+  // the `components` layer regardless of selector specificity — so it beats the
+  // per-component link colors / `text-decoration: none` cleanly.
+  a:not(.pill):not(.icon-button) {
+    color: inherit;
+    text-decoration: underline;
+    background: none;
+  }
+
+  // Pin all Mermaid quadrantChart matrices to the same rendered size for
+  // cross-page visual consistency. Internal viewBox is pinned by Mermaid's
+  // quadrantChart config, sized by DEFAULT_QUADRANT_SIZE in quartz/util/mermaid.ts.
+  .mermaid svg[aria-roledescription="quadrantChart"] {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    display: block;
+    margin-inline: auto;
+  }
+
+  // xychart-beta customizations — all bespoke to the single Diffusion of
+  // Innovations chart (content/diffusion-of-innovations.md, the only xychart on
+  // the site), so they're scoped to that page's `cssclasses: [diffusion-curve]`
+  // rather than every xychart svg — the same per-article opt-in pattern as the
+  // matrix tints below. A future xychart starts from Mermaid's defaults and opts
+  // into whichever of these it wants via its own cssclass.
+  .diffusion-curve .mermaid svg[aria-roledescription="xychart"] {
+    // Size cap — Mermaid emits no intrinsic width constraint, so the chart would
+    // otherwise render full-bleed. Confirm the aria-roledescription value against
+    // a built SVG if the chart ever stops sizing.
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    display: block;
+    margin-inline: auto;
+
+    // Render the `bar` series as thin axis-colored reference ticks instead of
+    // filled columns. Mermaid draws each bar as a centered <rect> with
+    // presentation-attribute fill/width, so this plain `overrides`-layer rule wins
+    // with no !important (same as the quadrant fills below). clip-path carves out a
+    // centered 1px-wide vertical strip — no magic offset, stays centered on the
+    // curve point regardless of chart width or category count. Fill matches the
+    // axis line, which is themed via lineColor = --darkgray.
+    g[class^="bar-plot"] rect {
+      fill: var(--darkgray);
+      clip-path: inset(0 calc(50% - 0.5px));
+    }
+
+    // Two overlaid line series on the shared 0-->100 axis, following the standard
+    // Rogers convention: solid = cumulative S-curve, dashed = frequency bell. Mermaid
+    // classes each plot by its source index (bar-plot-0, then line-plot-1 = bell,
+    // line-plot-2 = S-curve) and renders each line as a <path> with palette stroke
+    // presentation attrs — these overrides-layer rules win with no !important (same as
+    // the bar-tick rule above). xychart-beta has no legend, so the solid/dashed split
+    // is the only cue distinguishing the curves.
+    g.line-plot-2 path {
+      // cumulative S-curve — solid hero line
+      stroke: var(--secondary);
+    }
+
+    g.line-plot-1 path {
+      // frequency bell — dashed, muted; scaled in-source to peak 100 so it passes through
+      // the `bar` reference ticks (13.53 / 60.65 / 100). Both curves top out at 100 and
+      // cross once on the right — the standard Rogers bell + S-curve overlay.
+      stroke: var(--gray);
+      stroke-dasharray: 3 3;
+    }
+
+    // Drop the chart's background box (Mermaid hardcodes a full-bleed
+    // <rect class="background" fill="#333">) so the chart sits transparently on the
+    // page. Presentation-attr fill, overridden by a plain overrides-layer rule (same
+    // as the bars); purely visual, so CSS is the right tool here.
+    rect.background {
+      fill: none;
+    }
+
+    // NB: the y-axis labels/ticks and x-axis ticks are NOT hidden here. They're
+    // suppressed at render time via the `xyChart` config in ofm.ts (build) and
+    // mermaid.inline.ts (theme re-render) — CSS display:none would hide them but
+    // leave the reserved y-label width as a gap between the "Adopters" title and
+    // the plot. Only the size cap and bar-tick clip above are CSS-side.
+  }
+
+  // Second xychart on the site (content/that-5-minute-meeting-with-a-developer.md):
+  // the "5-minute meeting" productivity meme — two overlaid line series, no `bar`.
+  // Scoped to that page's `cssclasses: [meeting-curve]`, same per-article opt-in as
+  // diffusion-curve above. xychart-beta has no legend and no per-series styling, so
+  // color + dash are done here in CSS on `g.line-plot-N path` (Mermaid renders each
+  // line as a <path> with palette stroke presentation attrs; these overrides-layer
+  // rules win with no !important). NB the indices start at 0 here, not 1 like
+  // diffusion-curve — there's no `bar` series ahead of the lines to take index 0.
+  .meeting-curve .mermaid svg[aria-roledescription="xychart"] {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    display: block;
+    margin-inline: auto;
+
+    // First line in source = "what non-dev folks assume" — red, dashed; snaps back
+    // to full productivity the moment the meeting ends.
+    g.line-plot-0 path {
+      stroke: var(--color-red-fg);
+      stroke-dasharray: 6 4;
+    }
+
+    // Second line = "how it actually works" — blue solid hero line; the slow
+    // S-curve recovery back to flow.
+    g.line-plot-1 path {
+      stroke: var(--color-blue-fg);
+    }
+
+    // Drop the hardcoded full-bleed background box, same as diffusion-curve above.
+    rect.background {
+      fill: none;
+    }
+  }
+
+  // Third xychart on the site (content/technical-debt.md): the cost-of-change /
+  // responsiveness curves. Four overlaid line series, no `bar`, so indices start at
+  // 0 (same as meeting-curve). Two faint dashed "optimal" reference lines + two bold
+  // "actual" lines; green = responsiveness, orange = cost of change. Same per-article
+  // opt-in (cssclasses: [tech-debt-curve]) and same CSS-stroke approach as above —
+  // Mermaid renders each line as a <path> with palette stroke presentation attrs, so
+  // these overrides-layer rules win with no !important.
+  .tech-debt-curve .mermaid svg[aria-roledescription="xychart"] {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    display: block;
+    margin-inline: auto;
+
+    // optimal responsiveness — faint green reference (the ideal we drift from)
+    g.line-plot-0 path {
+      stroke: var(--color-green-fg);
+      stroke-opacity: 0.4;
+      stroke-dasharray: 4 4;
+    }
+
+    // optimal cost of change — faint orange reference
+    g.line-plot-1 path {
+      stroke: var(--color-orange-fg);
+      stroke-opacity: 0.4;
+      stroke-dasharray: 4 4;
+    }
+
+    // actual responsiveness — bold green, decays over time
+    g.line-plot-2 path {
+      stroke: var(--color-green-fg);
+    }
+
+    // actual cost of change — bold orange, climbs over time
+    g.line-plot-3 path {
+      stroke: var(--color-orange-fg);
+    }
+
+    // vertical "technical debt" marker — a lone bar spiking to full height at one
+    // point in time, clipped to a thin centered strip so it reads as a straight
+    // blue line (same bar→tick trick as diffusion-curve). Echoes the blue gap arrow
+    // in the original diagram. The bar is appended last in source, so it's
+    // bar-plot-4 and the line-plot indices above are unaffected.
+    g[class^="bar-plot"] rect {
+      fill: var(--color-blue-fg);
+      clip-path: inset(0 calc(50% - 1px));
+    }
+
+    // Hide the x-axis tick marks. The shared build config (ofm.ts) forces
+    // xAxis.showTick: true site-wide, but this chart's x labels are blank
+    // (zero-width spaces), so the bare ticks are just noise. Scoped here rather
+    // than flipping the global config, which the diffusion/meeting charts rely on.
+    g.bottom-axis g.ticks {
+      display: none;
+    }
+
+    // Drop the hardcoded full-bleed background box, same as the charts above.
+    rect.background {
+      fill: none;
+    }
+  }
+
+  // On phones the chart goes full-bleed, so the em-dash "arrows" baked into the
+  // x-axis/y-axis label text (g.labels > g.label > text) overshoot the chart box
+  // — Mermaid emits them at font-size:14 without measuring their width. Shrink the
+  // axis-label font on mobile so the arrows pull back inside the chart. font-size
+  // here is an SVG presentation attr in viewBox user units; the `overrides` layer
+  // beats it the same way the quadrant fills below do (no !important needed).
+  @media #{$mobile} {
+    .mermaid svg[aria-roledescription="quadrantChart"] g.labels text {
+      font-size: 10px;
+    }
+  }
+
+  // Opt-in escape hatch for matrices whose quadrant labels are too long to fit
+  // the shared quadrantLabelFontSize (14, set in quartz/util/mermaid.ts's
+  // consumers) at DEFAULT_QUADRANT_SIZE — e.g. evalai's "Optimistic power user".
+  // Add `small-quadrant-labels` to the page's `cssclasses` to shrink just the
+  // quadrant labels so they clear the central dividers. font-size here is an SVG
+  // presentation attr in viewBox user units; the `overrides` layer beats it the
+  // same way the mobile axis-label rule above does (no !important needed).
+  .small-quadrant-labels .mermaid g.quadrants g.quadrant text {
+    font-size: 11px;
+  }
+
+  // Severity / opportunity quadrant tints (opt-in per page via frontmatter
+  // `cssclasses`). Both paint a green↔red diagonal with yellow on the off-
+  // diagonal; they differ only in which corner is "good":
+  //   .severity-matrix    — top-right (q1) = worst  = red   (risk-project, risk-vendor, decision, stakeholders)
+  //   .opportunity-matrix — top-right (q1) = best   = green (eisenhower)
+  // Opt-in because the diagonal only fits matrices where the top-right corner is
+  // unambiguously best or worst — not a typology grid whose four corners are
+  // independent categories rather than points on one good↔bad scale.
+  //
+  // Mermaid's init-directive theme variables don't apply in this Quartz render
+  // path, but each quadrant <rect> carries an inline `fill` *presentation
+  // attribute*, which a plain CSS rule overrides (no !important needed).
+  // Quadrants are emitted in q1..q4 order = top-right, top-left, bottom-left,
+  // bottom-right.
+  // Fills reuse the muted pill tokens from _colors.scss, and each quadrant's
+  // label takes the matching `fg` token. The fills flip with the theme like the
+  // pills do; in dark mode the colored labels are swapped for one light neutral
+  // so they stay legible on the darker surfaces (see the override below).
+  // (Axis/title text sits outside .quadrants and keeps the theme color.)
+  .severity-matrix,
+  .opportunity-matrix {
+    .mermaid g.quadrants g.quadrant {
+      // Off-diagonal (top-left q2 / bottom-right q4) is the mid tier in both.
+      &:nth-of-type(2),
+      &:nth-of-type(4) {
+        rect {
+          fill: var(--color-yellow-bg);
+        }
+        text {
+          fill: var(--color-yellow-fg);
+        }
+      }
+    }
+  }
+
+  // Diagonal corners — the only difference between the two variants.
+  .severity-matrix .mermaid g.quadrants g.quadrant {
+    &:nth-of-type(1) {
+      rect {
+        fill: var(--color-red-bg);
+      }
+      text {
+        fill: var(--color-red-fg);
+      }
+    } // top-right (q1) — worst
+    &:nth-of-type(3) {
+      rect {
+        fill: var(--color-green-bg);
+      }
+      text {
+        fill: var(--color-green-fg);
+      }
+    } // bottom-left (q3) — best
+  }
+
+  .opportunity-matrix .mermaid g.quadrants g.quadrant {
+    &:nth-of-type(1) {
+      rect {
+        fill: var(--color-green-bg);
+      }
+      text {
+        fill: var(--color-green-fg);
+      }
+    } // top-right (q1) — best
+    &:nth-of-type(3) {
+      rect {
+        fill: var(--color-red-bg);
+      }
+      text {
+        fill: var(--color-red-fg);
+      }
+    } // bottom-left (q3) — worst
+  }
+}

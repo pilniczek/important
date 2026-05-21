@@ -1,0 +1,21 @@
+// Manifest — @uses the global style partials. Each partial assigns its own
+// rules to a CSS cascade layer (`@layer`), so priority follows ITCSS order
+// regardless of source order. The order is declared in the CSS emitter
+// (quartz/plugins/emitters/componentResources.ts, `layerOrder`), lowest to
+// highest priority:
+//   settings   → colors.scss        (variables.scss is pure Sass, no output)
+//   generic    → reset.scss
+//   elements   → elements.scss
+//   objects    → layout.scss
+//   components → syntax.scss, callouts.scss (+ component CSS, wrapped by emitter)
+//   overrides  → custom.scss (highest; added there)
+// See AGENTS.md "Base SCSS structure" for the rationale.
+
+@use "./variables.scss" as *;
+@use "./colors.scss";
+@use "./syntax.scss";
+@use "./callouts.scss";
+
+@use "./reset.scss";
+@use "./elements.scss";
+@use "./layout.scss";
