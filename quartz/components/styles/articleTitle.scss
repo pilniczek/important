@@ -1,0 +1,32 @@
+.article-meta-line {
+  margin: 0.25rem 0 0 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.article-meta-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+
+  > span {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem;
+  }
+}
+
+.article-source-url {
+  display: block; // override .article-meta-line's flex so text-overflow works
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  // The .external link carries its own white-space:normal + overflow-wrap:
+  // break-word (from base `a` styles), so it wraps to fit and defeats the
+  // ellipsis. Pin it to one line so the overflow is clipped above instead.
+  a {
+    white-space: nowrap;
+  }
+}
