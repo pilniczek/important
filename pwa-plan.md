@@ -1,8 +1,10 @@
 # Plan: Convert the wiki to a PWA with offline fallback
 
+> **Status: not implemented.** No PWA emitter is registered in [quartz.config.ts](quartz.config.ts); this file describes proposed work, not the current build.
+
 ## Context
 
-This is a Quartz 4 personal wiki (223 markdown pages → static HTML in [public/](public/)) deployed to GitHub Pages at `pilniczek.github.io/important`. The user wants a Progressive Web App with **network-first, fall back to stored data** behavior so the wiki stays usable offline (subway, plane, flaky wifi).
+This is a Quartz 4 personal wiki (246 markdown pages → static HTML in [public/](public/)) deployed to GitHub Pages at `pilniczek.github.io/important`. The user wants a Progressive Web App with **network-first, fall back to stored data** behavior so the wiki stays usable offline (subway, plane, flaky wifi).
 
 Today the SPA router at [quartz/components/scripts/spa.inline.ts:65](quartz/components/scripts/spa.inline.ts#L65) calls `fetchCanonical()` and on failure falls back to `window.location.assign(url)` ([line 74-75](quartz/components/scripts/spa.inline.ts#L74-L75)) — i.e. a hard reload that *also* fails offline. There is no service worker, no `manifest.webmanifest`, no PWA plugin. Clean slate.
 
@@ -55,9 +57,9 @@ The emitter runs after the page-emitting emitters in `quartz.config.ts`, so it c
 - **From `ctx.allFiles` / `ctx.allSlugs`** — the slug list Quartz already populates and that [contentIndex.tsx](quartz/plugins/emitters/contentIndex.tsx) iterates. Each slug maps to `<slug>/index.html`.
 - **Plus fixed extras** — `index.html`, `404.html`, `static/contentIndex.json`, `manifest.webmanifest`, `icon-192.png`, `icon-512.png`, and the `prescript.js` / `postscript.js` / `index.css` bundles emitted by `ComponentResources`.
 
-The emitter inlines this list as a JS array literal into the `sw.js` source string before `write()`-ing it. The 223-page corpus + assets is roughly a few MB total — acceptable for a deliberate "install" action.
+The emitter inlines this list as a JS array literal into the `sw.js` source string before `write()`-ing it. The 246-page corpus + assets is roughly a few MB total — acceptable for a deliberate "install" action.
 
-Image assets embedded inside content pages (e.g. screenshots under `content/issue/`, `content/semantic-commit-messages/`) are **not** included in the precache to keep first-install size bounded; they fall through to runtime cache-first on first view of their containing page.
+Image assets embedded inside content pages (they live in the shared `content/assets/` folder) are **not** included in the precache to keep first-install size bounded; they fall through to runtime cache-first on first view of their containing page.
 
 ## Files to touch
 

@@ -32,14 +32,14 @@ Wiki content lives under [content/](content/) (every page is a flat `content/<sl
 
 ### Filename / folder rules
 
-- **Every page is a flat `content/<slug>.md` file** — a direct child of `content/`. There are **no per-page folders and no nested page hierarchy**; the only subfolders under `content/` hold shared assets/config (`assets/`, `notion-assets/`, `lato-font/`, `.obsidian/`).
+- **Every page is a flat `content/<slug>.md` file** — a direct child of `content/`. There are **no per-page folders and no nested page hierarchy**; the only subfolders under `content/` hold shared assets/config (`assets/`, `notion-assets/`, `lato-font/`, `skills/`, `.obsidian/`).
 - **Slug format**: `[a-z0-9-]` only. Lowercase ASCII (the slug is the filename without `.md`).
 - **Dashes are the only separator.** Multiple consecutive dashes collapse to one; no leading/trailing dashes.
 - **Assets are referenced by filename**, Obsidian-style (`![[name.webp]]`), and resolved from the shared asset folders — not stored alongside each page.
 
 ### Frontmatter format
 
-Every page file has YAML frontmatter; `title`, `tags`, `type`, `section`, `releaseDate` are required. The full set of fields and their types is declared in [plugins/transformers/frontmatter.ts](quartz/plugins/transformers/frontmatter.ts) (search for `interface DataMap` — source of truth).
+Every page file has YAML frontmatter; `title`, `tags`, `type`, `section` are required, and `releaseDate` is optional (see below). The full set of fields and their types is declared in [plugins/transformers/frontmatter.ts](quartz/plugins/transformers/frontmatter.ts) (search for `interface DataMap` — source of truth).
 
 **`tags`** is normalized by Quartz at parse time: single string → 1-element array, comma-separated string → split, non-strings filtered. Slugified via [`slugTag`](quartz/util/path.ts) (lowercase, spaces → hyphens), so `tags: [Start a project]` is exposed to components as `Start-a-project`.
 
@@ -84,9 +84,10 @@ When `tags:list` surfaces a case/plural collision, treat the fix as a **separate
 
 ### Linking conventions
 
-- Internal page links: relative `[Foo](../foo/index.md)` from the source's directory.
-- Same-folder asset embeds: `![alt](image.png)` — the asset sits in the page's own folder.
-- Tag links: Quartz auto-creates `/tags/<slug>` pages from frontmatter `tags`; link to them as `[TagName](../tags/tagname/index.md)` if you need an in-body link.
+- Internal page links: Obsidian wikilinks by slug — `[[foo]]` or `[[foo|custom label]]`. The layout is flat, so there is no directory to be relative to. A markdown link to a page that no longer exists (`[Foo](Foo/index.md)`, a Notion-import leftover) emits a dead `./Foo/` href — Quartz does not warn.
+- Asset embeds: Obsidian-style by filename — `![[name.webp]]`.
+- Non-image assets (video, PDF, `.xcf`, JSON): link by **bare filename** — `[timezones.mp4](timezone-issue-openapigenerator-timezones.mp4)`. `CrawlLinks` runs with `markdownLinkResolution: "shortest"` ([quartz.config.ts](quartz.config.ts)), so it finds the file in whichever shared folder holds it and emits the full path. Don't hand-write the folder prefix.
+- Tag links: Quartz auto-creates `/tags/<slug>` pages from frontmatter `tags`; link to them as `[TagName](../tags/TagName/index.md)` if you need an in-body link — that form resolves to `./tags/TagName` at build. Casing matters, [`slugTag`](quartz/util/path.ts) does not lowercase.
 - External URLs that should NOT be touched: `notion.so` / `notion.site` (external Notion references, kept intentionally despite containing UUIDs).
 
 ### Matrix-style pages

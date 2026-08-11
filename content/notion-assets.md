@@ -1,5 +1,7 @@
 ---
 title: House of Web assets
+tags:
+  - Assets
 type: Tool
 section: Archived
 ---

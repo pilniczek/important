@@ -41,9 +41,9 @@ Pokud se merguje s warningem, je potřeba do merge requestu napsat vysvětlení 
 
 Rozlišujeme primárně 2 typy projektů:
 
-[B2C Project](B2C-Project/index.md)
+### B2C Project
 
-[B2B Project](B2B-Project/index.md)
+### B2B Project
 
 ## Možnosti nastavení
 

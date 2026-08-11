@@ -1,5 +1,7 @@
 ---
 title: Music resources
+tags:
+  - Music
 type: Tool
 section: Utilities
 ---

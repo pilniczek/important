@@ -1,5 +1,7 @@
 ---
 title: Wiki
+tags:
+  - Basics
 section: Main
 ---
 
