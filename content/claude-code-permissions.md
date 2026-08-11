@@ -177,4 +177,4 @@ Note what is deliberately absent. There are no `allow` entries for `.env.example
 
 ---
 
-Related: [[always-on-output-style|Always-on output style]] · [[global-agents-md-windows-wsl|Global AGENTS.md across Windows and WSL]] · [[claude-code-environment|Claude Code environment]]
+Related: [[always-on-output-style|Always-on caveman]] · [[global-agents-md-windows-wsl|Global AGENTS.md across Windows and WSL]] · [[claude-code-environment|Claude Code environment]]

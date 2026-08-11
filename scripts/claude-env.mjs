@@ -6,9 +6,16 @@
  * that it is already in place. Nothing is deleted and no existing value is
  * overwritten, so a second run is a no-op.
  *
- * Scope is deliberately limited to Claude Code itself - everything under
- * ~/.claude plus the AGENTS.md wiring. Editor, git and toolchain setup are
- * manual steps; see content/claude-code-environment.md for that checklist.
+ * Scope is deliberately limited to Claude Code itself - everything under ~/.claude,
+ * plus the AGENTS.md wiring and the skills CLI's ~/.agents store. Editor, git and
+ * toolchain setup are manual steps; see content/claude-code-environment.md.
+ *
+ * Everything path-free is shared across Windows and WSL by keeping the real file on
+ * the Windows side and symlinking to it from WSL: AGENTS.md, the skill directories
+ * (~/.claude/skills plus the CLI's ~/.agents store and lock), and the statusline and
+ * caveman clones. settings.json is the exception - its contents are path-bearing, so it
+ * stays per-OS, which is why the statusLine command and the hook commands are written
+ * per platform.
  *
  * Usage:
  *   node scripts/claude-env.mjs
@@ -37,61 +44,51 @@ const flag = (name) =>
 const has = (name) => args.includes(`--${name}`)
 
 /** The Claude Code settings keys this script owns. Paths are filled in per platform. */
-const SETTINGS_KEYS = { outputStyle: "caveman", theme: "light-ansi", tui: "fullscreen" }
+const SETTINGS_KEYS = { theme: "light-ansi", tui: "fullscreen" }
 
-/** Relative to the Windows user profile, on both OSes. */
-const STATUSLINE_REL = ["Documents", "Claude", "Projects", "claude-statusline", "statusline.js"]
+/** Relative to the user's own home on either OS, because the directory itself is shared. */
+const STATUSLINE_REL = [".claude", "statusline", "statusline.js"]
 
 const CLAUDE_MD = `Global agent preferences live in AGENTS.md (single source of truth). Do not edit this pointer; edit AGENTS.md.
 
 @../AGENTS.md
 `
 
-const OUTPUT_STYLE = `---
-name: caveman
-description: Ultra-compressed output. Full technical accuracy, no filler.
-keep-coding-instructions: true
----
+/** Upstream's hook scripts, inside the shared caveman clone. */
+const CAVEMAN_HOOKS_REL = [".claude", "caveman", "src", "hooks"]
+const CAVEMAN_HOOKS = [
+  {
+    event: "SessionStart",
+    script: "caveman-activate.js",
+    statusMessage: "Loading caveman mode...",
+  },
+  {
+    event: "UserPromptSubmit",
+    script: "caveman-mode-tracker.js",
+    statusMessage: "Tracking caveman mode...",
+  },
+]
 
-Respond terse like smart caveman. All technical substance stay. Only fluff die.
-
-## Persistence
-
-ACTIVE EVERY RESPONSE. No revert after many turns. Off only: "stop caveman" / "normal mode".
-
-## Rules
-
-Drop: articles, filler, pleasantries, hedging. Fragments OK. Short synonyms. No tool-call
-narration, no decorative tables or emoji. Technical terms exact. Code blocks unchanged.
-Errors quoted exact.
-
-Never drop not / never / no / only / except. Numbers and units exact.
-
-## Language
-
-Reply in the language the user writes. Compress the style, not the language. Keep technical
-terms, code, API names, CLI commands and exact error strings verbatim.
-
-## No self-reference
-
-Never name or announce the style.
-
-## Auto-Clarity
-
-Drop the compression for security warnings, irreversible-action confirmations, multi-step
-sequences where fragment order could be misread, and anywhere compression itself creates
-ambiguity. Resume afterwards.
-
-## Boundaries
-
-Anything persisted outside the chat - code, comments, commit messages, docs, PR text, memory
-files, messages to third parties - is written in normal prose.
-
-## Levels
-
-Intensity levels (lite / full / ultra / wenyan-*) and their examples live in
-~/.claude/skills/caveman/SKILL.md, read on demand. Default is full.
-`
+/**
+ * Directories shared across both OSes, relative to a user profile. Skills are shared as a
+ * unit - the directory Claude Code reads plus the CLI's own store and lock - so an install
+ * from either OS updates one state and `skills list` agrees on both sides. `create` marks
+ * the ones this script may bring into being; the statusline is a clone, not a store.
+ */
+const SHARED_DIRS = [
+  { rel: [".claude", "skills"], create: true },
+  { rel: [".agents"], create: true },
+  {
+    rel: [".claude", "statusline"],
+    create: false,
+    hint: "clone pilniczek/claude-statusline there",
+  },
+  {
+    rel: [".claude", "caveman"],
+    create: false,
+    hint: "clone JuliusBrussee/caveman there",
+  },
+]
 
 const log = {
   done: (m) => console.log(`  created  ${m}`),
@@ -123,6 +120,27 @@ function findWindowsProfile() {
   return candidates.length === 1 ? candidates[0] : null
 }
 
+/**
+ * Points a WSL path at its Windows counterpart. Anything already sitting at the target
+ * that is not the expected symlink is reported rather than replaced, so a real file or
+ * directory is never clobbered.
+ */
+function symlinkIfMissing(target, source) {
+  let current = null
+  try {
+    current = fs.readlinkSync(target)
+  } catch {
+    /* not a symlink, or absent */
+  }
+  if (current === source) return log.keep(`${target} -> ${source}`)
+  if (current) return log.warn(`${target} -> ${current}, expected ${source} - resolve by hand`)
+  if (fs.existsSync(target))
+    return log.warn(`${target} exists and is not a symlink - resolve by hand`)
+  fs.mkdirSync(path.dirname(target), { recursive: true })
+  fs.symlinkSync(source, target)
+  log.done(`${target} -> ${source}`)
+}
+
 function writeIfMissing(file, contents) {
   if (fs.existsSync(file)) return log.keep(file)
   fs.mkdirSync(path.dirname(file), { recursive: true })
@@ -150,24 +168,80 @@ function wireAgentsMd() {
   if (!fs.existsSync(source))
     return log.warn(`${source} absent - create it on the Windows side first`)
 
-  let current = null
-  try {
-    current = fs.readlinkSync(target)
-  } catch {
-    /* not a symlink, or absent */
-  }
-  if (current === source) return log.keep(`${target} -> ${source}`)
-  if (fs.existsSync(target)) {
-    return log.warn(`${target} exists and is not the expected symlink - resolve by hand`)
-  }
-  fs.symlinkSync(source, target)
-  log.done(`${target} -> ${source}`)
+  symlinkIfMissing(target, source)
 }
 
-function wirePointerAndStyle() {
+function wirePointer() {
   log.step("Claude Code files")
   writeIfMissing(path.join(CLAUDE_DIR, "CLAUDE.md"), CLAUDE_MD)
-  writeIfMissing(path.join(CLAUDE_DIR, "output-styles", "caveman.md"), OUTPUT_STYLE)
+}
+
+/**
+ * The always-on caveman voice comes from upstream's two hooks, which read the caveman
+ * SKILL.md at runtime - so there is no style file to write and no rules to keep in sync.
+ * Only the wiring is ours, and it is per-OS because the command carries a path.
+ */
+function wireCavemanHooks() {
+  log.step("caveman hooks")
+  const hooksDir = path.join(HOME, ...CAVEMAN_HOOKS_REL)
+  if (!fs.existsSync(hooksDir))
+    return log.warn(`${hooksDir} absent - clone JuliusBrussee/caveman into ~/.claude/caveman`)
+
+  const file = path.join(CLAUDE_DIR, "settings.json")
+  const settings = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, "utf8")) : {}
+  settings.hooks ??= {}
+
+  let changed = false
+  for (const { event, script, statusMessage } of CAVEMAN_HOOKS) {
+    const entries = (settings.hooks[event] ??= [])
+    if (entries.some((g) => g.hooks?.some((h) => h.command?.includes(script)))) {
+      log.keep(`${event} -> ${script}`)
+      continue
+    }
+    entries.push({
+      hooks: [
+        {
+          type: "command",
+          command: `"node" "${path.join(hooksDir, script)}"`,
+          timeout: 5,
+          statusMessage,
+        },
+      ],
+    })
+    changed = true
+    log.done(`${event} -> ${script}`)
+  }
+  if (changed) fs.writeFileSync(file, `${JSON.stringify(settings, null, 2)}\n`, "utf8")
+}
+
+/**
+ * Directories are shared the same way single files are: the real ones live on the Windows
+ * side and WSL symlinks to them. This has to run before wireSettings, which looks for the
+ * statusline through the link, and before installSkills, or an install would populate the
+ * wrong side.
+ */
+function wireSharedDirs() {
+  log.step("shared directories")
+  if (isWindows || !isWsl) return log.keep("real directories on this OS")
+
+  const profile = findWindowsProfile()
+  if (!profile) {
+    log.warn(
+      "cannot locate the Windows profile holding the shared directories - pass --win-user=<name>",
+    )
+    return
+  }
+  for (const { rel, create, hint } of SHARED_DIRS) {
+    const source = path.posix.join(profile, ...rel)
+    if (!fs.existsSync(source)) {
+      if (!create) {
+        log.warn(`${source} absent - ${hint}`)
+        continue
+      }
+      fs.mkdirSync(source, { recursive: true })
+    }
+    symlinkIfMissing(path.join(HOME, ...rel), source)
+  }
 }
 
 /**
@@ -201,13 +275,7 @@ function wireSettings() {
 }
 
 function statuslineCommand() {
-  if (isWindows) {
-    const script = path.join(HOME, ...STATUSLINE_REL)
-    return fs.existsSync(script) ? `node ${script}` : null
-  }
-  const profile = findWindowsProfile()
-  if (!profile) return null
-  const script = path.posix.join(profile, ...STATUSLINE_REL)
+  const script = path.join(HOME, ...STATUSLINE_REL)
   return fs.existsSync(script) ? `node ${script}` : null
 }
 
@@ -229,7 +297,9 @@ function installSkills() {
     fs.existsSync(path.join(CLAUDE_DIR, "skills"))
       ? fs
           .readdirSync(path.join(CLAUDE_DIR, "skills"), { withFileTypes: true })
-          .filter((e) => e.isDirectory())
+          // A skill installed by an older CLI is a symlink into ~/.agents/skills rather than
+          // a directory - counting only directories would reinstall what is already there.
+          .filter((e) => e.isDirectory() || e.isSymbolicLink())
           .map((e) => e.name)
       : [],
   )
@@ -239,14 +309,17 @@ function installSkills() {
       log.keep(skill)
       continue
     }
+    // The command goes through a shell because Windows resolves npx to npx.cmd, which
+    // execFileSync cannot spawn directly. Only slugs reach the shell.
+    if (!/^[\w.\-/]+$/.test(skill) || !/^[\w.\-/]+$/.test(repo)) {
+      log.warn(`${skill} (${repo}) - unexpected characters in the manifest entry, not installed`)
+      continue
+    }
     try {
-      execFileSync(
-        "npx",
-        ["-y", "skills", "add", repo, "--skill", skill, "-g", "-a", "claude-code", "-y"],
-        {
-          stdio: "inherit",
-        },
-      )
+      execFileSync(`npx -y skills add ${repo} --skill ${skill} -g -a claude-code -y`, {
+        stdio: "inherit",
+        shell: true,
+      })
       log.done(`${skill} (${repo})`)
     } catch {
       log.warn(`${skill} (${repo}) - install failed, run the command by hand to see why`)
@@ -258,8 +331,10 @@ console.log(
   `Claude Code environment bootstrap - ${isWindows ? "Windows" : isWsl ? "WSL" : "Linux"}`,
 )
 wireAgentsMd()
-wirePointerAndStyle()
+wirePointer()
+wireSharedDirs()
 wireSettings()
+wireCavemanHooks()
 installSkills()
 console.log(
   "\nDone. Permission rules are deliberately not written by this script; see content/claude-code-permissions.md.",

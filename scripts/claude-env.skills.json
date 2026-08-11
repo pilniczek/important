@@ -18,6 +18,14 @@
       "skill": "domain-modeling",
       "repo": "mattpocock/skills",
       "note": "Same as grilling: a grill-with-docs dependency, pinned here on purpose."
+    },
+    { "skill": "skill-scanner", "repo": "getsentry/skills" },
+    { "skill": "caveman-compress", "repo": "juliusbrussee/caveman" },
+    { "skill": "find-skills", "repo": "vercel-labs/skills" },
+    {
+      "skill": "thermo-nuclear-code-quality-review",
+      "repo": "cursor/plugins",
+      "note": "Slash-command only (disable-model-invocation), so it never shows up in the model-invocable list."
     }
   ]
 }
