@@ -2,6 +2,7 @@
 title: WSL Windows setup
 tags:
   - WSL
+  - Configuration
 type: How To
 section: Main
 ---
