@@ -19,19 +19,69 @@ Edit only canonical file: `C:\Users\[USER]\AGENTS.md`. Everything else points at
 - WSL `~/.claude/CLAUDE.md` → `@../AGENTS.md`
 - WSL `~/AGENTS.md` → (symlink) `/mnt/c/Users/[USER]/AGENTS.md`.
 
-## Layout
+The same pattern carries the rest of the shared configuration, each canonical under `C:\Users\[USER]\` with a symlink to it from WSL:
+
+- `.claude\skills\` and `.agents\` - the skills Claude Code reads, plus the CLI's store and lock, linked as a unit so an install from either OS updates one state
+- `.claude\statusline\` - the statusline clone, see [[claude-statusline|claude-statusline]]
+- `.claude\caveman\` - the caveman clone whose hooks carry the always-on voice, see [[always-on-output-style|Always-on caveman]]
+
+Anything whose content is free of OS-specific paths qualifies. `settings.json` does not, which is why its `statusLine` command and its two hook commands are written separately on each side - the full inventory is in [[claude-code-environment|Claude Code environment]].
+
+## Layout: agent instruction files
+
+The pointer chain, and the one file every agent tool reads. `CLAUDE.md` is duplicated because it is only a pointer; the file it points at is shared.
 
 ```mermaid
 flowchart LR
-  subgraph WIN["Windows (~ = C:\Users\<UserName>)"]
+  subgraph WIN["Windows (~ = C:\Users\[USER])"]
     WC["~/.claude/CLAUDE.md<br/>@../AGENTS.md"] --> WA["~/AGENTS.md<br/>REAL FILE"]
     WOTHER["Other agent tools<br/>(Codex, Cursor, ...)"] --> WA
   end
-  subgraph WSL["WSL (~ = /home/<UserName>)"]
+  subgraph WSL["WSL (~ = /home/[USER])"]
     LC["~/.claude/CLAUDE.md<br/>@../AGENTS.md"] --> LA["~/AGENTS.md<br/>symlink"]
     LOTHER["Other agent tools<br/>(Codex, Cursor, ...)"] --> LA
   end
   LA -. symlink .-> WA
+```
+
+## Layout: skills and the caveman voice
+
+The skills directory and the CLI's store travel together, so `skills list` cannot disagree between the two sides. The caveman clone rides along with them, and its `SessionStart` hook reads the caveman `SKILL.md` out of that same shared skills directory - one source for both the slash command and the always-on voice. What each side still writes for itself is the hook command, because it carries a path.
+
+```mermaid
+flowchart LR
+  subgraph WIN2["Windows (~ = C:\Users\[USER])"]
+    WK["~/.claude/skills<br/>REAL DIRS"]
+    WG["~/.agents<br/>store + .skill-lock.json"]
+    WV["~/.claude/caveman<br/>REAL DIR (clone)"]
+  end
+  subgraph WSL2["WSL (~ = /home/[USER])"]
+    LK["~/.claude/skills<br/>symlink"]
+    LG["~/.agents<br/>symlink"]
+    LV["~/.claude/caveman<br/>symlink"]
+  end
+  LK -. symlink .-> WK
+  LG -. symlink .-> WG
+  LV -. symlink .-> WV
+  WSET["Windows settings.json<br/>hooks -> C:/.../caveman"] --> WV
+  LSET["WSL settings.json<br/>hooks -> /home/.../caveman"] --> LV
+```
+
+## Layout: statusline
+
+The statusline adds a step the others do not have, because it is a program under development rather than a config file. The two checkouts never talk to each other directly: changes go up to GitHub from the development checkout and come back down into the deployed clone, which is the copy both operating systems execute.
+
+```mermaid
+flowchart LR
+  DEV["WSL ~/Projects.../claude-statusline<br/>development checkout, SSH remote"]
+  GH["github.com/[USER]/claude-statusline"]
+  WT["Windows ~/.claude/statusline<br/>deployed clone, HTTPS remote"]
+  LT["WSL ~/.claude/statusline<br/>symlink"]
+  DEV -- "git push" --> GH
+  GH -- "git pull" --> WT
+  LT -. symlink .-> WT
+  WT --> WRUN["Windows settings.json<br/>node C:/.../statusline.js"]
+  LT --> LRUN["WSL settings.json<br/>node /home/.../statusline.js"]
 ```
 
 ## How resolution works
@@ -40,6 +90,7 @@ flowchart LR
 - `@../AGENTS.md` line imports file one dir up: `~/AGENTS.md`.
 - Windows: real file. WSL: symlink, reads same `/mnt/c` file.
 - Other agent tools read `~/AGENTS.md` directly. No import step.
+- The symlinks are created on the WSL side, where no privilege is needed. Windows does support symlinks, but creating one there needs Developer Mode or an elevated shell.
 
 ## The rules in that file
 
@@ -73,4 +124,4 @@ Canonical file: `C:\Users\[USER]\AGENTS.md` (edit only here).
 
 ```
 
-Related: [[claude-code-environment|Claude Code environment]] · [[claude-code-permissions|Claude Code permission rules]] · [[always-on-output-style|Always-on output style]]
+Related: [[claude-code-environment|Claude Code environment]] · [[claude-code-permissions|Claude Code permission rules]] · [[always-on-output-style|Always-on caveman]]

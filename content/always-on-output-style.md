@@ -1,5 +1,5 @@
 ---
-title: Always-on output style (caveman in every session)
+title: Always-on caveman
 tags:
   - AI
   - Claude
@@ -12,103 +12,120 @@ releaseDate: 2026-08-11
 
 A globally installed skill does **not** run in every session. Skills are _model-invoked_: Claude reads the one-line `description` from every `SKILL.md`, and loads the body only when it judges the description relevant to the current prompt (or when you type `/skill-name`). That is exactly right for a task skill and exactly wrong for a **communication style**, which must hold for the whole session including the very first reply.
 
-Claude Code has a separate layer for this: **output styles**. An output style is injected into the system prompt at session start, and the harness itself re-reminds the model that the style is active - persistence is a runtime property, not something the model has to remember.
+Two mechanisms can carry it instead. This page picked the output style first, then reversed to a `SessionStart` hook. Both the reasoning and the reversal are recorded, because the reversal was driven by evidence rather than taste.
 
-Worked example below: making the [Caveman](https://skills.sh/juliusbrussee/caveman/caveman) skill (see [[skills|SKILLS]]) the default voice everywhere, without losing Claude Code's coding behaviour.
+Worked example: making the [Caveman](https://skills.sh/juliusbrussee/caveman/caveman) skill (see [[skills|SKILLS]]) the default voice on both Windows and WSL.
 
-## Why not just tell it in AGENTS.md
+## The four candidates
 
-Four mechanisms can carry a style. The first three land it in conversation context, where it competes with everything else in the transcript; only the last one lands it in the system prompt.
+| Mechanism           | Runs every session | Reinforced by harness | Lands in      | Notes                                                          |
+| ------------------- | ------------------ | --------------------- | ------------- | -------------------------------------------------------------- |
+| Skill (default)     | No                 | No                    | Conversation  | Fires only on description match or `/caveman`                  |
+| Rule in `AGENTS.md` | Yes                | No                    | Conversation  | One shared file for Windows + WSL; can fade in long sessions   |
+| `SessionStart` hook | Yes                | No                    | Conversation  | Deterministic trigger, still just context; skipped by `--bare` |
+| Output style        | Yes                | Yes                   | System prompt | Per-OS config; no tool call at session start                   |
 
-| Mechanism           | Runs every session | Reinforced by harness | Lands in          | Notes                                                          |
-| ------------------- | ------------------ | --------------------- | ----------------- | -------------------------------------------------------------- |
-| Skill (default)     | No                 | No                    | Conversation      | Fires only on description match or `/caveman`                  |
-| Rule in `AGENTS.md` | Yes                | No                    | Conversation      | One shared file for Windows + WSL; can fade in long sessions   |
-| `SessionStart` hook | Yes                | No                    | Conversation      | Deterministic trigger, still just context; skipped by `--bare` |
-| **Output style**    | **Yes**            | **Yes**               | **System prompt** | Per-OS config; no tool call at session start                   |
+On that table the output style wins outright, and it is what this setup used: `~/.claude/output-styles/caveman.md` plus `"outputStyle": "caveman"` in `settings.json`. It worked, and the `keep-coding-instructions: true` frontmatter kept the coding agent intact alongside the voice.
 
-The two context-injection rows also cost a `Skill` tool call if the injected rule merely points at `SKILL.md` rather than restating the rules inline.
+## Why it lost anyway
 
-The output style wins on the two things that matter for a persistent voice: it is in the system prompt rather than in conversation context, and the harness periodically re-asserts it. Verified against Claude Code 2.1.210, whose binary carries the settings key (`outputStyle` - "Controls the output style for assistant responses"), the `output-styles/` directory loader, the `keep-coding-instructions` frontmatter flag, and the reminder string `"… output style is active. Remember to follow the specific guidelines for this style."`
+Three findings, in the order they landed:
+
+1. **Anthropic is moving off the mechanism.** The official marketplace ships `explanatory-output-style`, and that plugin contains no style file at all. Its README opens: _"This plugin recreates the **deprecated** Explanatory output style as a SessionStart hook"_, and the handler injects the instructions as `additionalContext`. Both built-in styles migrated the same way.
+2. **Upstream caveman never used a style.** `JuliusBrussee/caveman` is itself a plugin, and its `plugin.json` wires `SessionStart` + `UserPromptSubmit` hooks. There is no output style anywhere in that repo, so the style file here was authored content with no upstream - a distillation that had to be kept in sync by hand, with a `## Mirror` note in `SKILL.md` as the reminder.
+3. **The hook reads `SKILL.md` at runtime.** `caveman-activate.js` resolves the skill file through a candidate list and emits the full ruleset filtered to the active intensity level. Its own comment explains why the full text rather than a summary: _"models drifted back to verbose mid-conversation, especially after context compression pruned it away."_ So the duplication problem the style file created does not exist here - there is one source of truth, and it is upstream's.
+
+The deciding measurement was cost. `claude plugin details` reports the inventory of any plugin:
+
+| Route                      | Always-on tokens                             |
+| -------------------------- | -------------------------------------------- |
+| Output style (what we had) | ~899 style + ~150 skill description ≈ 1,050  |
+| Full upstream plugin       | ~2,813 skills+agents + ~1,045 hook ≈ 3,858   |
+| **Hooks, no plugin**       | ~1,045 hook + ~150 skill description ≈ 1,195 |
+
+The plugin's 2,813 tokens are its 25 bundled skills and 5 agents, none of which are wanted. Wiring only the two hooks costs about what the style file cost, and `install.js` confirms the two paths are alternatives rather than partners: hooks are written into `settings.json` only when a plugin install did not happen, because otherwise _"two CAVEMAN MODE blocks"_ fire per event.
+
+## The setup
+
+Clone upstream once on the Windows side and symlink it from WSL, the same pattern as the skills and the statusline - see [[global-agents-md-windows-wsl|Global AGENTS.md across Windows and WSL]]:
+
+```bash
+git clone https://github.com/JuliusBrussee/caveman /mnt/c/Users/[USER]/.claude/caveman
+ln -s /mnt/c/Users/[USER]/.claude/caveman ~/.claude/caveman
+```
+
+Then two hooks in each `settings.json`, because the command carries a path and that file is never shared:
+
+```json
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"node\" \"/home/[USER]/.claude/caveman/src/hooks/caveman-activate.js\"",
+            "timeout": 5,
+            "statusMessage": "Loading caveman mode..."
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"node\" \"/home/[USER]/.claude/caveman/src/hooks/caveman-mode-tracker.js\"",
+            "timeout": 5,
+            "statusMessage": "Tracking caveman mode..."
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+`npm run env:bootstrap` writes both entries and reports `already` on a second run - see [[claude-code-environment|Claude Code environment]]. Do **not** use upstream's `bin/install.js` for this: it installs the plugin (the 2,813 tokens), copies six scripts into `~/.claude/hooks/` instead of leaving them in a pullable clone, and merges a `statusLine` of its own into `settings.json`.
 
 ## Load path
 
 ```mermaid
 flowchart LR
-  A["session start"] --> B["~/.claude/settings.json<br/>outputStyle: caveman"]
-  B --> C["~/.claude/output-styles/caveman.md<br/>core rules + keep-coding-instructions"]
-  C --> D["system prompt"]
-  D --> E["harness reminder<br/>'style is active'"]
-  F["~/.claude/skills/caveman/SKILL.md<br/>intensity levels + examples"] -. "read on demand<br/>(/caveman ultra)" .-> D
+  A["session start"] --> B["settings.json<br/>SessionStart hook"]
+  B --> C["~/.claude/caveman/src/hooks/<br/>caveman-activate.js"]
+  C --> D["reads skills/caveman/SKILL.md<br/>filters to active level"]
+  D --> E["additionalContext<br/>-> conversation"]
+  F["UserPromptSubmit hook<br/>caveman-mode-tracker.js"] -. "/caveman ultra"  .-> G["~/.claude/.caveman-active<br/>mode flag"]
+  G -. "read next session" .-> C
 ```
 
-## Step 1 - the output style file
-
-Create `~/.claude/output-styles/caveman.md` (the directory does not exist by default):
-
-```yaml
----
-name: caveman
-description: Ultra-compressed output. Full technical accuracy, no filler.
-keep-coding-instructions: true
----
-```
-
-`keep-coding-instructions: true` is the load-bearing line. Without it, a non-default output style **replaces** Claude Code's default coding instructions instead of sitting alongside them - you get the voice and lose the coding agent. With it, both are in the system prompt.
-
-`name` defaults to the filename, `description` is what shows in the `/output-style` picker. Two further frontmatter keys (`force-for-plugin`, and plugin-scoped `outputStyles` paths) are meaningful only for plugin-bundled styles - ignored for user styles.
-
-## Step 2 - flip it on globally
-
-Add one top-level key to `~/.claude/settings.json`, next to `theme` / `statusLine`:
-
-```json
-{
-  "outputStyle": "caveman"
-}
-```
-
-Edit surgically. A long-lived settings file is mostly a `permissions.allow` array (mine holds 443 entries) - a reformat or reorder there is a real diff nobody wants to review.
-
-## Step 3 - decide what gets duplicated
-
-The style file and the skill now describe the same thing, so pick a split and write it down. What worked:
-
-- **In the output style** - the always-true core: persistence (off only on "stop caveman"), the drop-lists (articles, filler, pleasantries, hedging), the never-drop list (`not` / `never` / `no` / `only` / `except`, numbers, units, error strings), language preservation, no self-reference, auto-clarity exemptions, and boundaries.
-- **In `SKILL.md` only** - the intensity table (`lite` / `full` / `ultra` / `wenyan-*`) and the per-level examples. Those are needed only when you actually switch level, and they are the bulk of the tokens.
-- **A `## Mirror` section at the bottom of `SKILL.md`** naming the style file and the settings key, so the next edit touches both.
-
-Two rules from the skill deserve calling out, because they are what keeps an always-on style survivable:
-
-- **Auto-clarity** - drop the compression for security warnings, irreversible-action confirmations, multi-step sequences where fragment order could be misread, and anywhere compression itself creates ambiguity.
-- **Boundaries** - anything persisted outside the chat (code, comments, commit messages, docs, PR/MR text, memory files, messages to third parties) is written in normal prose. Without this, your commit history turns into caveman.
+The mode flag is what makes levels persist: the tracker hook writes `~/.claude/.caveman-active`, and the activate hook reads it. `/caveman off` deletes it and skips activation entirely, which is the permanent off-switch that `/output-style default` used to be.
 
 ## Verification
 
-The style loads at session start, so the session you edited from will _not_ show it. Test in a fresh one, and never mention caveman in the prompt - if the prompt hints at it, you have tested nothing.
+Hooks fire at session start, so the session you configured from will _not_ show the change. Test in a fresh one, and never mention caveman in the prompt - if the prompt hints at it, you have tested nothing.
 
 ```bash
-# 1. settings still valid, permissions untouched
-python3 -c "import json; d=json.load(open('$HOME/.claude/settings.json')); \
-  print(d['outputStyle'], len(d['permissions']['allow']))"
-
-# 2. fresh session, no mention of the style
+# fresh session, no mention of the style
 claude -p "why does a React component re-render when I pass an inline object prop?"
 ```
 
 What to look for:
 
 - **Voice** - fragments, no articles, no pleasantries, while `Object.is` and `useMemo` survive verbatim. Compression of style, not of substance.
-- **Coding layer intact** - give a fresh session a trivial file edit. It must still reach for Read/Edit normally and still honour `AGENTS.md`. This is the check that `keep-coding-instructions` actually took.
+- **Coding layer intact** - give a fresh session a trivial file edit. It must still reach for Read/Edit normally and still honour `AGENTS.md`.
 - **Boundaries** - ask for a commit message. Normal prose, not caveman.
-- **Picker** - `/output-style` shows `caveman` as selected.
+- **Both OSes** - the hook command differs per side, so a passing WSL test says nothing about Windows.
 
 ## Caveats
 
-- **Turning it off has two scopes.** "stop caveman" ends it for the current session only; the next session has it back. Permanent off is `/output-style default`.
-- **Windows and WSL do not share this.** `~/.claude/settings.json` and `~/.claude/output-styles/` are per-OS. Only `AGENTS.md` is shared, via symlink - see [[global-agents-md-windows-wsl|Global AGENTS.md across Windows and WSL]]. Parity means copying the style file and adding the settings key on the other side too (and installing the skill there, if you want the intensity levels).
-- **`--bare` is a different world.** It skips hooks, plugin sync, auto-memory and `CLAUDE.md` auto-discovery, and expects context to be handed in explicitly (`--system-prompt`, `--append-system-prompt`, `--settings`). If you script against it, pass the style in yourself rather than assuming the global setting applies.
-- **Project scope exists too.** A repo-local `.claude/output-styles/` plus `outputStyle` in project settings gives a per-repo voice, which is the better home for a house writing style than a global one.
+- **Context, not system prompt.** This is the concession the reversal accepts: the rules now sit in conversation context, where a heavy compaction can prune them. Upstream mitigates it by injecting the full ruleset rather than a summary, and the `UserPromptSubmit` hook re-asserts the active level.
+- **`--bare` skips hooks entirely.** With the output style, a scripted `--bare` run still inherited the voice from settings; now it does not. Pass the rules in yourself with `--append-system-prompt` if a scripted run needs them.
+- **Two node processes per session** plus one per prompt, each with a 5-second timeout.
+- **Updating means `git pull`** in `~/.claude/caveman`. Nothing is vendored, so nothing goes stale silently - but nothing updates by itself either.
+- **The `## Mirror` note in `SKILL.md` is obsolete.** It pointed at a style file that no longer exists. Since the hook reads `SKILL.md` directly, an upstream `skills update` overwriting that file is now harmless.
 
 ---
 
