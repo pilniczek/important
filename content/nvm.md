@@ -3,6 +3,7 @@ title: NVM
 tags:
   - Start a project
   - NVM
+  - Configuration
 type: How To
 section: Main
 ---

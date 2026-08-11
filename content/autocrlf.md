@@ -2,7 +2,6 @@
 title: Safe line endings
 tags:
   - GIT
-  - Configuration
 type: How To
 section: Main
 ---

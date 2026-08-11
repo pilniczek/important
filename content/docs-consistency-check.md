@@ -5,7 +5,16 @@ tags:
   - Skill
 type: Tool
 section: Main
-url: "https://skills.sh/pilniczek/docs-consistency-check/docs-consistency-check"
+url: "https://github.com/pilniczek/dev-skills"
 ---
 
-[pilniczek/docs-consistency-check on GitHub](https://github.com/pilniczek/docs-consistency-check)
+Lives in [pilniczek/dev-skills on GitHub](https://github.com/pilniczek/dev-skills) alongside Work Report. Install either way:
+
+```bash
+npx skills add https://github.com/pilniczek/dev-skills --skill docs-consistency-check
+```
+
+```text
+/plugin marketplace add pilniczek/dev-skills
+/plugin install docs-consistency-check@dev-skills
+```

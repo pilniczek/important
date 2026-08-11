@@ -2,7 +2,6 @@
 title: Remember conflict resolutions
 tags:
   - GIT
-  - Configuration
 type: How To
 section: Main
 ---
