@@ -2,7 +2,6 @@
 title: Push current branch by default
 tags:
   - GIT
-  - Configuration
 type: How To
 section: Main
 ---

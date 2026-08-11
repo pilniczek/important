@@ -3,6 +3,7 @@ title: SSH
 tags:
   - Collaboration
   - GIT
+  - Configuration
 type: How To
 section: Main
 ---

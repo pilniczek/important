@@ -2,7 +2,6 @@
 title: Sign your commits
 tags:
   - GIT
-  - Configuration
 type: How To
 section: Main
 ---

@@ -3,6 +3,7 @@ title: claude-statusline
 tags:
   - AI
   - Claude
+  - Configuration
 type: How To
 section: Main
 releaseDate: 2026-05-22
