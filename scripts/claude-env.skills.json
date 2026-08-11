@@ -1,0 +1,23 @@
+{
+  "$comment": "Global (-g) Claude Code skills, installed by scripts/claude-env.mjs. This file is the manifest a fresh machine reproduces; content/skills.md is the human catalogue and marks which entries are global, project-scoped, or only evaluated.",
+  "version": 1,
+  "installCommand": "npx skills add {repo} --skill {skill} -g -a claude-code -y",
+  "global": [
+    { "skill": "caveman", "repo": "juliusbrussee/caveman" },
+    { "skill": "docs-consistency-check", "repo": "pilniczek/dev-skills" },
+    { "skill": "humanizer", "repo": "blader/humanizer" },
+    { "skill": "work-report", "repo": "pilniczek/dev-skills" },
+    { "skill": "skill-creator", "repo": "anthropics/skills" },
+    { "skill": "grill-with-docs", "repo": "mattpocock/skills" },
+    {
+      "skill": "grilling",
+      "repo": "mattpocock/skills",
+      "note": "Pulled in by grill-with-docs; listed explicitly so a fresh install cannot end up with the wrapper and not the body."
+    },
+    {
+      "skill": "domain-modeling",
+      "repo": "mattpocock/skills",
+      "note": "Same as grilling: a grill-with-docs dependency, pinned here on purpose."
+    }
+  ]
+}
