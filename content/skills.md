@@ -17,9 +17,9 @@ releaseDate: 2026-06-01
 
 Skills grouped by source repository. Each entry is marked with where it is installed, because the catalogue is wider than any one machine:
 
-- **`[global]`** - installed in `~/.claude/skills/`, available in every session. The pinned list a fresh machine reproduces is `scripts/claude-env.skills.json`, installed by `npm run env:bootstrap` (see [[claude-code-environment|Claude Code environment]]).
-- **`[project]`** - vendored into this repo's `.agents/skills/` and pinned in `skills-lock.json`, so it only exists here.
-- **`[evaluated]`** - read and worth knowing about, not currently installed anywhere.
+- **[`global`]** - installed in `~/.claude/skills/`, available in every session. The pinned list a fresh machine reproduces is `scripts/claude-env.skills.json`, installed by `npm run env:bootstrap` (see [[claude-code-environment|Claude Code environment]]).
+- **[`project`]** - vendored into this repo's `.agents/skills/` and pinned in `skills-lock.json`, so it only exists here.
+- **[`evaluated`]** - read and worth knowing about, not currently installed anywhere.
 
 ### anthropics/skills &#91;[GitHub](https://github.com/anthropics/skills)&#93;
 
@@ -70,8 +70,8 @@ Skills grouped by source repository. Each entry is marked with where it is insta
 
 Own skills. The repo doubles as a plugin marketplace, so either `npx skills add` or `/plugin install <skill>@dev-skills` installs them.
 
-- Docs Consistency Check [`global`] [`project`] - cross-file audit of docs, manifests and instruction files; see [[docs-consistency-check|notes]].
-- Work Report [`global`] - writes `WORK-REPORT.md` so a reviewer or a fresh session reads the intent instead of re-deriving it from the diff.
+- [Docs Consistency Check](https://skills.sh/pilniczek/dev-skills/docs-consistency-check) [`global`] [`project`] - cross-file audit of docs, manifests and instruction files; see [[docs-consistency-check|notes]].
+- [Work Report](https://skills.sh/pilniczek/dev-skills/work-report) [`global`] - writes `WORK-REPORT.md` so a reviewer or a fresh session reads the intent instead of re-deriving it from the diff.
 
 ### sickn33/antigravity-awesome-skills &#91;[GitHub](https://github.com/sickn33/antigravity-awesome-skills)&#93;
 
