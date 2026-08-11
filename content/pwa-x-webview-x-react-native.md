@@ -136,7 +136,3 @@ On android the native language used to be `Java`. But in May 2019 Google announc
 - costs more to have the application on multiple platforms
 - you could need more people if you want to write it quickly
 - more people needed (if we consider that one person tends to focus on one platform)
-
-# Testik
-
-[Test example](Test-example/index.md)

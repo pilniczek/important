@@ -8,8 +8,6 @@ section: Archived
 
 > By ”classy” we mean the standard implementation of the site using code.
 
-[**Moderní Web Builders neboli „nóbl“ kód**](Modern%C3%AD-Web-Builders-neboli-%E2%80%9En%C3%B3bl%E2%80%9C-k%C3%B3d/index.md)
-
 When a client comes to us with a request for a **website**, it is very important to understand what exactly he needs. Since sites are static or dynamic, the approaches to project implementation can be different, let's start with the difference.
 
 ## Dynamic websites
