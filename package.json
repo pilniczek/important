@@ -22,6 +22,7 @@
     "optimize:images": "node ./scripts/optimize-images.mjs",
     "optimize:videos": "node ./scripts/optimize-videos.mjs",
     "tags:list": "node ./scripts/tags-list.mjs",
+    "env:bootstrap": "node ./scripts/claude-env.mjs",
     "prepare": "husky"
   },
   "engines": {
