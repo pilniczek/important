@@ -2,6 +2,7 @@
 title: Development in WSL
 tags:
   - WSL
+  - Configuration
 type: How To
 section: Archived
 ---

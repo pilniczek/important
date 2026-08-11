@@ -2,6 +2,7 @@
 title: GIT installation
 tags:
   - GIT
+  - Configuration
 type: How To
 section: Main
 ---
