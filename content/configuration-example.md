@@ -113,8 +113,8 @@ If the file doesn't exist yet, create it. Then paste the template below and repl
 	release = push origin HEAD:release
 	selenium = push origin HEAD:selenium
 	test = push origin HEAD:test
-	# remove merged branches
-	merged = !sh -c 'git branch --merged | egrep -v \"(^\\*|master|main|dev)\" >/tmp/merged-branches && code --wait /tmp/merged-branches && xargs git branch -d </tmp/merged-branches'
+	# remove merged branches (^\* = current branch, ^\+ = branch checked out in another worktree)
+	merged = !sh -c 'git branch --merged | egrep -v \"(^\\*|^\\+|master|main|dev)\" >/tmp/merged-branches && echo \"waiting for git merged confirmation - review the list and close the IDE tab to continue\" && code --wait /tmp/merged-branches 2>/dev/null && xargs git branch -d </tmp/merged-branches'
 
 [color]
 	ui = auto
