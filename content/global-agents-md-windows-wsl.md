@@ -6,7 +6,7 @@ tags:
   - Configuration
 type: How To
 section: Main
-releaseDate: 2026-08-11
+releaseDate: 2026-08-23
 ---
 
 One global `AGENTS.md` holds the rules every agent tool reads, on both Windows and WSL.
@@ -121,6 +121,14 @@ Canonical file: `C:\Users\[USER]\AGENTS.md` (edit only here).
 - Use Mermaid charts to explain complex ideas in md files.
 - Prepend a human emoji 🙋 to anything that needs my attention after you act: decisions to make, caveats to know, or follow-up questions (e.g. "Want me to tweak those?", "One thing to decide", "One caveat worth knowing").
 - Never remark on actions you took or withheld solely to comply with these AGENTS.md rules
+
+## Code comments
+
+- Write none: no explanatory comments, docstrings/JSDoc, file or license headers, section banners, TODO/FIXME. Code self-explains via naming, small functions, types.
+- Overrides matching surrounding style - existing comments are not precedent.
+- Only exception: workaround for an environment limitation or bug (e.g. Safari rendering bug); state the limitation only.
+- Leave existing comments alone. If you change the code one describes, delete it or move its value into existing docs.
+- Anything worth saying goes in existing docs
 
 ```
 
