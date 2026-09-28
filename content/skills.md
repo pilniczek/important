@@ -9,9 +9,7 @@ section: Main
 releaseDate: 2026-06-01
 ---
 
-[The Agent Skills Directory](https://skills.sh/)
-
-[GitHub - vercel-labs/skills: The open agent skills tool - npx skills](https://github.com/vercel-labs/skills?tab=readme-ov-file#other-commands)
+Everything below is installed with the `skills` CLI, [Vercel's open agent skills tool](https://github.com/vercel-labs/skills), run as `npx skills` and able to target 75-odd agents from one command. Skills themselves are browsed in [The Agent Skills Directory](https://skills.sh/), the registry the same team runs; `add`, `list`, `remove` and `update` are the commands that matter, and `-g` is what makes an install global rather than project-local.
 
 ## Global
 
@@ -23,21 +21,30 @@ Installed in `~/.claude/skills/`, available in every session. The pinned list a 
 - Domain Modeling &#91;[mattpocock/skills](https://github.com/mattpocock/skills)&#93; - the glossary and ADR half of the same pairing; also arrives with it.
 - ~~[Brainstorming](https://skills.sh/obra/superpowers/brainstorming)~~ &#91;[obra/superpowers](https://github.com/obra/superpowers)&#93; _(deprecated, use Grill with Docs)_
 - ~~[Grill Me](https://skills.sh/mattpocock/skills/grill-me)~~ &#91;[mattpocock/skills](https://github.com/mattpocock/skills)&#93; _(deprecated, use Grill with Docs)_
-- [Grill with Docs](https://skills.sh/mattpocock/skills/grill-with-docs) &#91;[mattpocock/skills](https://github.com/mattpocock/skills)&#93; - see [[grill-with-docs|notes & best practices]].
+- [Grill with Docs](https://skills.sh/mattpocock/skills/grill-with-docs) &#91;[mattpocock/skills](https://github.com/mattpocock/skills)&#93; - interviews you until you reach shared understanding. Best practices from [Matt Pocock's grill video](https://www.youtube.com/watch?v=UzMNBN6xLLA):
+  - Grill only low-fidelity questions (a route's URL); hand high-fidelity ones (UI feel) to a prototype session and bring the learnings back.
+  - Keep the scope to one bounded thing, so the session stays under ~120k tokens.
+  - Grill with a smart model; implementation can run on a cheaper one.
+  - End by implementing the decisions or writing them down, never by clearing context cold.
 - Grilling &#91;[mattpocock/skills](https://github.com/mattpocock/skills)&#93; - the interview body that Grill with Docs delegates to; arrives with it.
-- ~~[Handoff](https://skills.sh/mattpocock/skills/handoff)~~ &#91;[mattpocock/skills](https://github.com/mattpocock/skills)&#93; _(deprecated, use Work Report)_ - see [[handoff-skill|notes & takeaways]].
-- [Work Report](https://skills.sh/pilniczek/dev-skills/work-report) &#91;[pilniczek/dev-skills](https://github.com/pilniczek/dev-skills)&#93; - writes `WORK-REPORT.md` so a reviewer or a fresh session reads the intent instead of re-deriving it from the diff.
-- [Docs Consistency Check](https://skills.sh/pilniczek/dev-skills/docs-consistency-check) &#91;[pilniczek/dev-skills](https://github.com/pilniczek/dev-skills)&#93; - cross-file audit of docs, manifests and instruction files; can also be installed per project; see [[docs-consistency-check|notes]].
+- ~~[Handoff](https://skills.sh/mattpocock/skills/handoff)~~ &#91;[mattpocock/skills](https://github.com/mattpocock/skills)&#93; _(deprecated, use Work Report)_ - writes a markdown doc so a fresh agent continues the work; unlike compact, it moves out-of-scope work into a separate session instead of summarizing back into the current one ([Matt Pocock's handoff video](https://www.youtube.com/watch?v=dtAJ2dOd3ko)).
+- [Work Report](https://skills.sh/pilniczek/dev-skills/work-report) &#91;[pilniczek/dev-skills](https://github.com/pilniczek/dev-skills)&#93; - writes `WORK-REPORT.md` so a reviewer or a fresh session reads the intent instead of re-deriving it from the diff; runs with or without a git repo.
+- [Docs Consistency Check](https://skills.sh/pilniczek/dev-skills/docs-consistency-check) &#91;[pilniczek/dev-skills](https://github.com/pilniczek/dev-skills)&#93; - cross-file audit of docs, templates, manifests, installer scripts and instruction files; runs with or without a git repo; can also be installed per project, or as a Claude Code plugin with `/plugin marketplace add pilniczek/dev-skills` and `/plugin install docs-consistency-check@dev-skills`.
 - [Skill Scanner](https://skills.sh/getsentry/skills/skill-scanner) &#91;[getsentry/skills](https://github.com/getsentry/skills)&#93; - static-analysis audit of other skills before adoption: prompt injection, obfuscation, excessive permissions, secrets, supply chain. Needs the `uv` CLI.
 - [Caveman Compress](https://skills.sh/juliusbrussee/caveman/caveman-compress) &#91;[juliusbrussee/caveman](https://github.com/juliusbrussee/caveman)&#93; - compresses a memory file in place to cut input tokens, keeping a `.original.md` backup.
-- [Thermo-Nuclear Code Quality Review](https://skills.sh/cursor/plugins/thermo-nuclear-code-quality-review) &#91;[cursor/plugins](https://github.com/cursor/plugins)&#93; - ambitious, strict review skill; slash-command only, so it never shows in the model's list; see [[thermo-nuclear-code-review|notes & takeaways]].
+- [Thermo-Nuclear Code Quality Review](https://skills.sh/cursor/plugins/thermo-nuclear-code-quality-review) &#91;[cursor/plugins](https://github.com/cursor/plugins)&#93; - ambitious, strict review skill; slash-command only, so it never shows in the model's list. It hunts the whole codebase, not just the diff, for reframings that delete complexity. From [Matt Pocock's test drive](https://www.youtube.com/watch?v=mh5XZ-L5SFQ):
+  - It pushes for files under ~1K lines, logic moved out of nested `if`s into helpers or state machines, boring code over clever code, and tight types (no needless optional props, `any` or casts).
+  - Ambition costs cheap false positives; on 5 real PRs, ~5 of 7 findings were worth fixing.
+  - It says nothing about tests or seams, and its prompt is long and repetitive.
 - [Find Skills](https://skills.sh/vercel-labs/skills/find-skills) &#91;[vercel-labs/skills](https://github.com/vercel-labs/skills)&#93; - searches the directory for a skill that does what you are asking for.
 
-Two entries carry `disable-model-invocation: true` and are therefore slash-command only: Grill with Docs and Thermo-Nuclear Code Quality Review.
+Two entries carry [`disable-model-invocation: true`](https://code.claude.com/docs/en/skills) and are therefore slash-command only: Grill with Docs and Thermo-Nuclear Code Quality Review.
 
 ## Project
 
 Vendored into this repo's `.claude/skills/`, so they only exist here.
+
+A project can also install skills from GitHub instead of vendoring them, recorded in a `skills-lock.json` at the repo root - what that file does and does not pin is in [[skills-lock-pinning|Pinning a project skill]].
 
 - Decision Framer - reframes a decision into its real options, the criteria that matter, and the unknowns that would change the answer.
 - Expand and Contract - expands an idea into everything it could include, then sorts each item into Core / Nice-to-have / Maybe-later / Out.
@@ -70,6 +77,6 @@ Bundled with the official [anthropics/claude-plugins-official](https://github.co
 - [build-mcp-server](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/mcp-server-dev/skills/build-mcp-server) / [build-mcp-app](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/mcp-server-dev/skills/build-mcp-app) / [build-mcpb](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/mcp-server-dev/skills/build-mcpb) &#91;[mcp-server-dev](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/mcp-server-dev)&#93; - MCP development trio: scaffold a server, add interactive UI widgets, bundle a shippable local `.mcpb`.
 - [agent-development](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/plugin-dev/skills/agent-development), [command-development](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/plugin-dev/skills/command-development), [hook-development](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/plugin-dev/skills/hook-development), [skill-development](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/plugin-dev/skills/skill-development), [mcp-integration](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/plugin-dev/skills/mcp-integration), [plugin-settings](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/plugin-dev/skills/plugin-settings), [plugin-structure](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/plugin-dev/skills/plugin-structure) &#91;[plugin-dev](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/plugin-dev)&#93; - focused guides for each piece of a Claude Code plugin.
 
-[settings.json](settings.json)
+## Checking the project set on open
 
-[tasks.json](tasks.json)
+VSCode can run `npx skills check` whenever the folder opens, which is enough to notice a project skill that is missing or stale without remembering to look. The task lives in [tasks.json](tasks.json) with `runOn: folderOpen`, and it only fires once [settings.json](settings.json) sets `task.allowAutomaticTasks` to `on` - the same mechanism as [[vscode-autorun-claude-on-open|Run tools when workspace opened]].
