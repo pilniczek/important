@@ -6,7 +6,7 @@ tags:
   - Configuration
 type: How To
 section: Main
-releaseDate: 2026-06-01
+releaseDate: 2026-09-28
 ---
 
 Everything below is installed with the `skills` CLI, [Vercel's open agent skills tool](https://github.com/vercel-labs/skills), run as `npx skills` and able to target 75-odd agents from one command. Skills themselves are browsed in [The Agent Skills Directory](https://skills.sh/), the registry the same team runs; `add`, `list`, `remove` and `update` are the commands that matter, and `-g` is what makes an install global rather than project-local.
@@ -27,6 +27,10 @@ Installed in `~/.claude/skills/`, available in every session. The pinned list a 
   - Grill with a smart model; implementation can run on a cheaper one.
   - End by implementing the decisions or writing them down, never by clearing context cold.
 - Grilling &#91;[mattpocock/skills](https://github.com/mattpocock/skills)&#93; - the interview body that Grill with Docs delegates to; arrives with it.
+- [Wayfinder](https://skills.sh/mattpocock/skills/wayfinder) &#91;[mattpocock/skills](https://github.com/mattpocock/skills)&#93; - plans work too big for one session as a map issue of decision tickets on the repo's issue tracker, then resolves them one at a time ([Wayfinder docs](https://github.com/mattpocock/skills/blob/main/docs/engineering/wayfinder.md)):
+  - `/wayfinder <idea>` charts the map; `/wayfinder <map>` resolves one ticket per fresh session. A cleared map goes to `/to-spec`.
+  - Without a configured tracker it uses [local markdown](https://github.com/mattpocock/skills/blob/main/skills/engineering/setup-matt-pocock-skills/issue-tracker-local.md) under `.scratch/<effort>/`.
+- [Setup Matt Pocock Skills](https://skills.sh/mattpocock/skills/setup-matt-pocock-skills) &#91;[mattpocock/skills](https://github.com/mattpocock/skills)&#93; - run once per repo before Wayfinder: records the issue tracker (GitHub, GitLab, local markdown or a described Other such as Jira), triage labels and domain doc layout under `docs/agents/`. TO REVIEW
 - ~~[Handoff](https://skills.sh/mattpocock/skills/handoff)~~ &#91;[mattpocock/skills](https://github.com/mattpocock/skills)&#93; _(deprecated, use Work Report)_ - writes a markdown doc so a fresh agent continues the work; unlike compact, it moves out-of-scope work into a separate session instead of summarizing back into the current one ([Matt Pocock's handoff video](https://www.youtube.com/watch?v=dtAJ2dOd3ko)).
 - [Work Report](https://skills.sh/pilniczek/dev-skills/work-report) &#91;[pilniczek/dev-skills](https://github.com/pilniczek/dev-skills)&#93; - writes `WORK-REPORT.md` so a reviewer or a fresh session reads the intent instead of re-deriving it from the diff; runs with or without a git repo.
 - [Docs Consistency Check](https://skills.sh/pilniczek/dev-skills/docs-consistency-check) &#91;[pilniczek/dev-skills](https://github.com/pilniczek/dev-skills)&#93; - cross-file audit of docs, templates, manifests, installer scripts and instruction files; runs with or without a git repo; can also be installed per project, or as a Claude Code plugin with `/plugin marketplace add pilniczek/dev-skills` and `/plugin install docs-consistency-check@dev-skills`.
@@ -38,7 +42,7 @@ Installed in `~/.claude/skills/`, available in every session. The pinned list a 
   - It says nothing about tests or seams, and its prompt is long and repetitive.
 - [Find Skills](https://skills.sh/vercel-labs/skills/find-skills) &#91;[vercel-labs/skills](https://github.com/vercel-labs/skills)&#93; - searches the directory for a skill that does what you are asking for.
 
-Two entries carry [`disable-model-invocation: true`](https://code.claude.com/docs/en/skills) and are therefore slash-command only: Grill with Docs and Thermo-Nuclear Code Quality Review.
+Four entries carry [`disable-model-invocation: true`](https://code.claude.com/docs/en/skills#control-who-invokes-a-skill) and are therefore slash-command only: Grill with Docs, Wayfinder, Setup Matt Pocock Skills and Thermo-Nuclear Code Quality Review.
 
 ## Project
 
