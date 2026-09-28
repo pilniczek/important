@@ -16,7 +16,7 @@ const config: QuartzConfig = {
     analytics: null,
     locale: "en-US",
     baseUrl: "pilniczek.github.io/important",
-    ignorePatterns: ["private", "templates", ".obsidian"],
+    ignorePatterns: ["shadow", "templates", ".obsidian"],
     defaultDateType: "modified",
     theme: {
       fontOrigin: "googleFonts",

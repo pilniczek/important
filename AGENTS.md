@@ -32,7 +32,15 @@ Wiki content lives under [content/](content/) (every page is a flat `content/<sl
 
 ### Filename / folder rules
 
-- **Every page is a flat `content/<slug>.md` file** — a direct child of `content/`. There are **no per-page folders and no nested page hierarchy**; the only subfolders under `content/` hold shared assets/config (`assets/`, `notion-assets/`, `lato-font/`, `skills/`, `.obsidian/`).
+- **Every page is a flat `content/<slug>.md` file** — a direct child of `content/`. There are **no per-page folders and no nested page hierarchy**; the only subfolders under `content/` hold shared assets/config (`assets/`, `notion-assets/`, `lato-font/`, `skills/`, `.obsidian/`) plus `shadow/` (see below).
+
+### Shadow content (in repo, not in wiki)
+
+`content/shadow/` holds files that are committed but never built into the site - it is listed in `ignorePatterns` ([quartz.config.ts](quartz.config.ts)) and skipped by `npm run tags:list`. Page rules (frontmatter, flat slugs) don't apply there.
+
+- Keep a shadow file's assets inside `content/shadow/` - an asset in `content/assets/` is published.
+- Never link a published page to a shadow file - the `[[wikilink]]` renders dead and Quartz does not warn.
+- The personal-information rule below covers published content only; shadow files are still public on GitHub.
 - **Slug format**: `[a-z0-9-]` only. Lowercase ASCII (the slug is the filename without `.md`).
 - **Dashes are the only separator.** Multiple consecutive dashes collapse to one; no leading/trailing dashes.
 - **Assets are referenced by filename**, Obsidian-style (`![[name.webp]]`), and resolved from the shared asset folders — not stored alongside each page.
