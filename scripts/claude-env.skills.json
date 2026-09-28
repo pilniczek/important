@@ -19,6 +19,16 @@
       "repo": "mattpocock/skills",
       "note": "Same as grilling: a grill-with-docs dependency, pinned here on purpose."
     },
+    {
+      "skill": "wayfinder",
+      "repo": "mattpocock/skills",
+      "note": "Slash-command only (disable-model-invocation)."
+    },
+    {
+      "skill": "setup-matt-pocock-skills",
+      "repo": "mattpocock/skills",
+      "note": "Per-repo tracker setup that wayfinder expects; slash-command only (disable-model-invocation)."
+    },
     { "skill": "skill-scanner", "repo": "getsentry/skills" },
     { "skill": "caveman-compress", "repo": "juliusbrussee/caveman" },
     { "skill": "find-skills", "repo": "vercel-labs/skills" },
