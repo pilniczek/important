@@ -26,7 +26,7 @@ Resources:
 
 ### Přístup
 
-Pokud nefunguje gatsbym poskytnutá IP adresa 172.22.156.74:8000 by default, jde to řešit třeba přes port forwarding v Chrome. [https://developer.chrome.com/docs/devtools/remote-debugging/local-server/](https://developer.chrome.com/docs/devtools/remote-debugging/local-server/)
+Pokud nefunguje gatsbym poskytnutá IP adresa `<local-ip>:8000` by default, jde to řešit třeba přes port forwarding v Chrome. [https://developer.chrome.com/docs/devtools/remote-debugging/local-server/](https://developer.chrome.com/docs/devtools/remote-debugging/local-server/)
 
 ### HTTP/1.1 404 Not Found
 
