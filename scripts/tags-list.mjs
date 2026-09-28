@@ -36,7 +36,8 @@ const extractTagsFromFrontmatter = ({ tags } = {}) => {
 const readArticleTags = async (path) =>
   extractTagsFromFrontmatter(safeParseFrontmatter(await safeReadFile(path)))
 
-const findMarkdownArticles = (contentDir) => globby("**/*.md", { cwd: contentDir, absolute: true })
+const findMarkdownArticles = (contentDir) =>
+  globby("**/*.md", { cwd: contentDir, absolute: true, ignore: ["shadow"] })
 
 const countOccurrences = (items) =>
   items.reduce((counts, item) => counts.set(item, (counts.get(item) ?? 0) + 1), new Map())
