@@ -5,9 +5,12 @@ tags:
   - WSL
   - Configuration
 type: How To
-section: Main
-releaseDate: 2026-08-23
+section: Archived
+releaseDate: 2026-09-10
 ---
+
+> Archived 2026-09-10. The cross-OS symlink scheme below is gone; `~/AGENTS.md` is a real file in
+> WSL. Current setup and the backup of the preferences text: [[global-agents-md|Global AGENTS.md]].
 
 One global `AGENTS.md` holds the rules every agent tool reads, on both Windows and WSL.
 
