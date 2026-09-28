@@ -13,7 +13,7 @@ Everything below is installed with the `skills` CLI, [Vercel's open agent skills
 
 ## Global
 
-Installed in `~/.claude/skills/`, available in every session. The pinned list a fresh machine reproduces is `scripts/claude-env.skills.json`, installed by `npm run env:bootstrap` (see [[claude-code-environment|Claude Code environment]]). Windows and WSL share one copy of that directory and of the CLI's `~/.agents` store, so installing from either side serves both. `skills remove <name> -g` is what takes one out again, because deleting the directory leaves a stale entry in `~/.agents/.skill-lock.json`.
+Installed in `~/.claude/skills/`, available in every session. The pinned list a fresh machine reproduces is `scripts/claude-env.skills.json`, installed by `npm run env:bootstrap` (see [[claude-code-environment|Claude Code environment]]). `skills remove <name> -g` is what takes one out again, because deleting the directory leaves a stale entry in `~/.agents/.skill-lock.json`.
 
 - [Skill Creator](https://skills.sh/anthropics/skills/skill-creator) &#91;[anthropics/skills](https://github.com/anthropics/skills)&#93;
 - [Humanizer](https://skills.sh/blader/humanizer/humanizer) &#91;[blader/humanizer](https://github.com/blader/humanizer)&#93; - removes signs of AI-generated writing; based on Wikipedia's "Signs of AI writing" guide.
