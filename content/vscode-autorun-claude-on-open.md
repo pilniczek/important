@@ -7,17 +7,17 @@ tags:
   - GIT
 type: How To
 section: Main
-releaseDate: 2026-06-12
+releaseDate: 2026-09-10
 ---
 
-Open any workspace folder in VSCode and a few tools fire automatically — your terminal with `claude` running, a repo freshen, and the Git Graph view — wired up once in global settings rather than per-project `.vscode/` files. It works for both native Windows and WSL Remote projects.
+Open any workspace folder in VSCode and two things fire automatically - a repo freshen and the Git Graph view - wired up once in global settings rather than per-project `.vscode/` files. A Claude session is _not_ one of them: it opens on demand from a keybinding, because a session started for you in every window is a session you did not ask for.
 
 ## What you get
 
-- **Windows project**: Windows Terminal opens at the workspace folder and runs `cmd /k claude`. The `git sync` then runs in the integrated terminal.
-- **WSL Remote project**: Windows Terminal opens a WSL session at the workspace folder, runs `claude`, then runs `git sync`.
-- **Git repo (either platform)** - the Git Graph view auto-opens in the editor area.
+- **Any git repo** - a `git sync` terminal runs in the background and the Git Graph view auto-opens in the editor area.
+- **A folder that is not a git repo** - nothing fires. Both rules are gated on `.git/HEAD`.
 - **VSCode opened with no folder** - nothing fires.
+- **`ctrl+alt+c`** - a Claude session as an editor tab, when you want one.
 
 ## Required extensions
 
@@ -35,27 +35,25 @@ Open via `Ctrl+Shift+P` → "Preferences: Open User Settings (JSON)".
 {
   "workbench.startupEditor": "none", // skip Welcome tab so Git Graph is the startup view
   "window.restoreWindows": "all",
+  "terminal.integrated.defaultLocation": "editor", // terminals open as tabs, not in the panel
   "auto-run-command.rules": [
     {
       "condition": "hasFile: .git/HEAD", // only in a git repo; needs files.exclude -> "**/.git": false
       "command": "git-graph.view",
     },
     {
-      "condition": "hasFile: **/*",
+      "condition": "hasFile: .git/HEAD",
       "command": "terminals.runTerminals",
     },
   ],
   "terminals.autorun": true,
   "terminals.terminals": [
     {
-      "name": "cmd",
+      "name": "git sync",
       "cwd": "${workspaceFolder}",
-      "commands": [
-        "start \"\" wt.exe -d \"${workspaceFolder}\" cmd /k claude",
-        "git sync",
-      ],
+      "commands": ["git sync"],
       "autorun": true,
-      "focus": true,
+      "focus": false,
     },
   ],
 }
@@ -65,41 +63,68 @@ Open via `Ctrl+Shift+P` → "Preferences: Open User Settings (JSON)".
 
 With a WSL Remote project open, `Ctrl+,` → click the **Remote &#91;WSL: &lt;distro&gt;&#93;** tab → open the JSON (the `{}` icon top-right).
 
-Replace `<your-windows-user>` with your Windows username:
+The `terminals.*` block is the same as above; the `auto-run-command.rules` array is duplicated here so the rules fire when the window is a WSL one:
 
 ```jsonc
 {
+  "auto-run-command.rules": [
+    { "condition": "hasFile: .git/HEAD", "command": "git-graph.view" },
+    { "condition": "hasFile: .git/HEAD", "command": "terminals.runTerminals" },
+  ],
   "terminals.autorun": true,
   "terminals.terminals": [
     {
-      "name": "Claude",
+      "name": "git sync",
       "cwd": "${workspaceFolder}",
-      "commands": [
-        "/mnt/c/Users/<your-windows-user>/AppData/Local/Microsoft/WindowsApps/wt.exe new-tab wsl.exe --cd ${workspaceFolder} -- bash -ic \"claude\\; exec bash\" ; git sync"
-      ],
+      "commands": ["git sync"],
       "autorun": true,
-      "focus": true
-    }
-  ]
+      "focus": false,
+    },
+  ],
 }
 ```
 
+## Launching Claude on demand
+
+`keybindings.json` (`Ctrl+Shift+P` → "Preferences: Open Keyboard Shortcuts (JSON)"):
+
+```jsonc
+{
+  "key": "ctrl+alt+c",
+  "command": "runCommands",
+  "args": {
+    "commands": [
+      "workbench.action.createTerminalEditor",
+      {
+        "command": "workbench.action.terminal.sendSequence",
+        "args": { "text": "claude\r" },
+      },
+    ],
+  },
+}
+```
+
+`runCommands` is built in - it runs a list of commands in order, so one chord can open a terminal and type into it. `workbench.action.createTerminalEditor` is the command behind "Terminal: Create New Terminal in Editor Area", so the session is a full-height tab regardless of the default location. `sendSequence` needs the trailing `\r` to submit the line. No path is needed: on a WSL window the integrated terminal is already a WSL shell with `claude` on `PATH` (see [[claude-code-environment|Claude Code environment]]).
+
 ## How it works
 
-Terminals Manager *almost* does this alone - it has an `autorun` flag - but that autorun only reads terminals defined in a per-workspace `.vscode/terminals.json`, **not** globally-defined ones in user settings. The workaround is `auto-run-command`: on folder open it dispatches the `terminals.runTerminals` command, which — unlike the `autorun` flag — does honour the global config. A second rule in the same `auto-run-command.rules` array opens the Git Graph view. So the full chain is:
+Terminals Manager _almost_ does this alone - it has an `autorun` flag - but that autorun only reads terminals defined in a per-workspace `.vscode/terminals.json`, **not** globally-defined ones in user settings. The workaround is `auto-run-command`: on folder open it dispatches the `terminals.runTerminals` command, which — unlike the `autorun` flag — does honour the global config. A second rule in the same `auto-run-command.rules` array opens the Git Graph view. So the full chain is:
 
-1. You open a workspace folder → `auto-run-command` fires its rules: `git-graph.view` (gated by `hasFile: .git/HEAD`, so only inside a git repo) and `terminals.runTerminals` (gated by `hasFile: **/*`, so nothing fires without a folder).
-2. VSCode routes the dispatched command to wherever Terminals Manager is installed - the local scope for Windows projects, the WSL scope for WSL projects. The `auto-run-command` rule itself lives **only** in the Windows user settings and fires from the host; it is not duplicated in the WSL settings.
+1. You open a workspace folder → `auto-run-command` fires its rules: `git-graph.view` and `terminals.runTerminals`, both gated by `hasFile: .git/HEAD`.
+2. VSCode routes the dispatched command to wherever Terminals Manager is installed - the local scope for Windows projects, the WSL scope for WSL projects.
 3. Terminals Manager reads the merged config and runs every defined terminal.
-4. The terminal entry runs its shell command in an integrated terminal - `start "" wt.exe …` (Windows) or `wt.exe new-tab wsl.exe …` (WSL) - then `git sync`.
-5. Windows Terminal spawns detached, so the launching integrated terminal is free to close.
+4. The terminal entry types `git sync` into an integrated terminal at `cwd: ${workspaceFolder}`, so the freshen acts on the right repo.
 
-**The Windows command line.** `start "" wt.exe -d "${workspaceFolder}" cmd /k claude` detaches a Windows Terminal at the workspace folder running `claude` (`cmd /k` keeps the shell open after `claude` exits). `start ""` detaches the process so the launching shell returns immediately; the empty `""` is the window-title argument `start` requires. `cwd: ${workspaceFolder}` points the integrated terminal at the workspace folder so the following `git sync` acts on the right repo.
+**`.git/HEAD` fires once per checkout.** A linked worktree's `.git` is a file rather than a directory, so the condition matches only in a primary checkout - a worktree window gets neither rule.
 
-**The WSL command line.** The path to `wt.exe` is absolute, via the `/mnt/c/...` mount - WSL's auto-appended Windows PATH isn't reliable for non-interactive shells. `wsl.exe --cd ${workspaceFolder}` uses the Linux path directly; no `wslpath` translation needed. `\\;` is JSON-escaped `\;` - `wt.exe` reserves `;` as a command-chain delimiter (it would open a second tab), so the semicolon between `claude` and `exec bash` must be escaped to pass through as a literal. `bash -ic "claude; exec bash"` runs claude under interactive bash (`-i` sources `~/.bashrc` so `claude` is on PATH), then `exec bash` replaces the shell so you stay interactive after.
+**Terminals in the editor area.** `terminal.integrated.defaultLocation: "editor"` is a global default, and the [VSCode terminal docs](https://code.visualstudio.com/docs/terminal/basics) describe it as changing "the default `view` or `editor` area terminal location". With it set, the `git sync` terminal is a tab too - `focus: false` keeps it from stealing the Git Graph view on startup.
 
 **Git Graph on startup.** For the `git-graph.view` rule to match, the `.git` folder must be visible to the glob - set `"**/.git": false` in `files.exclude` (see [[vscode-settings|VSCode Settings]]). `workbench.startupEditor: "none"` + `window.restoreWindows: "all"` then keep the Welcome tab from covering the auto-opened view.
 
-**`git sync`.** A clean-tree-only branch update: switch to the default branch, pull, prune, then clean up merged branches, skipped when there's work in progress. In a window opened on a linked worktree it refuses to run and exits 1, so those terminals print the refusal on startup — expected, see [[git-sync#Main checkout only|Main checkout only]]. The logic lives in the alias - defined in `.gitconfig` (see [[configuration-example|Configuration Example]] and [[git-sync|Sync the default branch]]). On Windows it is a second entry in the `commands` array; on WSL it is joined onto the launch line as a trailing `; git sync` instead.
+**`git sync`.** A clean-tree-only branch update: switch to the default branch, pull, prune, then clean up merged branches, skipped when there's work in progress. It refuses to run in a linked worktree and exits 1 - but the `.git/HEAD` gate means those windows never start it, see [[git-sync#Main checkout only|Main checkout only]]. The logic lives in the alias - defined in `.gitconfig` (see [[configuration-example|Configuration Example]] and [[git-sync|Sync the default branch]]).
 
-**Why one command on WSL, two on Windows.** Terminals Manager *types* the commands into the integrated terminal a fixed ~200 ms after it opens. `cmd` is ready by then, so two separate `commands` lines both land. But WSL `bash -i` is still sourcing `~/.bashrc` at 200 ms, and a second line (`git sync`) typed ~1.5 s later - *while the launch is still running* - gets swallowed. Collapsing both onto one line makes bash buffer and run the whole thing once it's ready, so `git sync` reliably fires.
+**One command per entry.** Terminals Manager _types_ the commands into the integrated terminal a fixed ~200 ms after it opens, and a second line typed while the first is still running gets swallowed - a WSL `bash -i` is still sourcing `~/.bashrc` at 200 ms. A single-command entry sidesteps the timing entirely; if you need two, join them onto one line with `;` so the shell buffers and runs both once it is ready.
+
+---
+
+Related: [[claude-code-environment|Claude Code environment]] · [[git-sync|Sync the default branch]] · [[vscode-settings|VSCode Settings]] · [[configuration-example|Configuration Example]]

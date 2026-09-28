@@ -5,9 +5,14 @@ tags:
   - WSL
   - Configuration
 type: How To
-section: Main
-releaseDate: 2026-08-23
+section: Archived
+releaseDate: 2026-09-10
 ---
+
+> Archived 2026-09-10. The cross-OS symlink scheme below is gone; `~/AGENTS.md` is a real file in
+> WSL. Kept for [The rules in that file](#the-rules-in-that-file), which is the only backup of the
+> preferences text. Current setup: [[claude-code-environment|Claude Code environment]], migration:
+> [[claude-code-wsl-only-setup|Claude Code on WSL only]].
 
 One global `AGENTS.md` holds the rules every agent tool reads, on both Windows and WSL.
 
