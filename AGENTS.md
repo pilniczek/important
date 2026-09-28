@@ -88,7 +88,41 @@ When `tags:list` surfaces a case/plural collision, treat the fix as a **separate
 - Asset embeds: Obsidian-style by filename — `![[name.webp]]`.
 - Non-image assets (video, PDF, `.xcf`, JSON): link by **bare filename** — `[timezones.mp4](timezone-issue-openapigenerator-timezones.mp4)`. `CrawlLinks` runs with `markdownLinkResolution: "shortest"` ([quartz.config.ts](quartz.config.ts)), so it finds the file in whichever shared folder holds it and emits the full path. Don't hand-write the folder prefix.
 - Tag links: Quartz auto-creates `/tags/<slug>` pages from frontmatter `tags`; link to them as `[TagName](../tags/TagName/index.md)` if you need an in-body link — that form resolves to `./tags/TagName` at build. Casing matters, [`slugTag`](quartz/util/path.ts) does not lowercase.
+- External links: **inline in the prose**, never collected into a trailing list. See "External resources" below.
 - External URLs that should NOT be touched: `notion.so` / `notion.site` (external Notion references, kept intentionally despite containing UUIDs).
+
+### External resources
+
+Every page cites its external sources **inline, inside the sentence that makes the claim**.
+
+```markdown
+Anthropic's [best-practices post](https://www.anthropic.com/engineering/claude-code-best-practices) introduced the keyword ladder publicly.
+```
+
+- **No trailing link section** or a bare list of URLs at the end.
+- **The trailing `Related:` wikilink line is a different thing and stays.** It carries internal `[[slug]]` navigation, not external sources.
+- **Attribute where it matters.** Anything non-obvious - values, claims or opinions - carries a link to the page that states it.
+- **One link per claim.** Don't stack three links on one sentence.
+- **Link text names the thing.** A short noun phrase - two to five words. Not a sentence or a clause. Not a generic label.
+- **Quote outside the link.** When the exact wording matters, the link names the source and the quote sits next to it in plain text:
+
+  ```markdown
+  The [permission rules](https://code.claude.com/docs/en/permissions) say deny rules
+  "don't apply to arbitrary subprocesses that read or write files indirectly".
+  ```
+
+### Searching before writing
+
+**Creating a new `content/<slug>.md` page requires a web search first** - `WebSearch`, plus `WebFetch` on the pages worth citing. This is not optional and not skippable, facts come from the doc rather than from model memory.
+
+1. Search the topic before drafting. Prefer official docs, changelogs, and repos.
+2. `WebFetch` each candidate URL you intend to cite - confirm it resolves and actually says what you're attributing to it.
+3. Draft with the links already inline.
+4. If a claim has no citable source, say so in chat window and keep fact bare.
+
+**Never write a URL you have not fetched in this session.** A plausible-looking invented link is worse than no link.
+
+The same rule applies to a **substantive rewrite** of an existing page (new section, refreshed facts) - search, then cite inline. Typo and formatting passes don't need it.
 
 ### Matrix-style pages
 
