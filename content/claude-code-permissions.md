@@ -7,10 +7,10 @@ tags:
   - Security
 type: How To
 section: Main
-releaseDate: 2026-08-11
+releaseDate: 2026-09-10
 ---
 
-Every tool call Claude Code makes is matched against a flat list of permission rules. A rule is a string shaped `ToolName(argument)`, and it sits in one of three buckets inside a `permissions` object:
+Every tool call Claude Code makes is matched against a flat list of [permission rules](https://code.claude.com/docs/en/permissions). A rule is a string shaped `ToolName(argument)`, and it sits in one of three buckets inside a `permissions` object:
 
 ```json
 {
@@ -22,34 +22,15 @@ Every tool call Claude Code makes is matched against a flat list of permission r
 }
 ```
 
-The mechanics look obvious and are not. Three separate traps make rules that read as protective do nothing at all. All three are reproducible, and the recipe for reproducing them is at the bottom.
+The mechanics look obvious and are not. The [rule syntax](https://code.claude.com/docs/en/permissions#permission-rule-syntax), the [evaluation order](https://code.claude.com/docs/en/permissions#manage-permissions) and the [path patterns](https://code.claude.com/docs/en/permissions#read-and-edit) are all documented; this page keeps only the traps they add up to, each verified here, and a block that survives them. The recipe for reproducing them is at the bottom.
 
 Verified against Claude Code 2.1.210.
 
-## Scopes and where relative paths point
+## Trap 1: user-scope paths point into `~/.claude`
 
-Rules can come from five sources. They are all merged into one list before matching, so a rule's scope decides two things only: who can override the file, and what a relative path inside it resolves against.
+A relative path in **user** settings resolves against `~/.claude`, so `Read(/.env)` there guards `~/.claude/.env`, not the `.env` of whatever repo you happen to be in. The same string in **project** settings guards the repo's own `.env`, which is what everyone assumes it does everywhere.
 
-| Scope            | File                                                                        | Base dir for `./x`        |
-| ---------------- | --------------------------------------------------------------------------- | ------------------------- |
-| policy / managed | pushed by an org-managed channel, lands in `~/.claude/remote-settings.json` | working directory         |
-| flag             | whatever you pass to `--settings <file>`                                    | that file's own directory |
-| local            | `<repo>/.claude/settings.local.json`                                        | repo root                 |
-| project          | `<repo>/.claude/settings.json`                                              | repo root                 |
-| user             | `~/.claude/settings.json`                                                   | **`~/.claude`**           |
-
-That last row is the first trap. A rule written `Read(./.env)` in **user** settings guards `~/.claude/.env`, not the `.env` of whatever repo you happen to be in. The same string in **project** settings guards the repo's own `.env`, which is what everyone assumes it does everywhere.
-
-Path prefixes are interpreted like this:
-
-| Written as    | Resolves to                             |
-| ------------- | --------------------------------------- |
-| `//etc/hosts` | absolute `/etc/hosts`, base dir ignored |
-| `/etc/hosts`  | `<base dir>/etc/hosts`                  |
-| `./x`, `x`    | relative to the base dir                |
-| `~/x`         | home directory                          |
-
-So a rule that must hold in every repo regardless of which settings file carries it has to be written absolute, with the doubled slash and a `**` for depth:
+A rule that must hold in every repo regardless of which settings file carries it has to be written absolute, with the doubled slash and a `**` for depth:
 
 ```json
 "deny": ["Read(//**/.env)"]
@@ -57,32 +38,13 @@ So a rule that must hold in every repo regardless of which settings file carries
 
 That form is verified: a `.env` several directories deep is refused with `File is in a directory that is denied by your permission settings.`
 
-## Precedence: deny, then ask, then allow
+## Trap 2: an ask rule kills a broader allow
 
-Matching walks the buckets in a fixed order and returns on the first hit. Deny wins over everything, ask wins over allow, and allow is only reached when neither of the others matched.
+A block holding `ask: Read(./.env.*)` alongside `allow: Read(./.env.example)` never reaches the allow, because `.env.*` matches `.env.example` and ask is checked first. Reading the template prompts you, forever, and the allow rule looks fine in the file. The same holds one level up: there is no negation syntax, so `deny: Edit(//**/.env.*)` means the agent can never write a `.env.example` either. Decide which of the two you want before writing the pattern.
 
-```mermaid
-flowchart LR
-  A["tool call"] --> D{"matches deny?"}
-  D -- yes --> X["refused"]
-  D -- no --> K{"matches ask?"}
-  K -- yes --> P["prompt"]
-  K -- no --> L{"matches allow?"}
-  L -- yes --> Y["runs"]
-  L -- no --> M["mode default decides"]
-```
+## Trap 3: `Write(...)` rules are inert
 
-Two consequences worth internalising.
-
-**An ask rule silently kills a broader allow.** A block holding `ask: Read(./.env.*)` alongside `allow: Read(./.env.example)` never reaches the allow, because `.env.*` matches `.env.example` and ask is checked first. Reading the template prompts you, forever, and the allow rule looks fine in the file.
-
-**No allow rule can rescue a deny.** If a deny pattern is broad, narrowing it is the only fix. There is no negation syntax, so `deny: Edit(//**/.env.*)` genuinely does mean the agent can never write a `.env.example` either. Decide which of the two you want before writing the pattern.
-
-## The `Write(...)` trap
-
-This is the expensive one. File permission checks consult `Read(...)` for reads and `Edit(...)` for writes. `Edit(...)` covers **every** file-modifying tool. `Write(...)` is not a rule name the check ever looks at, so any rule written that way is an inert string.
-
-Claude Code says so itself, once per offending rule, at every session start:
+Path rules for `Write(...)` are [accepted but never consulted](https://code.claude.com/docs/en/permissions#read-and-edit); `Edit(...)` is the rule that covers every file-modifying tool. Claude Code warns once per offending rule at every session start:
 
 ```text
 Permission deny rule: Write(./.env) is not matched by file permission checks
@@ -102,13 +64,19 @@ Both halves of that diagram are verified. With `deny: Edit(//**/.env)` in place 
 
 ## Bash rules are string patterns, not semantics
 
-`Bash(...)` rules match the command string by prefix and wildcard. They do not understand shell. `Bash(rm -rf /)` and `Bash(rm -rf /*)` say nothing about `rm -fr /`, and `Bash(git push --force)` says nothing about `git -c foo=bar push --force`. Treat a Bash deny list as a guardrail against the obvious slip, never as a sandbox.
+`Bash(rm -rf /)` says nothing about `rm -fr /`, and `Bash(git push --force)` says nothing about `git -c foo=bar push --force` - the [Bash rule limits](https://code.claude.com/docs/en/permissions#bash) spell out why. Treat a Bash deny list as a guardrail against the obvious slip, never as a sandbox; the [sandboxed Bash tool](https://code.claude.com/docs/en/sandboxing) is what constrains processes at the OS level.
+
+The two meet at the [unsandboxed retry escape hatch](https://code.claude.com/docs/en/sandboxing#the-unsandboxed-retry-escape-hatch): a retry with `dangerouslyDisableSandbox` lands back in the permission flow, so with the default `allowUnsandboxedCommands: true` the rules above, traps included, are still the last line. Verified on 2.1.267: with `allowUnsandboxedCommands: false`, the tool description itself changes to say the parameter is disabled by policy.
+
+### The `!` prompt is outside all of it
+
+A line typed at the [`!` shell-mode prompt](https://code.claude.com/docs/en/interactive-mode#shell-mode-with-prefix) is not a tool call, so no permission rule is consulted, and in an ordinary interactive session it runs outside the sandbox too - the escape hatch section above lists the sessions where it does not. This is a boundary rather than a gap: the rules and the sandbox constrain the agent, not the person at the keyboard. It is also the practical route for anything the agent is deliberately denied. `Bash(sudo *)` in the deny list plus strict sandbox mode leaves no way for Claude to run an elevated command, and `! sudo …` is how that command gets run anyway - by you, visibly, with the output still landing in the transcript for Claude to read.
 
 ## The policy scope is not yours to edit
 
-If your Claude account belongs to an org-managed channel, that channel can push permission rules to your machine. They land in `~/.claude/remote-settings.json` and sit at the highest scope, above your own user settings. Their relative paths resolve against the working directory, so unlike user-scope rules the `./`-relative form does work per-repo.
+Rules pushed by an org-managed channel land in `~/.claude/remote-settings.json` and sit in the [managed settings](https://code.claude.com/docs/en/managed-settings) tier, above every scope you control. A local edit to that file survives only until the next sync, so a defect in a pushed block has to be fixed by whoever administers the channel. What you _can_ do meanwhile is add denies of your own, which hold regardless of policy - unless the pushed block carries [`allowManagedPermissionRulesOnly`](https://code.claude.com/docs/en/server-managed-settings).
 
-Two things follow. Your own settings cannot loosen them, so there is no point restating them. And a local edit to that file survives only until the next sync, so a defect in a pushed block has to be fixed by whoever administers the channel. What you _can_ do meanwhile is add rules of your own: deny is additive across scopes, so a deny you add in user settings holds regardless of what policy says.
+Deploying your own root-owned `managed-settings.json` does not help on such an account: the remote source wins the managed tier and the file is never read. [[claude-code-environment#When the managed file is skipped|When the managed file is skipped]] has the measurement.
 
 ## Reproducing any of this yourself
 
@@ -172,9 +140,8 @@ Note what is deliberately absent. There are no `allow` entries for `.env.example
 ## Caveats
 
 - **Rule counts grow on their own.** Approving a one-off command in a session appends it to `permissions.allow`, so a long-lived user settings file accumulates hundreds of hyper-specific entries. Edit that file surgically; a reformat there is a diff nobody can review.
-- **Deny is not a sandbox.** It refuses tool calls. It does not constrain a process that a permitted command starts.
 - **The session you edit from does not see the change.** Rules load at session start. Test in a fresh one.
 
 ---
 
-Related: [[always-on-output-style|Always-on caveman]] · [[global-agents-md-windows-wsl|Global AGENTS.md across Windows and WSL]] · [[claude-code-environment|Claude Code environment]]
+Related: [[always-on-output-style|Always-on caveman]] · [[global-agents-md|Global AGENTS.md]] · [[claude-code-environment|Claude Code environment]]
