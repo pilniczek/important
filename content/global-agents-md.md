@@ -29,7 +29,8 @@ file directly.
 ## Writing
 
 - Never publish PII (names/phones/emails of me or anyone) or development secrets (API keys, tokens, passwords, connection strings, private keys). If found while editing, pause and ask - never silently redact.
-- Keep personal identifiers (name, username, email, IDs) and secrets out of docs/READMEs; use generic examples or env-var references.
+- Keep personal identifiers (name, username, email, IDs, IP addresses, hostnames, MAC addresses) and secrets out of docs/READMEs; use generic examples or env-var references.
+- Write IP addresses as placeholders (`<device-ip>`, `<router-ip>`, `192.168.x.y`), the same way as `<user>` in paths.
 - Say each idea exactly once; cut restated content.
 - Never use em dash "—", use dash "-" instead
 - Use Mermaid charts to explain complex ideas in md files.
