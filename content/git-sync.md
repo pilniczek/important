@@ -41,7 +41,7 @@ $ echo $?
 Two consequences of using `exit 1` rather than a quiet skip:
 
 - **Message goes to stderr**, so it stays visible when the alias is chained (`git sync && …`) and the chain stops instead of continuing on stale assumptions.
-- **The autorun terminal shows it.** [[vscode-autorun-claude-on-open|Autorun on window open]] fires `git sync` in every window, worktree windows included, so those windows now report the refusal on startup. That's the intent: it names where the command belongs rather than looking like a successful no-op.
+- **Worktree windows never start it.** The [[vscode-settings#Auto-run on open|auto-run on open]] rule is gated on `.git/HEAD`, which a linked worktree lacks, so the refusal only shows when `git sync` is typed there by hand. That's the intent: it names where the command belongs rather than looking like a successful no-op.
 
 The [[#Why clean-tree only|WIP guard]] below stays a quiet skip — dirty tree is a normal, expected state in the right directory.
 

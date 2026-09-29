@@ -81,7 +81,7 @@ Without the extension, every launcher is a terminal typing `claude`, so all of t
 
 Both land in the **editor area** rather than the bottom panel, which is what makes a session a full-height tab you can split and drag like a file. Two settings decide that. `terminal.integrated.defaultLocation` - which the [VSCode terminal docs](https://code.visualstudio.com/docs/terminal/basics) describe as changing "the default `view` or `editor` area terminal location" - is set to `editor` globally, so every terminal opens as a tab, including the ones the auto-run rules start. The keybinding does not rely on it: `workbench.action.createTerminalEditor` is the command behind "Terminal: Create New Terminal in Editor Area", so it opens a tab whichever way the default is set. Where the extension's own chat can live is covered in [Choose where Claude lives](https://code.claude.com/docs/en/vs-code#choose-where-claude-lives).
 
-The auto-run terminals - now a `git sync` freshen only, with the Claude session left to the keybinding - are set up in [[vscode-autorun-claude-on-open|Run tools when workspace opened]].
+The auto-run on open - Git Graph and a `git sync` terminal, with the Claude session left to the keybinding - is set up in [[vscode-settings#Auto-run on open|VSCode setup]].
 
 ### The npm install failure mode
 
@@ -175,7 +175,7 @@ In rough order for a fresh machine:
 2. Node via nvm - [[nvm|NVM]]
 3. Git config: line endings and commit signing - [[autocrlf|Safe line endings]], [[gpg-sign-commits|Sign commits with GPG]]
 4. SSH keys - [[ssh|SSH]]
-5. VSCode settings, extensions and snippets - [[vscode-settings|VSCode settings]], [[vscode-extensions|VSCode extensions]], [[vscode-setup-notes|VSCode setup notes]]
+5. VSCode settings, extensions and snippets - [[vscode-settings|VSCode setup]], [[vscode-extensions|VSCode Extensions]]
 6. Claude Code itself, native installer, see [Installs](#installs), then `npm run env:bootstrap`
 7. Statusline program, cloned to `~/.claude/statusline/` - [[claude-statusline|Claude statusline]]
 8. Caveman, cloned to `~/.claude/caveman/`, then `npm run env:bootstrap` again to wire the hooks - [[always-on-output-style|Always-on caveman]]

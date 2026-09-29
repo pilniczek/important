@@ -83,4 +83,4 @@ Bundled with the official [anthropics/claude-plugins-official](https://github.co
 
 ## Checking the project set on open
 
-VSCode can run `npx skills check` whenever the folder opens, which is enough to notice a project skill that is missing or stale without remembering to look. The task lives in [tasks.json](tasks.json) with `runOn: folderOpen`, and it only fires once [settings.json](settings.json) sets `task.allowAutomaticTasks` to `on` - the same mechanism as [[vscode-autorun-claude-on-open|Run tools when workspace opened]].
+VSCode can run `npx skills check` whenever the folder opens, which is enough to notice a project skill that is missing or stale without remembering to look. The task lives in [tasks.json](tasks.json) with `runOn: folderOpen`, and it only fires once [settings.json](settings.json) sets `task.allowAutomaticTasks` to `on` - the same mechanism as [[vscode-settings#Auto-run on open|VSCode setup]].
