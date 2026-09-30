@@ -29,7 +29,7 @@ const MANIFEST = path.join(SCRIPT_DIR, "claude-env.skills.json")
 const args = process.argv.slice(2)
 const has = (name) => args.includes(`--${name}`)
 
-const SETTINGS_KEYS = { theme: "light-ansi", tui: "fullscreen" }
+const SETTINGS_KEYS = {}
 
 const STATUSLINE_REL = [".claude", "statusline", "statusline.js"]
 
