@@ -165,12 +165,22 @@ The [sandboxed Bash tool](https://code.claude.com/docs/en/sandboxing) sits above
   "sandbox": {
     "enabled": true,
     "failIfUnavailable": true,
-    "allowUnsandboxedCommands": false
+    "allowUnsandboxedCommands": false,
+    "filesystem": {
+      "allowWrite": ["~/_Projects_ubuntu"]
+    }
   }
 }
 ```
 
 [`failIfUnavailable`](https://code.claude.com/docs/en/settings-reference#sandbox-failifunavailable) turns a missing `bubblewrap` from a warning into a startup error; [`allowUnsandboxedCommands`](https://code.claude.com/docs/en/settings-reference#sandbox-allowunsandboxedcommands) `false` closes the [unsandboxed retry escape hatch](https://code.claude.com/docs/en/sandboxing#the-unsandboxed-retry-escape-hatch). A genuinely blocked command then fails instead of prompting; widen the allowed domains in `/sandbox` or exclude that one command rather than turning the key off. Neither key reaches the `!` prompt - see below.
+
+### Writing across projects
+
+By default a sandboxed command writes only to the working directory, `$TMPDIR` and added directories, so a session in one repo cannot even `git commit` in another - `.git/index.lock` fails with `Read-only file system`. [`sandbox.filesystem.allowWrite`](https://code.claude.com/docs/en/sandboxing#configure-sandboxing) with `~/_Projects_ubuntu` opens the whole projects tree; the home directory, `~/.claude` and everything else outside it stay read-only. An edit to the list reaches the running session at the next command.
+
+- **Other projects' agent config becomes writable.** The sandbox's [protected paths](https://code.claude.com/docs/en/sandboxing#protected-paths) - `.claude` settings, skills and hooks, `.mcp.json`, `.git/hooks` and `.git/config` - cover the working directory (for `.claude`, also the directories above it), not the rest of the tree. A sandboxed command can therefore change another repo's hooks, which later run outside the sandbox. Accepted here: per-project settings are managed through Claude.
+- **`denyWrite` does not expand `**`.** Measured: `~/_Projects_ubuntu/**/.git/hooks` protected nothing, while a literal path was denied. A deny inside the tree has to name the exact path.
 
 ### The `!` prompt is outside the sandbox
 
