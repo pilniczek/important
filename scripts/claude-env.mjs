@@ -244,6 +244,4 @@ ensureDirs()
 wireSettings()
 wireHooks()
 installSkills()
-console.log(
-  "\nDone. Permission rules are deliberately not written by this script; see content/claude-code-permissions.md.",
-)
+console.log("\nDone. Permission rules are deliberately not written by this script.")
