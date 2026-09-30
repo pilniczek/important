@@ -12,6 +12,7 @@
       "repo": "pilniczek/dev-skills",
       "note": "The PreToolUse hook in scripts/hooks/subtract-first-gate.mjs nudges toward this skill, so the two ship together."
     },
+    { "skill": "merge-reviews", "repo": "pilniczek/dev-skills" },
     { "skill": "skill-creator", "repo": "anthropics/skills" },
     { "skill": "grill-with-docs", "repo": "mattpocock/skills" },
     {
@@ -27,12 +28,7 @@
     {
       "skill": "wayfinder",
       "repo": "mattpocock/skills",
-      "note": "Slash-command only (disable-model-invocation)."
-    },
-    {
-      "skill": "setup-matt-pocock-skills",
-      "repo": "mattpocock/skills",
-      "note": "Per-repo tracker setup that wayfinder expects; slash-command only (disable-model-invocation)."
+      "note": "Slash-command only (disable-model-invocation). Expects setup-matt-pocock-skills, which is left out while it is under validation."
     },
     { "skill": "skill-scanner", "repo": "getsentry/skills" },
     { "skill": "caveman-compress", "repo": "juliusbrussee/caveman" },
