@@ -38,17 +38,29 @@ const CLAUDE_MD = `Global agent preferences live in AGENTS.md (single source of 
 @../AGENTS.md
 `
 
-const CAVEMAN_HOOKS_REL = [".claude", "caveman", "src", "hooks"]
-const CAVEMAN_HOOKS = [
+const CAVEMAN_HOOKS_DIR = path.join(HOME, ".claude", "caveman", "src", "hooks")
+const CAVEMAN_MISSING = "clone JuliusBrussee/caveman into ~/.claude/caveman"
+const HOOKS = [
   {
     event: "SessionStart",
+    dir: CAVEMAN_HOOKS_DIR,
     script: "caveman-activate.js",
     statusMessage: "Loading caveman mode...",
+    missing: CAVEMAN_MISSING,
   },
   {
     event: "UserPromptSubmit",
+    dir: CAVEMAN_HOOKS_DIR,
     script: "caveman-mode-tracker.js",
     statusMessage: "Tracking caveman mode...",
+    missing: CAVEMAN_MISSING,
+  },
+  {
+    event: "PreToolUse",
+    matcher: "Write|Edit|MultiEdit|NotebookEdit|Bash",
+    dir: path.join(SCRIPT_DIR, "hooks"),
+    script: "subtract-first-gate.mjs",
+    missing: "this repo's scripts/hooks is incomplete",
   },
 ]
 
@@ -93,30 +105,32 @@ function wirePointer() {
   writeIfMissing(path.join(CLAUDE_DIR, "CLAUDE.md"), CLAUDE_MD)
 }
 
-function wireCavemanHooks() {
-  log.step("caveman hooks")
-  const hooksDir = path.join(HOME, ...CAVEMAN_HOOKS_REL)
-  if (!fs.existsSync(hooksDir))
-    return log.warn(`${hooksDir} absent - clone JuliusBrussee/caveman into ~/.claude/caveman`)
-
+function wireHooks() {
+  log.step("hooks")
   const file = path.join(CLAUDE_DIR, "settings.json")
   const settings = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, "utf8")) : {}
   settings.hooks ??= {}
 
   let changed = false
-  for (const { event, script, statusMessage } of CAVEMAN_HOOKS) {
+  for (const { event, matcher, dir, script, statusMessage, missing } of HOOKS) {
+    const scriptPath = path.join(dir, script)
+    if (!fs.existsSync(scriptPath)) {
+      log.warn(`${scriptPath} absent - ${missing}`)
+      continue
+    }
     const entries = (settings.hooks[event] ??= [])
     if (entries.some((g) => g.hooks?.some((h) => h.command?.includes(script)))) {
       log.keep(`${event} -> ${script}`)
       continue
     }
     entries.push({
+      ...(matcher && { matcher }),
       hooks: [
         {
           type: "command",
-          command: `"node" "${path.join(hooksDir, script)}"`,
+          command: `"node" "${scriptPath}"`,
           timeout: 5,
-          statusMessage,
+          ...(statusMessage && { statusMessage }),
         },
       ],
     })
@@ -228,7 +242,7 @@ checkAgentsMd()
 wirePointer()
 ensureDirs()
 wireSettings()
-wireCavemanHooks()
+wireHooks()
 installSkills()
 console.log(
   "\nDone. Permission rules are deliberately not written by this script; see content/claude-code-permissions.md.",

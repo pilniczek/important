@@ -7,6 +7,11 @@
     { "skill": "docs-consistency-check", "repo": "pilniczek/dev-skills" },
     { "skill": "humanizer", "repo": "blader/humanizer" },
     { "skill": "work-report", "repo": "pilniczek/dev-skills" },
+    {
+      "skill": "subtract-first",
+      "repo": "pilniczek/dev-skills",
+      "note": "The PreToolUse hook in scripts/hooks/subtract-first-gate.mjs nudges toward this skill, so the two ship together."
+    },
     { "skill": "skill-creator", "repo": "anthropics/skills" },
     { "skill": "grill-with-docs", "repo": "mattpocock/skills" },
     {
